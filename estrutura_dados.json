@@ -1,0 +1,2444 @@
+{
+  "metadata": {
+    "obra": "AION-100 · LUCAS HAJJAR",
+    "fase": "003.ENTREGA · FUNDAÇÃO E BALDRAME",
+    "data": "22/09/2026",
+    "dimensoesObra": {
+      "extensaoX_m": 34.22,
+      "larguraY_m": 10.49,
+      "centroGlobal": [
+        11711.2,
+        50524.4
+      ]
+    },
+    "totais": {
+      "blocos": 27,
+      "estacas": 45,
+      "vigasBaldrames": 22
+    }
+  },
+  "blocos": {
+    "B1": {
+      "id": "B1",
+      "nome": "Bloco B1",
+      "tipo": "1xC40_7m",
+      "pilarId": "P1",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10000.0,
+      "globalY": 51048.9,
+      "localX": -1711.2,
+      "localY": 524.5,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B1_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B2": {
+      "id": "B2",
+      "nome": "Bloco B2",
+      "tipo": "2xC40_7m",
+      "pilarId": "P2",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 10131.5,
+      "globalY": 50998.9,
+      "localX": -1579.7,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B2_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B2_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B3": {
+      "id": "B3",
+      "nome": "Bloco B3",
+      "tipo": "2xC40_7m",
+      "pilarId": "P3",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 10496.0,
+      "globalY": 50998.9,
+      "localX": -1215.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B3_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B3_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 12.5,
+          "quant": 4,
+          "espac": 13
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B4": {
+      "id": "B4",
+      "nome": "Bloco B4",
+      "tipo": "2xC40_7m",
+      "pilarId": "P4",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 10829.0,
+      "globalY": 50998.9,
+      "localX": -882.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B4_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B4_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 8.0,
+          "quant": 7,
+          "espac": 6
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 7
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B5": {
+      "id": "B5",
+      "nome": "Bloco B5",
+      "tipo": "2xC40_7m",
+      "pilarId": "P5",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 11209.0,
+      "globalY": 50998.9,
+      "localX": -502.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B5_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B5_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 7
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B6": {
+      "id": "B6",
+      "nome": "Bloco B6",
+      "tipo": "2xC40_7m",
+      "pilarId": "P6",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 11589.0,
+      "globalY": 50998.9,
+      "localX": -122.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B6_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B6_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 8.0,
+          "quant": 7,
+          "espac": 6
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 7
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B7": {
+      "id": "B7",
+      "nome": "Bloco B7",
+      "tipo": "2xC40_7m",
+      "pilarId": "P7",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 11969.0,
+      "globalY": 50998.9,
+      "localX": 257.8,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B7_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B7_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 7
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B8": {
+      "id": "B8",
+      "nome": "Bloco B8",
+      "tipo": "2xC40_7m",
+      "pilarId": "P8",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 12349.0,
+      "globalY": 50998.9,
+      "localX": 637.8,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B8_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B8_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 12.5,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B9": {
+      "id": "B9",
+      "nome": "Bloco B9",
+      "tipo": "2xC40_7m",
+      "pilarId": "P9",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 12736.5,
+      "globalY": 50998.9,
+      "localX": 1025.3,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B9_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B9_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 8.0,
+          "quant": 7,
+          "espac": 6
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B10": {
+      "id": "B10",
+      "nome": "Bloco B10",
+      "tipo": "2xC40_7m",
+      "pilarId": "P10",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 12901.4,
+      "globalY": 50998.9,
+      "localX": 1190.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B10_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B10_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B11": {
+      "id": "B11",
+      "nome": "Bloco B11",
+      "tipo": "2xC40_7m",
+      "pilarId": "P11",
+      "numEstacas": 2,
+      "orientacao": "X",
+      "globalX": 13422.4,
+      "globalY": 50998.9,
+      "localX": 1711.2,
+      "localY": 474.5,
+      "localZ": 0.0,
+      "dimX": 160,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B11_E1",
+          "relX": -50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B11_E2",
+          "relX": 50.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "X",
+        "dim": [
+          160,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B12": {
+      "id": "B12",
+      "nome": "Bloco B12",
+      "tipo": "1xC40_7m",
+      "pilarId": "P12",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 12349.0,
+      "globalY": 50773.4,
+      "localX": 637.8,
+      "localY": 249.0,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B12_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 12
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 4,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B13": {
+      "id": "B13",
+      "nome": "Bloco B13",
+      "tipo": "2xC40_7m",
+      "pilarId": "P13",
+      "numEstacas": 2,
+      "orientacao": "Y",
+      "globalX": 12731.0,
+      "globalY": 50773.4,
+      "localX": 1019.8,
+      "localY": 249.0,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 160,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B13_E1",
+          "relX": 0.0,
+          "relY": -50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B13_E2",
+          "relX": 0.0,
+          "relY": 50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "Y",
+        "dim": [
+          60,
+          160,
+          60
+        ],
+        "tirante": {
+          "diam": 8.0,
+          "quant": 9,
+          "espac": 4
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 7
+        },
+        "pilar": {
+          "quant": 4,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B14": {
+      "id": "B14",
+      "nome": "Bloco B14",
+      "tipo": "1xC40_7m",
+      "pilarId": "P14",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 12901.4,
+      "globalY": 50778.9,
+      "localX": 1190.2,
+      "localY": 254.5,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B14_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 12
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B15": {
+      "id": "B15",
+      "nome": "Bloco B15",
+      "tipo": "1xC40_7m",
+      "pilarId": "P15",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 13422.4,
+      "globalY": 50784.4,
+      "localX": 1711.2,
+      "localY": 260.0,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B15_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B16": {
+      "id": "B16",
+      "nome": "Bloco B16",
+      "tipo": "2xC40_7m",
+      "pilarId": "P16",
+      "numEstacas": 2,
+      "orientacao": "Y",
+      "globalX": 12354.5,
+      "globalY": 50550.4,
+      "localX": 643.3,
+      "localY": 26.0,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 160,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B16_E1",
+          "relX": 0.0,
+          "relY": -50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B16_E2",
+          "relX": 0.0,
+          "relY": 50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "Y",
+        "dim": [
+          60,
+          160,
+          60
+        ],
+        "tirante": {
+          "diam": 12.5,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B17": {
+      "id": "B17",
+      "nome": "Bloco B17",
+      "tipo": "2xC40_7m",
+      "pilarId": "P17",
+      "numEstacas": 2,
+      "orientacao": "Y",
+      "globalX": 12731.0,
+      "globalY": 50555.9,
+      "localX": 1019.8,
+      "localY": 31.5,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 160,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B17_E1",
+          "relX": 0.0,
+          "relY": -50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B17_E2",
+          "relX": 0.0,
+          "relY": 50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "Y",
+        "dim": [
+          60,
+          160,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B18": {
+      "id": "B18",
+      "nome": "Bloco B18",
+      "tipo": "1xC40_7m",
+      "pilarId": "P18",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10131.5,
+      "globalY": 50491.5,
+      "localX": -1579.7,
+      "localY": -32.9,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B18_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 8,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B19": {
+      "id": "B19",
+      "nome": "Bloco B19",
+      "tipo": "1xC40_7m",
+      "pilarId": "P19",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10121.5,
+      "globalY": 50211.0,
+      "localX": -1589.7,
+      "localY": -313.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B19_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 8
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 6,
+          "espac": 8
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B20": {
+      "id": "B20",
+      "nome": "Bloco B20",
+      "tipo": "1xC40_7m",
+      "pilarId": "P20",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10116.0,
+      "globalY": 50005.5,
+      "localX": -1595.2,
+      "localY": -518.9,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B20_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 10.0,
+          "alt": 83
+        }
+      }
+    },
+    "B21": {
+      "id": "B21",
+      "nome": "Bloco B21",
+      "tipo": "2xC40_7m",
+      "pilarId": "P21",
+      "numEstacas": 2,
+      "orientacao": "Y",
+      "globalX": 12349.0,
+      "globalY": 50005.5,
+      "localX": 637.8,
+      "localY": -518.9,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 160,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B21_E1",
+          "relX": 0.0,
+          "relY": -50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B21_E2",
+          "relX": 0.0,
+          "relY": 50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "Y",
+        "dim": [
+          60,
+          160,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 7,
+          "espac": 6
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B22": {
+      "id": "B22",
+      "nome": "Bloco B22",
+      "tipo": "2xC40_7m",
+      "pilarId": "P22",
+      "numEstacas": 2,
+      "orientacao": "Y",
+      "globalX": 12731.0,
+      "globalY": 50005.5,
+      "localX": 1019.8,
+      "localY": -518.9,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 160,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B22_E1",
+          "relX": 0.0,
+          "relY": -50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        },
+        {
+          "id": "B22_E2",
+          "relX": 0.0,
+          "relY": 50.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "Y",
+        "dim": [
+          60,
+          160,
+          60
+        ],
+        "tirante": {
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
+        },
+        "sup": {
+          "diam": 8.0,
+          "quant": 4
+        },
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 9
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 5
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B23": {
+      "id": "B23",
+      "nome": "Bloco B23",
+      "tipo": "1xC40_7m",
+      "pilarId": "P23",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10496.0,
+      "globalY": 50000.0,
+      "localX": -1215.2,
+      "localY": -524.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B23_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B24": {
+      "id": "B24",
+      "nome": "Bloco B24",
+      "tipo": "1xC40_7m",
+      "pilarId": "P24",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 10829.0,
+      "globalY": 50000.0,
+      "localX": -882.2,
+      "localY": -524.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B24_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B25": {
+      "id": "B25",
+      "nome": "Bloco B25",
+      "tipo": "1xC40_7m",
+      "pilarId": "P25",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 11209.0,
+      "globalY": 50000.0,
+      "localX": -502.2,
+      "localY": -524.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B25_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B26": {
+      "id": "B26",
+      "nome": "Bloco B26",
+      "tipo": "1xC40_7m",
+      "pilarId": "P26",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 11589.0,
+      "globalY": 50000.0,
+      "localX": -122.2,
+      "localY": -524.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B26_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    },
+    "B27": {
+      "id": "B27",
+      "nome": "Bloco B27",
+      "tipo": "1xC40_7m",
+      "pilarId": "P27",
+      "numEstacas": 1,
+      "orientacao": "CENTRAL",
+      "globalX": 11969.0,
+      "globalY": 50000.0,
+      "localX": 257.8,
+      "localY": -524.4,
+      "localZ": 0.0,
+      "dimX": 60,
+      "dimY": 60,
+      "dimZ": 60,
+      "hb": 60.0,
+      "ca": -60.0,
+      "estacas": [
+        {
+          "id": "B27_E1",
+          "relX": 0.0,
+          "relY": 0.0,
+          "diam": 40.0,
+          "prof": 700.0,
+          "ca": -60.0
+        }
+      ],
+      "especRebar": {
+        "orient": "CENTRAL",
+        "dim": [
+          60,
+          60,
+          60
+        ],
+        "tirante": {
+          "diam": 6.3,
+          "quant": 5,
+          "espac": 10
+        },
+        "sup": null,
+        "cintas": {
+          "diam": 5.0,
+          "quant": 5,
+          "espac": 10
+        },
+        "estribos": {
+          "diam": 5.0,
+          "quant": 4
+        },
+        "pilar": {
+          "quant": 6,
+          "diam": 16.0,
+          "alt": 105
+        }
+      }
+    }
+  },
+  "estacasIsoladas": [
+    {
+      "id": "E1",
+      "globalX": 10147.0,
+      "globalY": 50780.9,
+      "localX": -1564.2,
+      "localY": 256.5,
+      "diam": 40.0,
+      "prof": 200.0,
+      "ca": -10.0,
+      "tipo": "C40_2m"
+    },
+    {
+      "id": "E2",
+      "globalX": 10490.5,
+      "globalY": 50211.0,
+      "localX": -1220.7,
+      "localY": -313.4,
+      "diam": 40.0,
+      "prof": 200.0,
+      "ca": -10.0,
+      "tipo": "C40_2m"
+    },
+    {
+      "id": "E3",
+      "globalX": 12213.5,
+      "globalY": 50212.5,
+      "localX": 502.3,
+      "localY": -311.9,
+      "diam": 40.0,
+      "prof": 200.0,
+      "ca": -10.0,
+      "tipo": "C40_2m"
+    }
+  ],
+  "vigas": [
+    {
+      "id": "VB1",
+      "secao": "20x45",
+      "b": 20.0,
+      "h": 45.0,
+      "nivel": -10.0,
+      "nos": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5"
+      ],
+      "desc": "Baldrame Longitudinal Norte (P1-P5)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N34 Ø10.0 + reforços N54 Ø16.0"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 6.3,
+          "desc": "2 N4 Ø6.3 + negativos Ø8.0 / Ø16.0"
+        },
+        "pele": {
+          "quant": 6,
+          "diam": 6.3,
+          "desc": "2x3 N5 Ø6.3 C=1200"
+        },
+        "estribos": {
+          "diam": 5.0,
+          "espac": 12,
+          "desc": "N1 Ø5.0 c/12 e c/20"
+        }
+      }
+    },
+    {
+      "id": "VB2",
+      "secao": "20x45",
+      "b": 20.0,
+      "h": 45.0,
+      "nivel": -10.0,
+      "nos": [
+        "B5",
+        "B6",
+        "B7",
+        "B8"
+      ],
+      "desc": "Baldrame Longitudinal Norte (P5-P8)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 16.0,
+          "desc": "2 N53 Ø16.0 + 1 N35 Ø10.0"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N36 Ø10.0 + reforço 1 N54 Ø16.0"
+        },
+        "pele": {
+          "quant": 6,
+          "diam": 6.3,
+          "desc": "2x3 N6 Ø6.3 C=1194"
+        },
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "28 N1 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB3",
+      "secao": "20x45",
+      "b": 20.0,
+      "h": 45.0,
+      "nivel": -10.0,
+      "nos": [
+        "B8",
+        "B9",
+        "B10"
+      ],
+      "desc": "Baldrame Longitudinal Norte (P8-P10)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N37 Ø10.0 C=606"
+        },
+        "sup": {
+          "quant": 3,
+          "diam": 8.0,
+          "desc": "3 N11 Ø8.0 C=606"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 20,
+          "desc": "31 N1 Ø5.0 c/20"
+        }
+      }
+    },
+    {
+      "id": "VB4",
+      "secao": "40x30",
+      "b": 40.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B10",
+        "B11"
+      ],
+      "desc": "Baldrame Longitudinal Norte (P10-P11)",
+      "rebar": {
+        "inf": {
+          "quant": 4,
+          "diam": 8.0,
+          "desc": "4 N13 Ø8.0"
+        },
+        "sup": {
+          "quant": 4,
+          "diam": 8.0,
+          "desc": "4 N12 Ø8.0 C=575"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "duplo": true,
+          "desc": "Estribos duplos 2x39 N2 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB5",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B12",
+        "B13",
+        "B14",
+        "B15"
+      ],
+      "desc": "Baldrame Longitudinal Intermediário (P12-P15)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N38 Ø10.0 + 2 N18 Ø8.0"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N16 Ø8.0 C=716"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "37 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB6",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B16",
+        "B17"
+      ],
+      "desc": "Baldrame Intermediário (P16-P17)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N19 Ø8.0 C=486"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N19 Ø8.0 C=486"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "33 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB7",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "pontos": [
+        {
+          "x": 643.2999999999993,
+          "y": -224.9499999999971
+        },
+        {
+          "x": 1019.7999999999993,
+          "y": -224.9499999999971
+        }
+      ],
+      "desc": "Baldrame Intermediário entre VB17 e VB19 (vão 401 cm)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 12.5,
+          "desc": "2 N44 Ø12.5 C=395"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N20 Ø8.0 C=395"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 11,
+          "desc": "30 N3 Ø5.0 c/11 e c/15"
+        }
+      }
+    },
+    {
+      "id": "VB8",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B19",
+        "E2"
+      ],
+      "desc": "Baldrame Longitudinal Oeste (P19 a Estaca E2)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N42 Ø10.0 C=413"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N43 Ø10.0 C=435"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "26 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB9",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "pontos": [
+        {
+          "x": 502.2999999999993,
+          "y": -311.9499999999971
+        },
+        {
+          "x": 643.2999999999993,
+          "y": -311.9499999999971
+        }
+      ],
+      "desc": "Baldrame de Ligação (Estaca E3 à VB17)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N21 Ø8.0 C=167"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N22 Ø8.0 C=209"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "9 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB10",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B20",
+        "B23",
+        "B24",
+        "B25"
+      ],
+      "desc": "Baldrame Longitudinal Sul (P20-P25)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 12.5,
+          "desc": "3 N46 Ø12.5 C=1158"
+        },
+        "sup": {
+          "quant": 3,
+          "diam": 8.0,
+          "desc": "3 N23 Ø8.0 C=1147"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "N3 Ø5.0 c/14 e c/15"
+        }
+      }
+    },
+    {
+      "id": "VB11",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B25",
+        "B26",
+        "B27",
+        "B21"
+      ],
+      "desc": "Baldrame Longitudinal Sul (P25-P21)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 12.5,
+          "desc": "3 N48 Ø12.5 C=1085"
+        },
+        "sup": {
+          "quant": 3,
+          "diam": 8.0,
+          "desc": "3 N25 Ø8.0 C=1194"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB12",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B21",
+        "B22"
+      ],
+      "desc": "Baldrame Longitudinal Sul (P21-P22)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N26 Ø8.0 C=436"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N26 Ø8.0 + 1 N27 Ø8.0"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "30 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB13",
+      "secao": "20x45",
+      "b": 20.0,
+      "h": 45.0,
+      "nivel": -10.0,
+      "nos": [
+        "B20",
+        "B19",
+        "B18"
+      ],
+      "desc": "Baldrame Transversal Oeste (P20-P18)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 8.0,
+          "desc": "3 N28 Ø8.0 C=540"
+        },
+        "sup": {
+          "quant": 4,
+          "diam": 8.0,
+          "desc": "4 N29 Ø8.0 C=577"
+        },
+        "pele": {
+          "quant": 6,
+          "diam": 6.3,
+          "desc": "2x3 N8 Ø6.3 C=260"
+        },
+        "estribos": {
+          "diam": 5.0,
+          "espac": 16,
+          "desc": "36 N1 Ø5.0 c/13, c/16, c/20"
+        }
+      }
+    },
+    {
+      "id": "VB14",
+      "secao": "20x45",
+      "b": 20.0,
+      "h": 45.0,
+      "nivel": -10.0,
+      "nos": [
+        "B18",
+        "E1",
+        "B2"
+      ],
+      "desc": "Baldrame Transversal (P18 - E1 - P2)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N39 Ø10.0 C=611"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N41 Ø10.0 C=639 + 2 N40 Ø10.0 C=325"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "40 N1 Ø5.0 c/15 e c/16"
+        }
+      }
+    },
+    {
+      "id": "VB15",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B23",
+        "E2"
+      ],
+      "desc": "Baldrame Transversal (P23 a Estaca E2)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N30 Ø8.0 C=255"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N31 Ø8.0 C=305"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "15 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB16",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "pontos": [
+        {
+          "x": 502.2999999999993,
+          "y": -524.4499999999971
+        },
+        {
+          "x": 502.2999999999993,
+          "y": -311.9499999999971
+        }
+      ],
+      "desc": "Baldrame Transversal (VB11 a Estaca E3)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 8.0,
+          "desc": "2 N32 Ø8.0 C=236"
+        },
+        "sup": {
+          "quant": 4,
+          "diam": 8.0,
+          "desc": "4 N33 Ø8.0 C=282"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "13 N3 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB17",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B21",
+        "B16"
+      ],
+      "desc": "Baldrame Transversal (P21-P16)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 12.5,
+          "desc": "2 N5 Ø8.0 + 3 N14 Ø12.5 C=337"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N8 Ø10.0 + 2 N3 Ø6.3"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "28 N1 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB18",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B16",
+        "B12",
+        "B8"
+      ],
+      "desc": "Baldrame Transversal (P16 - P12 - P8)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 10.0,
+          "desc": "3 N12 Ø10.0 C=597"
+        },
+        "sup": {
+          "quant": 3,
+          "diam": 12.5,
+          "desc": "3 N16 Ø12.5 C=618"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "18 N1 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB19",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B22",
+        "B17"
+      ],
+      "desc": "Baldrame Transversal (P22-P17)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 10.0,
+          "desc": "2 N9 Ø10.0 C=664"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 16.0,
+          "desc": "2 N18 Ø16.0 C=654 + 1 N4 Ø6.3"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "31 N1 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB20",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B17",
+        "B13",
+        "B9"
+      ],
+      "desc": "Baldrame Transversal (P17 - P13 - P9)",
+      "rebar": {
+        "inf": {
+          "quant": 3,
+          "diam": 10.0,
+          "desc": "3 N10 Ø10.0 C=571 + 1 N3 Ø6.3"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 16.0,
+          "desc": "2 N19 Ø16.0 C=624"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "desc": "15 N1 Ø5.0 c/15"
+        }
+      }
+    },
+    {
+      "id": "VB21",
+      "secao": "19x30",
+      "b": 19.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B14",
+        "B10"
+      ],
+      "desc": "Baldrame Transversal (P14-P10)",
+      "rebar": {
+        "inf": {
+          "quant": 2,
+          "diam": 16.0,
+          "desc": "2 N20 Ø16.0 C=324"
+        },
+        "sup": {
+          "quant": 2,
+          "diam": 16.0,
+          "desc": "2 N20 Ø16.0 C=324"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 10,
+          "desc": "12 N1 Ø5.0 c/10"
+        }
+      }
+    },
+    {
+      "id": "VB22",
+      "secao": "40x30",
+      "b": 40.0,
+      "h": 30.0,
+      "nivel": -10.0,
+      "nos": [
+        "B15",
+        "B11"
+      ],
+      "desc": "Baldrame Transversal Leste (P15-P11)",
+      "rebar": {
+        "inf": {
+          "quant": 4,
+          "diam": 12.5,
+          "desc": "4 N15 Ø12.5 C=326"
+        },
+        "sup": {
+          "quant": 3,
+          "diam": 12.5,
+          "desc": "3 N22 Ø12.5 C=324 / 7 N11 Ø10.0"
+        },
+        "pele": null,
+        "estribos": {
+          "diam": 5.0,
+          "espac": 15,
+          "duplo": true,
+          "desc": "Estribos duplos 2x8 N2 Ø5.0 c/15"
+        }
+      }
+    }
+  ]
+}

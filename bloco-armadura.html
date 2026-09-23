@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Visualizador 3D interativo fiel ao projeto estrutural do Bloco de Coroamento B5 sobre 2 Estacas.">
+<title>Bloco B5 (2xC40) | Detalhamento Estrutural 3D</title>
+<style>
+:root {
+  --bg: #0f1115;
+  --panel: #161920;
+  --panel2: #1e222d;
+  --ink: #f1f3f7;
+  --muted: #9ba3b4;
+  --line: #2d3343;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --blue: #38bdf8;
+  --focus: #fef08a;
+  --border-radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+button, input { font: inherit; }
+button {
+  color: var(--ink);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all .18s ease;
+  user-select: none;
+}
+button:hover { background: #2a3040; border-color: #3f475c; }
+button:active { transform: translateY(1px); }
+button.active {
+  background: var(--accent);
+  color: #141005;
+  border-color: var(--accent);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+}
+button:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.app {
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h1 span { font-weight: 400; color: var(--muted); }
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.status-tag strong { color: var(--ink); }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 18px;
+}
+.stage-wrap {
+  position: relative;
+  min-height: 640px;
+  background: radial-gradient(circle at 50% 40%, #171b26 0%, #0d0f14 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+#three-canvas {
+  display: block;
+  width: 100%;
+  height: 640px;
+  touch-action: none;
+}
+.viewport-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 8px;
+  pointer-events: none;
+}
+.viewport-badge {
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+}
+.help-pill {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: var(--muted);
+  font-size: 11px;
+  pointer-events: none;
+}
+.compass-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+  pointer-events: none;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--border-radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 850px;
+  overflow-y: auto;
+}
+.panel::-webkit-scrollbar { width: 6px; }
+.panel::-webkit-scrollbar-thumb { background: #2f364a; border-radius: 3px; }
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 6px;
+}
+.button-grid button { padding: 7px 10px; font-size: 12px; }
+
+.range-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.range-box label { font-size: 13px; color: var(--ink); }
+.range-box output {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+input[type=range] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--accent);
+  height: 5px;
+  background: var(--line);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.toggles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.toggle-item:hover { border-color: #434d67; }
+.toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.toggle-item input[type=checkbox] {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+.color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+.pill-count {
+  font-size: 11px;
+  color: var(--muted);
+  background: rgba(0,0,0,0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.rebar-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.rebar-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.rebar-table td {
+  padding: 6px;
+  border-bottom: 1px solid #202534;
+  vertical-align: middle;
+}
+.rebar-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.info-card {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: #fed7aa;
+  line-height: 1.45;
+}
+.info-card strong { color: var(--accent); }
+
+.tooltip-3d {
+  position: absolute;
+  background: rgba(18, 21, 29, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  pointer-events: none;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 1fr; }
+  .stage-wrap, #three-canvas { min-height: 520px; height: 520px; }
+  .panel { max-height: none; }
+}
+</style>
+
+<!-- Suporte Offline Completo com Fallback automático para CDN -->
+<script src="three.min.js"></script>
+<script>
+if (typeof THREE === 'undefined') {
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+<script src="OrbitControls.js"></script>
+<script>
+if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+}
+</script>
+</head>
+<body>
+
+<main class="app">
+  <header class="header-bar">
+    <div>
+      <p class="eyebrow">Projeto Estrutural · Bloco B5 (2xC40_7m)</p>
+      <h1>Bloco de Coroamento <span>sobre 2 Estacas</span></h1>
+    </div>
+    <div class="status-tag">
+      <span>Dimensões: <strong>160 × 60 × 60 cm</strong></span>
+      <span>•</span>
+      <span>2 Estacas: <strong>Ø40 cm (eixos a 100 cm)</strong></span>
+      <span>•</span>
+      <span>Arrasamento: <strong>CA: -60</strong></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Visualizador 3D -->
+    <section class="stage-wrap" id="stageWrap">
+      <div id="three-container" style="width:100%; height:100%;"></div>
+      <div class="viewport-overlay">
+        <span class="viewport-badge" id="viewBadge">Isométrica</span>
+        <span class="viewport-badge" id="cutBadge" style="display:none; color: var(--accent);">Corte Ativo</span>
+      </div>
+      <div class="compass-badge">
+        Eixo X: 160 cm (Longitudinal)<br>
+        Eixo Y: 60 cm (Transversal)<br>
+        Eixo Z: 60 cm (Vertical)
+      </div>
+      <div class="help-pill">
+        🖱️ <strong>Girar:</strong> Botão esquerdo / toque &nbsp;|&nbsp; 
+        ✋ <strong>Mover:</strong> Botão direito / Shift + esquerdo &nbsp;|&nbsp; 
+        🔍 <strong>Zoom:</strong> Roda do mouse
+      </div>
+      <div id="tooltip" class="tooltip-3d"></div>
+    </section>
+
+    <!-- Painel de Controles e Especificação -->
+    <aside class="panel">
+      <!-- Vistas e Cortes -->
+      <div>
+        <div class="section-title">Vistas de Projeto & Cortes</div>
+        <div class="button-grid" id="viewButtons">
+          <button type="button" class="active" data-view="iso">Isométrica</button>
+          <button type="button" data-view="planta">Planta</button>
+          <button type="button" data-view="corteAA">Corte A–A</button>
+          <button type="button" data-view="corteBB">Corte B–B</button>
+          <button type="button" data-view="fundo">Base / Estacas</button>
+          <button type="button" id="btnReset">Resetar</button>
+        </div>
+      </div>
+
+      <!-- Planos de Seção / Corte Técnico -->
+      <div>
+        <div class="section-title">Plano de Seção Dinâmico (Corte)</div>
+        <div class="button-grid">
+          <button type="button" id="btnCutAA">Seccionar A–A (Y=0)</button>
+          <button type="button" id="btnCutBB">Seccionar B–B (X=0)</button>
+          <button type="button" id="btnCutOff" class="active">Sem Corte</button>
+        </div>
+      </div>
+
+      <!-- Ajustes Visuais -->
+      <div>
+        <div class="section-title">Controle Visual & Didática</div>
+        <div class="range-box">
+          <label for="concreteAlpha">Opacidade do Concreto:</label>
+          <output id="alphaValue">35%</output>
+          <input type="range" id="concreteAlpha" min="0" max="100" value="35">
+        </div>
+        <div class="range-box">
+          <label for="explodeRange">Explosão Didática das Armaduras:</label>
+          <output id="explodeValue">0 cm</output>
+          <input type="range" id="explodeRange" min="0" max="35" value="0">
+        </div>
+      </div>
+
+      <!-- Famílias de Armaduras (Fiel à Prancha B5) -->
+      <div>
+        <div class="section-title">
+          <span>Armaduras da Prancha</span>
+          <span style="font-size:10px; cursor:pointer; color:var(--blue);" id="btnToggleAll">Ocultar/Exibir Tudo</span>
+        </div>
+        <div class="toggles-list" id="togglesList"></div>
+      </div>
+
+      <!-- Tabela Detalhada de Aço -->
+      <div>
+        <div class="section-title">Especificação de Dobra (Prancha B5)</div>
+        <table class="rebar-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Geometria / Função</th>
+              <th>Bitola</th>
+              <th>Quant.</th>
+              <th>C (cm)</th>
+            </tr>
+          </thead>
+          <tbody id="rebarTableBody">
+            <!-- Preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-card">
+        <strong>Fidelidade ao Projeto B5:</strong><br>
+        • As <strong>2 estacas Ø40 cm</strong> apoiam a face inferior do bloco (cota de arrasamento CA: -60, Z ≤ 0).<br>
+        • <strong>N13 (6 Ø10.0):</strong> Tirante inferior longitudinal principal em U com abas verticais de 41 cm.<br>
+        • <strong>N5 (5 Ø5.0 c/9):</strong> Cintas retangulares horizontais fechadas (151 × 51 cm).<br>
+        • <strong>N1 (7 Ø5.0 c/25):</strong> Estribos verticais transversais fechados (50 × 41 cm).<br>
+        • <strong>N10 (4 Ø8.0 c/12):</strong> Armadura superior com ganchos de 9 cm.<br>
+        • <strong>N9 (2 Ø8.0 c/5):</strong> 2 barras laterais em U vertical (150 cm com abas de 30 cm para cima), paralelas às faces laterais.<br>
+        • <strong>Pilar (6 N16 + 3 N3):</strong> Arranque do pilar com dobras de ancoragem na base.
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+// --- DEFINIÇÃO COMPLETA DAS FAMÍLIAS DE ARMADURAS CONFORME PRANCHA B5 ---
+const REBAR_DATA = {
+  N13: {
+    name: 'N13 (Tirante Longitudinal)',
+    desc: 'Armadura principal inferior em U (150 cm + 2 dobras verticais de 41 cm)',
+    diameterMm: 10.0,
+    qty: 6,
+    spacing: 'c/7',
+    lengthCm: 227,
+    color: '#a855f7', // Roxo
+    visible: true,
+    category: 'principal'
+  },
+  N10: {
+    name: 'N10 (Superior Longitudinal)',
+    desc: 'Armadura superior reta de 150 cm com ganchos verticais de 9 cm para baixo',
+    diameterMm: 8.0,
+    qty: 4,
+    spacing: 'c/12',
+    lengthCm: 164,
+    color: '#38bdf8', // Azul Claro
+    visible: true,
+    category: 'superior'
+  },
+  N9: {
+    name: 'N9 (Laterais Verticais em U)',
+    desc: '2 barras longitudinais laterais em U vertical (150 cm + 2 abas verticais de 30 cm para cima)',
+    diameterMm: 8.0,
+    qty: 2,
+    spacing: 'c/5',
+    lengthCm: 206,
+    color: '#ec4899', // Rosa
+    visible: true,
+    category: 'pele'
+  },
+  N5: {
+    name: 'N5 (Cintas Horizontais Fechadas)',
+    desc: 'Estribos horizontais retangulares perimetrais (151 × 51 cm, 5 níveis c/9)',
+    diameterMm: 5.0,
+    qty: 5,
+    spacing: 'c/9',
+    lengthCm: 415,
+    color: '#10b981', // Verde Esmeralda
+    visible: true,
+    category: 'cinta'
+  },
+  N1: {
+    name: 'N1 (Estribos Verticais Fechados)',
+    desc: 'Estribos verticais transversais (50 × 41 cm, 7 unidades c/25)',
+    diameterMm: 5.0,
+    qty: 7,
+    spacing: 'c/25',
+    lengthCm: 193,
+    color: '#f59e0b', // Laranja / Âmbar
+    visible: true,
+    category: 'estribo'
+  },
+  PILAR: {
+    name: 'Arranque do Pilar (6 N16 + 3 N3)',
+    desc: 'Armadura de espera do pilar (6 Ø16.0 C=121 + 3 estribos N3 c/19)',
+    diameterMm: 16.0,
+    qty: 6,
+    spacing: 'c/19',
+    lengthCm: 121,
+    color: '#3b82f6', // Azul Real
+    visible: true,
+    category: 'pilar'
+  },
+  PILES: {
+    name: 'Estacas de Apoio (2 × Ø40 cm)',
+    desc: '2 estacas circulares de concreto C40 na cota inferior de arrasamento CA: -60',
+    diameterMm: 400.0,
+    qty: 2,
+    spacing: 'eixos 100 cm',
+    lengthCm: 700,
+    color: '#78716c', // Concreto
+    visible: true,
+    category: 'fundacao'
+  }
+};
+
+// --- CONFIGURAÇÃO THREE.JS & CENÁRIO ---
+let scene, camera, renderer, controls;
+let blockMesh, blockEdges;
+let pileGroup = new THREE.Group();
+let rebarGroups = {};
+let allRebarGroup = new THREE.Group();
+let currentCut = null; // 'AA', 'BB' ou null
+let clippingPlanes = [];
+
+// Dimensões do bloco em centímetros:
+const BLOCK = {
+  lengthX: 160,
+  widthY: 60,
+  heightZ: 60,
+  center: new THREE.Vector3(0, 0, 30) // X: [-80, 80], Y: [-30, 30], Z: [0, 60]
+};
+
+// Planos de corte Three.js:
+const clipPlaneAA = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.01); // Secciona no plano Y = 0
+const clipPlaneBB = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0.01); // Secciona no plano X = 0
+
+function init() {
+  const container = document.getElementById('three-container');
+  const width = container.clientWidth || 800;
+  const height = container.clientHeight || 640;
+
+  // Cena
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0d0f14);
+
+  // Câmera (perspectiva com campo de visão equilibrado)
+  camera = new THREE.PerspectiveCamera(40, width / height, 1, 2000);
+  camera.position.set(180, -220, 160);
+  camera.up.set(0, 0, 1); // Z é para cima na convenção estrutural
+
+  // Renderizador WebGL com Antialiasing e Suporte a Clipping Planes
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.localClippingEnabled = true;
+  container.appendChild(renderer.domElement);
+
+  // OrbitControls com inércia (damping) e limites confortáveis
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.target.copy(BLOCK.center);
+  controls.maxDistance = 800;
+  controls.minDistance = 30;
+
+  // Iluminação técnica com contraste
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+  scene.add(ambientLight);
+
+  const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.85);
+  dirLight1.position.set(150, -200, 250);
+  scene.add(dirLight1);
+
+  const dirLight2 = new THREE.DirectionalLight(0x90b0e0, 0.45);
+  dirLight2.position.set(-150, 180, 100);
+  scene.add(dirLight2);
+
+  const dirLightBottom = new THREE.DirectionalLight(0x607080, 0.35);
+  dirLightBottom.position.set(0, 0, -200);
+  scene.add(dirLightBottom);
+
+  // Construção dos elementos do modelo
+  createGridAndAxes();
+  createConcreteBlock();
+  createPiles();
+  createAllRebars();
+
+  scene.add(allRebarGroup);
+  scene.add(pileGroup);
+
+  // Construir interface e eventos
+  buildUI();
+  setupRaycaster();
+
+  // Redimensionamento
+  window.addEventListener('resize', onWindowResize);
+
+  // Loop de renderização
+  animate();
+}
+
+// Grade de referência sutil na cota de arrasamento CA: -60 (Z = 0)
+function createGridAndAxes() {
+  const grid = new THREE.GridHelper(300, 30, 0x2d3343, 0x1a1e29);
+  grid.rotation.x = Math.PI / 2;
+  grid.position.set(0, 0, 0); // Z=0 é o fundo do bloco
+  scene.add(grid);
+}
+
+// --- CONCRETO DO BLOCO (160 × 60 × 60 cm) ---
+function createConcreteBlock() {
+  const geom = new THREE.BoxGeometry(BLOCK.lengthX, BLOCK.widthY, BLOCK.heightZ);
+  
+  // Material semi-transparente que reage à luz
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0xd6d3d1,
+    transparent: true,
+    opacity: 0.35,
+    roughness: 0.3,
+    metalness: 0.05,
+    transmission: 0.25,
+    ior: 1.4,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    clippingPlanes: clippingPlanes
+  });
+
+  blockMesh = new THREE.Mesh(geom, mat);
+  blockMesh.position.copy(BLOCK.center);
+  scene.add(blockMesh);
+
+  // Arestas do bloco de concreto
+  const edgesGeom = new THREE.EdgesGeometry(geom);
+  const edgesMat = new THREE.LineBasicMaterial({
+    color: 0xf59e0b,
+    transparent: true,
+    opacity: 0.75,
+    linewidth: 2,
+    clippingPlanes: clippingPlanes
+  });
+  blockEdges = new THREE.LineSegments(edgesGeom, edgesMat);
+  blockEdges.position.copy(BLOCK.center);
+  scene.add(blockEdges);
+}
+
+// --- DUAS ESTACAS CIRCULARES Ø40 cm NA BASE DO BLOCO (Z ≤ 0) ---
+function createPiles() {
+  pileGroup.clear();
+  const radius = 20; // Ø40 cm -> raio = 20 cm
+  const pileLength = 65; // Representação do topo e arranque da estaca de 7m
+  const pileDepth = 5; // Embutimento no bloco (5 cm conforme prática de projeto)
+  
+  // Posições dos centros: x = -50 cm e x = +50 cm, y = 0
+  const pilePositions = [-50, 50];
+
+  const pileMat = new THREE.MeshStandardMaterial({
+    color: 0x64748b,
+    roughness: 0.6,
+    metalness: 0.1,
+    clippingPlanes: clippingPlanes
+  });
+
+  const pileCapMat = new THREE.MeshStandardMaterial({
+    color: 0x475569,
+    roughness: 0.7,
+    metalness: 0.1,
+    clippingPlanes: clippingPlanes
+  });
+
+  pilePositions.forEach((posX, idx) => {
+    // Cilindro da estaca
+    // Em Three.js, CylinderGeometry tem eixo em Y local, então rotacionamos para Z
+    const geom = new THREE.CylinderGeometry(radius, radius, pileLength, 36);
+    geom.rotateX(Math.PI / 2);
+
+    const pile = new THREE.Mesh(geom, pileMat);
+    // Posicionada na parte inferior do bloco: topo em Z = +pileDepth (5 cm), estendendo para Z = -60 cm
+    pile.position.set(posX, 0, pileDepth - pileLength / 2);
+    pileGroup.add(pile);
+
+    // Borda superior da estaca (chanfro/círculo para realce)
+    const circleEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(geom, 25),
+      new THREE.LineBasicMaterial({ color: 0x94a3b8, clippingPlanes: clippingPlanes })
+    );
+    circleEdges.position.copy(pile.position);
+    pileGroup.add(circleEdges);
+  });
+}
+
+// --- CRIAÇÃO DAS ARMADURAS 3D (FIÉIS À PRANCHA E À NBR 6118) ---
+
+// Função auxiliar: cria tubo cilíndrico realista de aço a partir de pontos 3D
+function createRebarTube(points, diameterMm, colorHex, isClosed = false, rebarId = '') {
+  // Converte pontos para Vector3
+  const vPoints = points.map(p => (p instanceof THREE.Vector3 ? p : new THREE.Vector3(p[0], p[1], p[2])));
+  
+  // Cria curva 3D com cantos suaves
+  const curve = new THREE.CatmullRomCurve3(vPoints, isClosed, 'catmullrom', 0.08);
+  
+  // Raio do tubo proporcional ao diâmetro real em cm
+  const radius = Math.max(0.35, (diameterMm / 20) * 1.05);
+  const tubularSegments = Math.max(24, points.length * 8);
+  const radialSegments = 8;
+
+  const geom = new THREE.TubeGeometry(curve, tubularSegments, radius, radialSegments, isClosed);
+  const mat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(colorHex),
+    roughness: 0.35,
+    metalness: 0.45,
+    clippingPlanes: clippingPlanes
+  });
+
+  const mesh = new THREE.Mesh(geom, mat);
+  mesh.userData = { rebarId: rebarId };
+  return mesh;
+}
+
+function createAllRebars() {
+  allRebarGroup.clear();
+  rebarGroups = {
+    N13: new THREE.Group(),
+    N10: new THREE.Group(),
+    N9: new THREE.Group(),
+    N5: new THREE.Group(),
+    N1: new THREE.Group(),
+    PILAR: new THREE.Group()
+  };
+
+  const explode = currentExplode;
+
+  // 1. N13: 6 BARRAS Ø10.0 INFERIORES LONGITUDINAIS EM "U" (C=227 cm)
+  // Prancha: vão horizontal de 150 cm e abas verticais para cima de 41 cm nas duas pontas!
+  // Cobrimento inferior: Z = 6 cm. As abas sobem até Z = 6 + 41 = 47 cm.
+  // 6 barras distribuídas em Y: espaçamento c/7 cm -> Y de -17.5 a +17.5 cm
+  const n13Ys = [-17.5, -10.5, -3.5, 3.5, 10.5, 17.5];
+  n13Ys.forEach(y => {
+    const pts = [
+      [-75, y, 47],        // Topo da aba vertical esquerda (X = -75)
+      [-75, y, 6.5],       // Canto inferior esquerdo
+      [-73, y, 6.5],
+      [73, y, 6.5],
+      [75, y, 6.5],        // Canto inferior direito
+      [75, y, 47]          // Topo da aba vertical direita (X = +75)
+    ];
+    const mesh = createRebarTube(pts, REBAR_DATA.N13.diameterMm, REBAR_DATA.N13.color, false, 'N13');
+    mesh.position.z -= explode * 0.4;
+    rebarGroups.N13.add(mesh);
+  });
+
+  // 2. N10: 4 BARRAS Ø8.0 SUPERIORES LONGITUDINAIS RETAS COM GANCHOS DE 9 cm (C=164 cm)
+  // Prancha: vão horizontal 150 cm, ganchos para baixo de 9 cm em cada ponta!
+  // Posicionadas no topo da gaiola (Z = 47 cm), ganchos descem para Z = 38 cm.
+  // 4 barras c/12: Y = [-18, -6, 6, 18]
+  const n10Ys = [-18, -6, 6, 18];
+  n10Ys.forEach(y => {
+    const pts = [
+      [-75, y, 38],        // Ponta do gancho esquerdo para baixo
+      [-75, y, 47],        // Canto superior esquerdo
+      [-73, y, 47],
+      [73, y, 47],
+      [75, y, 47],         // Canto superior direito
+      [75, y, 38]          // Ponta do gancho direito para baixo
+    ];
+    const mesh = createRebarTube(pts, REBAR_DATA.N10.diameterMm, REBAR_DATA.N10.color, false, 'N10');
+    mesh.position.z += explode * 0.4;
+    rebarGroups.N10.add(mesh);
+  });
+
+  // 3. N9: 2 BARRAS Ø8.0 EM "U" VERTICAL LONGITUDINAL (C=206 cm)
+  // Prancha: vão horizontal de 150 cm e abas verticais de 30 cm para cima nas extremidades!
+  // Ficam na vertical com as extremidades para cima (assim como a N13), espelhadas e paralelas às faces laterais (Y = -24 cm e Y = +24 cm).
+  const n9Ys = [-24, 24];
+  n9Ys.forEach(y => {
+    const pts = [
+      [-75, y, 36.5],      // Topo da aba vertical esquerda (sobe 30 cm a partir de Z = 6.5)
+      [-75, y, 6.5],       // Canto inferior esquerdo (Z = 6.5)
+      [-73, y, 6.5],
+      [73, y, 6.5],
+      [75, y, 6.5],        // Canto inferior direito (Z = 6.5)
+      [75, y, 36.5]        // Topo da aba vertical direita (sobe 30 cm a partir de Z = 6.5)
+    ];
+    const mesh = createRebarTube(pts, REBAR_DATA.N9.diameterMm, REBAR_DATA.N9.color, false, 'N9');
+    const dirY = y < 0 ? -1 : 1;
+    mesh.position.y += dirY * explode * 0.35;
+    mesh.position.z -= explode * 0.3;
+    rebarGroups.N9.add(mesh);
+  });
+
+  // 4. N5: 5 CINTAS RETANGULARES HORIZONTAIS FECHADAS (151 × 51 cm, C=415 cm)
+  // Prancha: corte A-A marca "5 N5 c/9". São 5 cintas fechadas abraçando o bloco horizontalmente!
+  // X: [-75.5, 75.5] (comprimento 151 cm), Y: [-25.5, 25.5] (largura 51 cm)
+  // Z: 5 níveis espaçados de 9 cm: Z = [8, 17, 26, 35, 44] cm
+  const n5Zs = [8, 17, 26, 35, 44];
+  n5Zs.forEach((z, idx) => {
+    // Retângulo fechado com gancho de fechamento
+    const x0 = -75.5, x1 = 75.5;
+    const y0 = -25.5, y1 = 25.5;
+    const pts = [
+      [x0, y0 + 6, z],      // Início do gancho de fechamento
+      [x0, y0, z],
+      [x1, y0, z],
+      [x1, y1, z],
+      [x0, y1, z],
+      [x0, y0, z],          // Fechamento
+      [x0 + 6, y0, z]       // Gancho de traspasse a 135°
+    ];
+    const mesh = createRebarTube(pts, REBAR_DATA.N5.diameterMm, REBAR_DATA.N5.color, false, 'N5');
+    // Explosão suave vertical e radial
+    mesh.position.z += (idx - 2) * explode * 0.15;
+    rebarGroups.N5.add(mesh);
+  });
+
+  // 5. N1: 7 ESTRIBOS RETANGULARES VERTICAIS FECHADOS (50 × 41 cm, C=193 cm)
+  // Prancha: corte B-B e A-A marcam "7 N1 Ø5.0 c/25". Largura 50 cm, altura 41 cm!
+  // Distribuídos em X a cada 25 cm: [-75, -50, -25, 0, 25, 50, 75]
+  // Y: de -25 a +25 cm (largura 50 cm). Z: de 5.5 a 46.5 cm (altura 41 cm).
+  const n1Xs = [-75, -50, -25, 0, 25, 50, 75];
+  n1Xs.forEach((x, idx) => {
+    const y0 = -25, y1 = 25;
+    const z0 = 5.5, z1 = 46.5;
+    const pts = [
+      [x, y0, z1 - 6],     // Gancho superior
+      [x, y0, z1],         // Canto superior esquerdo
+      [x, y1, z1],         // Canto superior direito
+      [x, y1, z0],         // Canto inferior direito
+      [x, y0, z0],         // Canto inferior esquerdo
+      [x, y0, z1],         // Fechamento
+      [x, y0 + 6, z1]      // Gancho de fechamento
+    ];
+    const mesh = createRebarTube(pts, REBAR_DATA.N1.diameterMm, REBAR_DATA.N1.color, false, 'N1');
+    mesh.position.x += (idx - 3) * explode * 0.2;
+    rebarGroups.N1.add(mesh);
+  });
+
+  // 6. ARRANQUE DO PILAR: 6 N16 Ø16.0 (C=121 cm) + 3 ESTRIBOS N3 (c/19 cm)
+  // Prancha: corte A-A e B-B mostram as barras verticais do pilar entrando no bloco,
+  // dobrando 20 cm na base (Z = 6 cm) e subindo 105 cm para fora do bloco (até Z = 111 cm)!
+  // Localizado sobre o pilar à direita (eixo em X = +50 cm, sobre a estaca da direita).
+  const pilarX = 50;
+  // 6 barras N16 distribuídas no retângulo do pilar (ex: 20 × 30 cm)
+  const pilarBarPositions = [
+    { x: pilarX - 8, y: -10 },
+    { x: pilarX - 8, y: 0 },
+    { x: pilarX - 8, y: 10 },
+    { x: pilarX + 8, y: -10 },
+    { x: pilarX + 8, y: 0 },
+    { x: pilarX + 8, y: 10 }
+  ];
+
+  pilarBarPositions.forEach(pos => {
+    // Dobra de 20 cm na base para ancoragem no bloco
+    const pts = [
+      [pos.x - 20, pos.y, 6.5], // Dobra horizontal de ancoragem de 20 cm
+      [pos.x, pos.y, 6.5],      // Canto inferior
+      [pos.x, pos.y, 111]       // Topo da barra (105 cm de altura)
+    ];
+    const mesh = createRebarTube(pts, 16.0, REBAR_DATA.PILAR.color, false, 'PILAR');
+    mesh.position.z += explode * 0.3;
+    rebarGroups.PILAR.add(mesh);
+  });
+
+  // 3 Estribos do Pilar N3 c/19 cm
+  const pilarStirrupZs = [15, 34, 53];
+  pilarStirrupZs.forEach(z => {
+    const x0 = pilarX - 9.5, x1 = pilarX + 9.5;
+    const y0 = -11.5, y1 = 11.5;
+    const pts = [
+      [x0, y0, z],
+      [x1, y0, z],
+      [x1, y1, z],
+      [x0, y1, z],
+      [x0, y0, z]
+    ];
+    const mesh = createRebarTube(pts, 5.0, '#60a5fa', true, 'PILAR');
+    rebarGroups.PILAR.add(mesh);
+  });
+
+  // Adicionar todos os grupos ao allRebarGroup respeitando o estado de visibilidade
+  Object.keys(rebarGroups).forEach(k => {
+    rebarGroups[k].visible = REBAR_DATA[k] ? REBAR_DATA[k].visible : true;
+    allRebarGroup.add(rebarGroups[k]);
+  });
+}
+
+// --- INTERFACE DO USUÁRIO & CONTROLES ---
+let currentExplode = 0;
+
+function buildUI() {
+  const togglesContainer = document.getElementById('togglesList');
+  const tableBody = document.getElementById('rebarTableBody');
+
+  togglesContainer.innerHTML = '';
+  tableBody.innerHTML = '';
+
+  Object.entries(REBAR_DATA).forEach(([key, item]) => {
+    // Item de alternância
+    const itemEl = document.createElement('label');
+    itemEl.className = 'toggle-item';
+    itemEl.innerHTML = `
+      <div class="toggle-left">
+        <input type="checkbox" id="chk_${key}" ${item.visible ? 'checked' : ''}>
+        <span class="color-dot" style="background:${item.color}"></span>
+        <span>${item.name}</span>
+      </div>
+      <span class="pill-count">${item.qty} un</span>
+    `;
+
+    itemEl.querySelector('input').addEventListener('change', (e) => {
+      item.visible = e.target.checked;
+      if (key === 'PILES') {
+        pileGroup.visible = item.visible;
+      } else if (rebarGroups[key]) {
+        rebarGroups[key].visible = item.visible;
+      }
+    });
+
+    togglesContainer.appendChild(itemEl);
+
+    // Linha na tabela (apenas barras de aço)
+    if (key !== 'PILES') {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong style="color:${item.color}">${key}</strong></td>
+        <td>${item.desc}</td>
+        <td>Ø${item.diameterMm.toFixed(1)} mm</td>
+        <td>${item.qty} un (${item.spacing})</td>
+        <td>${item.lengthCm} cm</td>
+      `;
+      tableBody.appendChild(row);
+    }
+  });
+
+  // Botão Ocultar/Exibir Tudo
+  let allVisible = true;
+  document.getElementById('btnToggleAll').addEventListener('click', () => {
+    allVisible = !allVisible;
+    Object.keys(REBAR_DATA).forEach(k => {
+      REBAR_DATA[k].visible = allVisible;
+      const chk = document.getElementById(`chk_${k}`);
+      if (chk) chk.checked = allVisible;
+      if (k === 'PILES') pileGroup.visible = allVisible;
+      else if (rebarGroups[k]) rebarGroups[k].visible = allVisible;
+    });
+  });
+
+  // Slider de opacidade do concreto
+  const alphaSlider = document.getElementById('concreteAlpha');
+  const alphaVal = document.getElementById('alphaValue');
+  alphaSlider.addEventListener('input', (e) => {
+    const val = e.target.value / 100;
+    alphaVal.textContent = e.target.value + '%';
+    blockMesh.material.opacity = val;
+    blockMesh.material.transparent = val < 0.98;
+    blockEdges.material.opacity = Math.max(0.2, val * 1.5);
+  });
+
+  // Slider de explosão
+  const explodeSlider = document.getElementById('explodeRange');
+  const explodeVal = document.getElementById('explodeValue');
+  explodeSlider.addEventListener('input', (e) => {
+    currentExplode = parseFloat(e.target.value);
+    explodeVal.textContent = e.target.value + ' cm';
+    createAllRebars();
+  });
+
+  // Botões de Vistas Predefinidas
+  const viewButtons = document.querySelectorAll('#viewButtons button[data-view]');
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setCameraView(btn.dataset.view);
+    });
+  });
+
+  // Resetar
+  document.getElementById('btnReset').addEventListener('click', () => {
+    alphaSlider.value = 35;
+    alphaVal.textContent = '35%';
+    blockMesh.material.opacity = 0.35;
+    explodeSlider.value = 0;
+    explodeVal.textContent = '0 cm';
+    currentExplode = 0;
+    createAllRebars();
+    setClipping(null);
+    setCameraView('iso');
+  });
+
+  // Botões de Corte
+  document.getElementById('btnCutAA').addEventListener('click', () => setClipping('AA'));
+  document.getElementById('btnCutBB').addEventListener('click', () => setClipping('BB'));
+  document.getElementById('btnCutOff').addEventListener('click', () => setClipping(null));
+}
+
+// --- CONTROLE DE CÂMERA SUAVE & VISTAS TÉCNICAS ---
+function setCameraView(viewName) {
+  const badge = document.getElementById('viewBadge');
+  const target = BLOCK.center.clone();
+
+  switch(viewName) {
+    case 'iso':
+      badge.textContent = 'Isométrica';
+      animateCameraTo(new THREE.Vector3(180, -220, 160), target);
+      break;
+
+    case 'planta':
+      // PLANTA: Câmera no topo (Z positivo), olhando para baixo (X no comprimento, Y na largura).
+      // Mostra com clareza as duas estacas em cinza na parte inferior do bloco!
+      badge.textContent = 'Planta (Vista Superior)';
+      animateCameraTo(new THREE.Vector3(0, 0, 260), target, new THREE.Vector3(0, 1, 0));
+      break;
+
+    case 'corteAA':
+      // CORTE A-A: Elevação frontal olhando no plano XZ (comprimento 160 cm x altura 60 cm)
+      // Vê as estacas apoiando embaixo e a distribuição longitudinal completa!
+      badge.textContent = 'Elevação A–A (Frontal)';
+      animateCameraTo(new THREE.Vector3(0, -260, 30), target, new THREE.Vector3(0, 0, 1));
+      break;
+
+    case 'corteBB':
+      // CORTE B-B: Seção lateral transversal olhando no plano YZ (largura 60 cm x altura 60 cm)
+      badge.textContent = 'Elevação B–B (Lateral)';
+      animateCameraTo(new THREE.Vector3(-260, 0, 30), target, new THREE.Vector3(0, 0, 1));
+      break;
+
+    case 'fundo':
+      // VISTA INFERIOR: Olha de baixo para cima para destacar o apoio das duas estacas!
+      badge.textContent = 'Vista Inferior (Estacas)';
+      animateCameraTo(new THREE.Vector3(0, -120, -180), target, new THREE.Vector3(0, 1, 0));
+      break;
+  }
+}
+
+// Animação de interpolação suave da câmera
+let cameraTween = null;
+function animateCameraTo(targetPos, targetLookAt, targetUp = new THREE.Vector3(0, 0, 1)) {
+  const startPos = camera.position.clone();
+  const startLookAt = controls.target.clone();
+  const startUp = camera.up.clone();
+  const duration = 650;
+  const startTime = performance.now();
+
+  if (cameraTween) cancelAnimationFrame(cameraTween);
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Easing suave (cubic)
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    camera.position.lerpVectors(startPos, targetPos, ease);
+    controls.target.lerpVectors(startLookAt, targetLookAt, ease);
+    camera.up.lerpVectors(startUp, targetUp, ease);
+    controls.update();
+
+    if (progress < 1) {
+      cameraTween = requestAnimationFrame(step);
+    }
+  }
+  cameraTween = requestAnimationFrame(step);
+}
+
+// --- PLANOS DE CORTE EM TEMPO REAL ---
+function setClipping(type) {
+  currentCut = type;
+  const cutBadge = document.getElementById('cutBadge');
+  const btnAA = document.getElementById('btnCutAA');
+  const btnBB = document.getElementById('btnCutBB');
+  const btnOff = document.getElementById('btnCutOff');
+
+  btnAA.classList.toggle('active', type === 'AA');
+  btnBB.classList.toggle('active', type === 'BB');
+  btnOff.classList.toggle('active', type === null);
+
+  clippingPlanes.length = 0; // Limpa array
+
+  if (type === 'AA') {
+    clippingPlanes.push(clipPlaneAA);
+    cutBadge.style.display = 'inline-block';
+    cutBadge.textContent = 'Corte A–A (Y=0)';
+  } else if (type === 'BB') {
+    clippingPlanes.push(clipPlaneBB);
+    cutBadge.style.display = 'inline-block';
+    cutBadge.textContent = 'Corte B–B (X=0)';
+  } else {
+    cutBadge.style.display = 'none';
+  }
+
+  // Atualiza materiais com novos planos de corte
+  updateMaterialsClipping(scene);
+}
+
+function updateMaterialsClipping(root) {
+  root.traverse(child => {
+    if (child.material) {
+      child.material.clippingPlanes = clippingPlanes;
+      child.material.needsUpdate = true;
+    }
+  });
+}
+
+// --- TOOLTIP INTERATIVO POR RAYCASTING ---
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById('tooltip');
+
+function setupRaycaster() {
+  const container = document.getElementById('stageWrap');
+
+  container.addEventListener('pointermove', (e) => {
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(allRebarGroup.children, true);
+
+    if (intersects.length > 0) {
+      const hit = intersects[0];
+      const rebarId = hit.object.userData.rebarId;
+      if (rebarId && REBAR_DATA[rebarId]) {
+        const data = REBAR_DATA[rebarId];
+        tooltip.style.display = 'block';
+        tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+        tooltip.style.top = (e.clientY - rect.top - 20) + 'px';
+        tooltip.innerHTML = `<strong>${data.name}</strong><br><span style="color:var(--muted)">${data.desc}</span>`;
+        return;
+      }
+    }
+    tooltip.style.display = 'none';
+  });
+
+  container.addEventListener('pointerleave', () => {
+    tooltip.style.display = 'none';
+  });
+}
+
+// Redimensionamento responsivo
+function onWindowResize() {
+  const container = document.getElementById('three-container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
+// Loop de animação
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// Inicialização após o DOM estar pronto
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

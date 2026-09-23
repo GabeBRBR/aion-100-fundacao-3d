@@ -1,0 +1,1708 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Gêmeo digital 3D interativo fiel aos projetos estruturais da obra AION-100 (Lucas Hajjar).">
+<title>AION-100 | Fundação e Baldrames 3D (Fiel aos PDFs)</title>
+<style>
+:root {
+  --bg: #0b0d11;
+  --panel: #131720;
+  --panel2: #1b202c;
+  --panel3: #242b3b;
+  --ink: #f3f5f9;
+  --muted: #94a0b8;
+  --line: #2a3245;
+  --accent: #f59e0b;
+  --blue: #38bdf8;
+  --green: #10b981;
+  --purple: #a855f7;
+  --pink: #ec4899;
+  --focus: #fef08a;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+button, input, select { font: inherit; }
+button {
+  color: var(--ink);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all .16s ease;
+  user-select: none;
+}
+button:hover { background: #262e40; border-color: #3e4a66; }
+button:active { transform: translateY(1px); }
+button.active {
+  background: var(--accent);
+  color: #120e04;
+  border-color: var(--accent);
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.viewport-area {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  background: radial-gradient(circle at 50% 45%, #151a26 0%, #080a0e 100%);
+}
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Barra Superior */
+.top-bar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 430px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+.brand-card {
+  background: rgba(19, 23, 32, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  pointer-events: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.brand-eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.brand-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.brand-title span { font-weight: 400; color: var(--muted); }
+.badge-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+.stat-pill {
+  font-size: 11px;
+  color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.stat-pill strong { color: var(--ink); }
+
+.quick-views {
+  display: flex;
+  gap: 6px;
+  background: rgba(19, 23, 32, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px;
+  pointer-events: auto;
+}
+.quick-views button { padding: 6px 10px; font-size: 11px; }
+
+/* Barra Inferior */
+.bottom-bar {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+.help-card {
+  background: rgba(19, 23, 32, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--muted);
+  pointer-events: auto;
+}
+.view-state-card {
+  background: rgba(19, 23, 32, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  pointer-events: auto;
+}
+
+/* Card Flutuante de Inspeção / Foco */
+.focus-inspector {
+  position: absolute;
+  top: 90px;
+  left: 14px;
+  width: 340px;
+  background: rgba(19, 23, 32, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: none;
+  z-index: 20;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+}
+.focus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+.focus-title { font-size: 15px; font-weight: 800; color: var(--accent); }
+.focus-subtitle { font-size: 11px; color: var(--muted); }
+.focus-body { font-size: 11px; display: grid; gap: 6px; }
+.focus-actions { margin-top: 12px; display: flex; gap: 8px; }
+.btn-close-focus { background: transparent; border: none; font-size: 16px; cursor: pointer; color: var(--muted); }
+.btn-close-focus:hover { color: #fff; }
+
+.tooltip-3d {
+  position: absolute;
+  background: rgba(15, 18, 26, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  pointer-events: none;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+  white-space: nowrap;
+}
+
+/* Painel Lateral */
+.sidebar {
+  width: 420px;
+  height: 100%;
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 15;
+}
+.sidebar-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar-tabs {
+  display: flex;
+  background: var(--panel2);
+  border-bottom: 1px solid var(--line);
+}
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sidebar-content::-webkit-scrollbar { width: 5px; }
+.sidebar-content::-webkit-scrollbar-thumb { background: #2f364a; border-radius: 3px; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-group {
+  display: grid;
+  gap: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.slider-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px;
+  align-items: center;
+}
+.slider-row label { font-size: 12px; color: var(--ink); }
+.slider-row output { font-size: 12px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+input[type=range] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--accent);
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.layer-list { display: grid; gap: 6px; }
+.layer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.layer-item:hover { border-color: #404b66; }
+.layer-left { display: flex; align-items: center; gap: 8px; }
+.layer-item input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+.color-swatch { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+.element-search {
+  width: 100%;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.element-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+  gap: 5px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.element-chip {
+  padding: 6px 4px;
+  font-size: 11px;
+  text-align: center;
+  border-radius: 5px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all .14s ease;
+}
+.element-chip:hover {
+  background: var(--panel3);
+  border-color: var(--accent);
+  color: #fff;
+}
+.element-chip.selected {
+  background: var(--accent);
+  color: #120e04;
+  font-weight: 700;
+  border-color: var(--accent);
+}
+
+.summary-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.summary-table th { text-align: left; color: var(--muted); font-weight: 600; padding: 4px; border-bottom: 1px solid var(--line); }
+.summary-table td { padding: 5px 4px; border-bottom: 1px solid #1e2433; }
+
+.notice-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 11px;
+  color: #fed7aa;
+  line-height: 1.45;
+}
+</style>
+
+<script src="three.min.js"></script>
+<script>
+if (typeof THREE === 'undefined') {
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+<script src="OrbitControls.js"></script>
+<script>
+if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+}
+</script>
+</head>
+<body>
+
+<div class="app-container">
+  <main class="viewport-area" id="viewportArea">
+    <div id="three-container" style="width:100%; height:100%;"></div>
+
+    <!-- Barra Superior -->
+    <div class="top-bar">
+      <div class="brand-card">
+        <div class="brand-eyebrow">Projeto Estrutural Fiel aos PDFs · 01 a 08</div>
+        <div class="brand-title">AION-100 <span>Fundações & Baldrames 3D</span></div>
+        <div class="badge-row">
+          <span class="stat-pill"><strong>27</strong> Blocos (B1..B27)</span>
+          <span class="stat-pill"><strong>45</strong> Estacas Ø40</span>
+          <span class="stat-pill"><strong>22</strong> Vigas Baldrames</span>
+          <span class="stat-pill">Extensão: <strong>34,2 × 10,5 m</strong></span>
+        </div>
+      </div>
+
+      <div class="quick-views" id="quickViews">
+        <button type="button" class="active" data-view="iso">Isométrica Geral</button>
+        <button type="button" data-view="planta">Planta de Fôrma</button>
+        <button type="button" data-view="norte">Elevação Norte (Long.)</button>
+        <button type="button" data-view="oeste">Elevação Oeste (Transv.)</button>
+        <button type="button" data-view="estacas">Estacas / Apoio</button>
+        <button type="button" id="btnResetView">Reset</button>
+      </div>
+    </div>
+
+    <!-- Barra Inferior -->
+    <div class="bottom-bar">
+      <div class="view-state-card" id="viewStateBadge">Visão Geral da Obra</div>
+      <div class="help-card">
+        🖱️ <strong>Girar:</strong> Botão esquerdo &nbsp;|&nbsp; 
+        ✋ <strong>Deslocar:</strong> Botão direito / Shift &nbsp;|&nbsp; 
+        🔍 <strong>Zoom:</strong> Roda do mouse &nbsp;|&nbsp; 
+        🎯 <strong>Inspecionar:</strong> Clique em qualquer viga ou bloco
+      </div>
+    </div>
+
+    <!-- Painel de Inspeção do Elemento -->
+    <div class="focus-inspector" id="focusInspector">
+      <div class="focus-header">
+        <div>
+          <div class="focus-title" id="focusTitle">Bloco B5</div>
+          <div class="focus-subtitle" id="focusSubtitle">2xC40_7m · 160 × 60 × 60 cm</div>
+        </div>
+        <button type="button" class="btn-close-focus" id="btnCloseFocus" title="Fechar">✕</button>
+      </div>
+      <div class="focus-body" id="focusBody"></div>
+      <div class="focus-actions">
+        <button type="button" class="active" id="btnIsolate" style="flex:1;">Isolar no 3D</button>
+        <button type="button" id="btnShowAll" style="flex:1;">Ver no Conjunto</button>
+      </div>
+    </div>
+
+    <div id="tooltip" class="tooltip-3d"></div>
+  </main>
+
+  <!-- Sidebar Direita -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2 style="font-size:14px; font-weight:700;">Controles do Modelo</h2>
+      <span style="font-size:11px; color:var(--muted)">Pranchas 01 a 08</span>
+    </div>
+
+    <div class="sidebar-tabs">
+      <button type="button" class="tab-btn active" data-tab="camadas">Camadas & Transparência</button>
+      <button type="button" class="tab-btn" data-tab="elementos">Navegador de Elementos</button>
+      <button type="button" class="tab-btn" data-tab="resumo">Resumo da Obra</button>
+    </div>
+
+    <div class="sidebar-content" id="tabContent">
+      <!-- ABA 1 -->
+      <div id="tabCamadas" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="slider-group">
+          <div class="section-label" style="margin:0 0 6px 0;">Controle do Concreto Translúcido</div>
+          <div class="slider-row">
+            <label for="opacityBlocos">Opacidade dos Blocos:</label>
+            <output id="outBlocos">35%</output>
+            <input type="range" id="opacityBlocos" min="0" max="100" value="35">
+          </div>
+          <div class="slider-row">
+            <label for="opacityVigas">Opacidade das Vigas Baldrames:</label>
+            <output id="outVigas">35%</output>
+            <input type="range" id="opacityVigas" min="0" max="100" value="35">
+          </div>
+          <div class="slider-row">
+            <label for="opacityEstacas">Opacidade das Estacas:</label>
+            <output id="outEstacas">75%</output>
+            <input type="range" id="opacityEstacas" min="0" max="100" value="75">
+          </div>
+        </div>
+
+        <div class="slider-group">
+          <div class="section-label" style="margin:0 0 6px 0;">Explosão das Armaduras</div>
+          <div class="slider-row">
+            <label for="explodeRange">Distanciamento Didático:</label>
+            <output id="outExplode">0 cm</output>
+            <input type="range" id="explodeRange" min="0" max="50" value="0">
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">Visibilidade por Categoria</div>
+          <div class="layer-list">
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkConcreteBlocks" checked>
+                <span class="color-swatch" style="background:#d6d3d1"></span>
+                <span>Concreto dos Blocos (27 un)</span>
+              </div>
+            </label>
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkConcreteBeams" checked>
+                <span class="color-swatch" style="background:#cbd5e1"></span>
+                <span>Concreto das Vigas Baldrames (22 un)</span>
+              </div>
+            </label>
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkPiles" checked>
+                <span class="color-swatch" style="background:#64748b"></span>
+                <span>Estacas de Fundação (45 estacas Ø40)</span>
+              </div>
+            </label>
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkBlockRebars" checked>
+                <span class="color-swatch" style="background:var(--purple)"></span>
+                <span>Armaduras dos Blocos (Fiel à Prancha)</span>
+              </div>
+            </label>
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkBeamRebars" checked>
+                <span class="color-swatch" style="background:var(--accent)"></span>
+                <span>Armaduras das Vigas Baldrames</span>
+              </div>
+            </label>
+            <label class="layer-item">
+              <div class="layer-left">
+                <input type="checkbox" id="chkPillars" checked>
+                <span class="color-swatch" style="background:var(--blue)"></span>
+                <span>Arranques de Pilares (P1 a P27)</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">Plano de Seção Dinâmico</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+            <button type="button" id="btnCutX">Corte Long. (X)</button>
+            <button type="button" id="btnCutY">Corte Transv. (Y)</button>
+          </div>
+          <button type="button" id="btnCutOff" class="active" style="width:100%; margin-top:6px;">Desativar Cortes</button>
+        </div>
+      </div>
+
+      <!-- ABA 2 -->
+      <div id="tabElementos" style="display:none; flex-direction:column; gap:12px;">
+        <input type="text" class="element-search" id="elementSearch" placeholder="Buscar Bloco ou Viga (ex: B5, B13, VB1, B21)...">
+        
+        <div>
+          <div class="section-label">Blocos de Fundação (B1 a B27)</div>
+          <div class="element-chips-grid" id="blockChips"></div>
+        </div>
+
+        <div>
+          <div class="section-label">Vigas Baldrames (VB1 a VB22)</div>
+          <div class="element-chips-grid" id="beamChips"></div>
+        </div>
+      </div>
+
+      <!-- ABA 3 -->
+      <div id="tabResumo" style="display:none; flex-direction:column; gap:12px;">
+        <div class="notice-box">
+          <strong>Fidelidade Estrita aos 8 PDFs:</strong><br>
+          • <strong>B2 a B11:</strong> Blocos de 2 estacas em X (160×60 cm).<br>
+          • <strong>B13, B16, B17, B21, B22:</strong> Blocos de 2 estacas em Y (60×160 cm)!<br>
+          • <strong>B1, B12, B14, B15, B18..B20, B23..B27:</strong> Blocos de 1 estaca (60×60 cm) com grelhas de estribos verticais e cintas perimetrais.<br>
+          • <strong>Bitolas Reais:</strong> Cada bloco modelado com suas quantidades, calibres e espaçamentos exatos das tabelas oficiais de aço!
+        </div>
+
+        <div>
+          <div class="section-label">Relação de Elementos</div>
+          <table class="summary-table">
+            <tbody>
+              <tr><td>Blocos com 2 Estacas no Eixo X</td><td><strong>10 blocos (B2..B11)</strong></td></tr>
+              <tr><td>Blocos com 2 Estacas no Eixo Y</td><td><strong>5 blocos (B13, B16, B17, B21, B22)</strong></td></tr>
+              <tr><td>Blocos com 1 Estaca</td><td><strong>12 blocos</strong></td></tr>
+              <tr><td>Estacas Escavadas C40 (7,0 m)</td><td><strong>42 estacas (CA: -60 cm)</strong></td></tr>
+              <tr><td>Estacas Escavadas C40 (2,0 m)</td><td><strong>3 estacas (CA: -10 cm)</strong></td></tr>
+              <tr><td>Vigas Baldrames Modeladas</td><td><strong>22 vigas (35 trechos)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+// --- BANCO DE DADOS ESTRUTURAL COMPLETO E FIEL AOS PDFS ---
+// Centro da obra: X = 11711.2 cm, Y = 50524.5 cm
+const DATA = {
+  center: [11711.2, 50524.5],
+  blocos: {
+    // Folha 02
+    "B1":  { id:"B1",  pilar:"P1",  x:10000.0, y:51048.9, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B2":  { id:"B2",  pilar:"P2",  x:10131.5, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B3":  { id:"B3",  pilar:"P3",  x:10496.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:4, espac:13}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B4":  { id:"B4",  pilar:"P4",  x:10829.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B5":  { id:"B5",  pilar:"P5",  x:11209.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B6":  { id:"B6",  pilar:"P6",  x:11589.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B7":  { id:"B7",  pilar:"P7",  x:11969.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    
+    // Folha 03
+    "B8":  { id:"B8",  pilar:"P8",  x:12349.0, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B9":  { id:"B9",  pilar:"P9",  x:12736.5, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B10": { id:"B10", pilar:"P10", x:12901.4, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B11": { id:"B11", pilar:"P11", x:13422.4, y:50998.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B12": { id:"B12", pilar:"P12", x:12349.0, y:50773.4, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:12, w:51, l:51}, pilar:{quant:4, diam:10.0, alt:83} } },
+    "B13": { id:"B13", pilar:"P13", x:12731.0, y:50773.4, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:9, espac:4}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:7}, pilar:{quant:4, diam:10.0, alt:83} } },
+    "B14": { id:"B14", pilar:"P14", x:12901.4, y:50778.9, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:12, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B15": { id:"B15", pilar:"P15", x:13422.4, y:50784.4, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+
+    // Folha 04
+    "B16": { id:"B16", pilar:"P16", x:12354.5, y:50550.4, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:5, espac:10}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:4}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B17": { id:"B17", pilar:"P17", x:12731.0, y:50555.9, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:4}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B18": { id:"B18", pilar:"P18", x:10131.5, y:50491.5, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:8, diam:10.0, alt:83} } },
+    "B19": { id:"B19", pilar:"P19", x:10121.5, y:50211.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:6, espac:8, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B20": { id:"B20", pilar:"P20", x:10116.0, y:50005.5, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B21": { id:"B21", pilar:"P21", x:12349.0, y:50005.5, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B22": { id:"B22", pilar:"P22", x:12731.0, y:50005.5, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B23": { id:"B23", pilar:"P23", x:10496.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+
+    // Folha 05
+    "B24": { id:"B24", pilar:"P24", x:10829.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B25": { id:"B25", pilar:"P25", x:11209.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B26": { id:"B26", pilar:"P26", x:11589.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B27": { id:"B27", pilar:"P27", x:11969.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } }
+  },
+  estacasIsoladas: [
+    { id:"E1", x:10147.0, y:50780.9, prof:200, ca:-10 },
+    { id:"E2", x:10490.5, y:50211.0, prof:200, ca:-10 },
+    { id:"E3", x:12213.5, y:50212.5, prof:200, ca:-10 }
+  ],
+  vigas: [
+    // Linha Longitudinal Norte (Folha 07)
+    { id:"VB1",  secao:"20x45", b:20, h:45, nos:["B1", "B2", "B3", "B4", "B5"], desc:"Baldrame Longitudinal Norte (P1-P5)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N34 Ø10.0 (contínua) + reforço 1 N54 Ø16.0"}, sup:{quant:2, diam:6.3, desc:"2 N4 Ø6.3 (porta-estribos) + reforço N10 Ø8.0"}, pele:{quant:6, diam:6.3, desc:"2x3 N5 Ø6.3 C=1200"}, estribos:{diam:5.0, espac:12, desc:"N1 Ø5.0 c/12 e c/20"} } },
+    { id:"VB2",  secao:"20x45", b:20, h:45, nos:["B5", "B6", "B7", "B8"], desc:"Baldrame Longitudinal Norte (P5-P8)",
+      rebar: { inf:{quant:3, diam:16.0, desc:"2 N53 Ø16.0 + 1 N35 Ø10.0"}, sup:{quant:2, diam:10.0, desc:"2 N36 Ø10.0 + reforço 1 N54 Ø16.0"}, pele:{quant:6, diam:6.3, desc:"2x3 N6 Ø6.3 C=1194"}, estribos:{diam:5.0, espac:15, desc:"28 N1 Ø5.0 c/15"} } },
+    { id:"VB3",  secao:"20x45", b:20, h:45, nos:["B8", "B9", "B10"], desc:"Baldrame Longitudinal Norte (P8-P10)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N37 Ø10.0 C=606"}, sup:{quant:3, diam:8.0, desc:"3 N11 Ø8.0 C=606"}, pele:null, estribos:{diam:5.0, espac:20, desc:"31 N1 Ø5.0 c/20"} } },
+    { id:"VB4",  secao:"40x30", b:40, h:30, nos:["B10", "B11"], desc:"Baldrame Longitudinal Norte (P10-P11)",
+      rebar: { inf:{quant:4, diam:8.0, desc:"4 N13 Ø8.0"}, sup:{quant:4, diam:8.0, desc:"4 N12 Ø8.0 C=575"}, pele:null, estribos:{diam:5.0, espac:15, duplo:true, desc:"Estribos duplos 2x39 N2 Ø5.0 c/15"} } },
+
+    // Linha Longitudinal Intermediária (Folhas 07 e 08)
+    { id:"VB5",  secao:"19x30", b:19, h:30, nos:["B12", "B13", "B14", "B15"], desc:"Baldrame Longitudinal Intermediário (P12-P15)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N38 Ø10.0 + 2 N18 Ø8.0"}, sup:{quant:2, diam:8.0, desc:"2 N16 Ø8.0 C=716"}, pele:null, estribos:{diam:5.0, espac:15, desc:"37 N3 Ø5.0 c/15"} } },
+    { id:"VB6",  secao:"19x30", b:19, h:30, nos:["B16", "B17"], desc:"Baldrame Intermediário (P16-P17)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N19 Ø8.0 C=486"}, sup:{quant:2, diam:8.0, desc:"2 N19 Ø8.0 C=486"}, pele:null, estribos:{diam:5.0, espac:15, desc:"33 N3 Ø5.0 c/15"} } },
+    { id:"VB7",  secao:"19x30", b:19, h:30, pontos:[{x:12354.5, y:50299.5}, {x:12731.0, y:50299.5}], desc:"Baldrame Intermediário entre VB17 e VB19 (vão 401 cm)",
+      rebar: { inf:{quant:2, diam:12.5, desc:"2 N44 Ø12.5 C=395"}, sup:{quant:2, diam:8.0, desc:"2 N20 Ø8.0 C=395"}, pele:null, estribos:{diam:5.0, espac:11, desc:"30 N3 Ø5.0 c/11 e c/15"} } },
+    { id:"VB8",  secao:"19x30", b:19, h:30, nos:["B19", "E2"], desc:"Baldrame Longitudinal Oeste (P19 a Estaca E2)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N42 Ø10.0 C=413"}, sup:{quant:2, diam:10.0, desc:"2 N43 Ø10.0 C=435"}, pele:null, estribos:{diam:5.0, espac:15, desc:"26 N3 Ø5.0 c/15"} } },
+    { id:"VB9",  secao:"19x30", b:19, h:30, pontos:[{x:12213.5, y:50212.5}, {x:12354.5, y:50212.5}], desc:"Baldrame de Ligação (Estaca E3 à VB17)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N21 Ø8.0 C=167"}, sup:{quant:2, diam:8.0, desc:"2 N22 Ø8.0 C=209"}, pele:null, estribos:{diam:5.0, espac:15, desc:"9 N3 Ø5.0 c/15"} } },
+
+    // Linha Longitudinal Sul (Folha 07)
+    { id:"VB10", secao:"19x30", b:19, h:30, nos:["B20", "B23", "B24", "B25"], desc:"Baldrame Longitudinal Sul (P20-P25)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"3 N46 Ø12.5 C=1158"}, sup:{quant:3, diam:8.0, desc:"3 N23 Ø8.0 C=1147"}, pele:null, estribos:{diam:5.0, espac:15, desc:"N3 Ø5.0 c/14 e c/15"} } },
+    { id:"VB11", secao:"19x30", b:19, h:30, nos:["B25", "B26", "B27", "B21"], desc:"Baldrame Longitudinal Sul (P25-P21)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"3 N48 Ø12.5 C=1085"}, sup:{quant:3, diam:8.0, desc:"3 N25 Ø8.0 C=1194"}, pele:null, estribos:{diam:5.0, espac:15, desc:"N3 Ø5.0 c/15"} } },
+    { id:"VB12", secao:"19x30", b:19, h:30, nos:["B21", "B22"], desc:"Baldrame Longitudinal Sul (P21-P22)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N26 Ø8.0 C=436"}, sup:{quant:2, diam:8.0, desc:"2 N26 Ø8.0 + 1 N27 Ø8.0"}, pele:null, estribos:{diam:5.0, espac:15, desc:"30 N3 Ø5.0 c/15"} } },
+
+    // Vigas Transversais (Norte-Sul) (Folhas 07 e 08)
+    { id:"VB13", secao:"20x45", b:20, h:45, nos:["B20", "B19", "B18"], desc:"Baldrame Transversal Oeste (P20-P18)",
+      rebar: { inf:{quant:3, diam:8.0, desc:"3 N28 Ø8.0 C=540"}, sup:{quant:4, diam:8.0, desc:"4 N29 Ø8.0 C=577"}, pele:{quant:6, diam:6.3, desc:"2x3 N8 Ø6.3 C=260"}, estribos:{diam:5.0, espac:16, desc:"36 N1 Ø5.0 c/13, c/16, c/20"} } },
+    { id:"VB14", secao:"20x45", b:20, h:45, nos:["B18", "E1", "B2"], desc:"Baldrame Transversal (P18 - E1 - P2)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N39 Ø10.0 C=611"}, sup:{quant:2, diam:10.0, desc:"2 N41 Ø10.0 C=639 + 2 N40 Ø10.0 C=325"}, pele:null, estribos:{diam:5.0, espac:15, desc:"40 N1 Ø5.0 c/15 e c/16"} } },
+    { id:"VB15", secao:"19x30", b:19, h:30, nos:["B23", "E2"], desc:"Baldrame Transversal (P23 a Estaca E2)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N30 Ø8.0 C=255"}, sup:{quant:2, diam:8.0, desc:"2 N31 Ø8.0 C=305"}, pele:null, estribos:{diam:5.0, espac:15, desc:"15 N3 Ø5.0 c/15"} } },
+    { id:"VB16", secao:"19x30", b:19, h:30, pontos:[{x:12213.5, y:50000.0}, {x:12213.5, y:50212.5}], desc:"Baldrame Transversal (VB11 a Estaca E3)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N32 Ø8.0 C=236"}, sup:{quant:4, diam:8.0, desc:"4 N33 Ø8.0 C=282"}, pele:null, estribos:{diam:5.0, espac:15, desc:"13 N3 Ø5.0 c/15"} } },
+    { id:"VB17", secao:"19x30", b:19, h:30, nos:["B21", "B16"], desc:"Baldrame Transversal (P21-P16)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"2 N5 Ø8.0 + 3 N14 Ø12.5 C=337"}, sup:{quant:2, diam:10.0, desc:"2 N8 Ø10.0 + 2 N3 Ø6.3"}, pele:null, estribos:{diam:5.0, espac:15, desc:"28 N1 Ø5.0 c/15"} } },
+    { id:"VB18", secao:"19x30", b:19, h:30, nos:["B16", "B12", "B8"], desc:"Baldrame Transversal (P16 - P12 - P8)",
+      rebar: { inf:{quant:3, diam:10.0, desc:"3 N12 Ø10.0 C=597"}, sup:{quant:3, diam:12.5, desc:"3 N16 Ø12.5 C=618"}, pele:null, estribos:{diam:5.0, espac:15, desc:"18 N1 Ø5.0 c/15"} } },
+    { id:"VB19", secao:"19x30", b:19, h:30, nos:["B22", "B17"], desc:"Baldrame Transversal (P22-P17)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N9 Ø10.0 C=664"}, sup:{quant:2, diam:16.0, desc:"2 N18 Ø16.0 C=654 + 1 N4 Ø6.3"}, pele:null, estribos:{diam:5.0, espac:15, desc:"31 N1 Ø5.0 c/15"} } },
+    { id:"VB20", secao:"19x30", b:19, h:30, nos:["B17", "B13", "B9"], desc:"Baldrame Transversal (P17 - P13 - P9)",
+      rebar: { inf:{quant:3, diam:10.0, desc:"3 N10 Ø10.0 C=571 + 1 N3 Ø6.3"}, sup:{quant:2, diam:16.0, desc:"2 N19 Ø16.0 C=624"}, pele:null, estribos:{diam:5.0, espac:15, desc:"15 N1 Ø5.0 c/15"} } },
+    { id:"VB21", secao:"19x30", b:19, h:30, nos:["B14", "B10"], desc:"Baldrame Transversal (P14-P10)",
+      rebar: { inf:{quant:2, diam:16.0, desc:"2 N20 Ø16.0 C=324"}, sup:{quant:2, diam:16.0, desc:"2 N20 Ø16.0 C=324"}, pele:null, estribos:{diam:5.0, espac:10, desc:"12 N1 Ø5.0 c/10"} } },
+    { id:"VB22", secao:"40x30", b:40, h:30, nos:["B15", "B11"], desc:"Baldrame Transversal Leste (P15-P11)",
+      rebar: { inf:{quant:4, diam:12.5, desc:"4 N15 Ø12.5 C=326"}, sup:{quant:3, diam:12.5, desc:"3 N22 Ø12.5 C=324 / 7 N11 Ø10.0"}, pele:null, estribos:{diam:5.0, espac:15, duplo:true, desc:"Estribos duplos 2x8 N2 Ø5.0 c/15"} } }
+  ]
+};
+
+// Normalizar coordenadas em relação ao centro (em cm)
+const CX = DATA.center[0];
+const CY = DATA.center[1];
+Object.values(DATA.blocos).forEach(b => {
+  b.lx = b.x - CX;
+  b.ly = b.y - CY;
+});
+DATA.estacasIsoladas.forEach(e => {
+  e.lx = e.x - CX;
+  e.ly = e.y - CY;
+});
+
+// --- CENÁRIO THREE.JS ---
+let scene, camera, renderer, controls;
+let groupConcreteBlocks = new THREE.Group();
+let groupConcreteBeams = new THREE.Group();
+let groupPiles = new THREE.Group();
+let groupBlockRebars = new THREE.Group();
+let groupBeamRebars = new THREE.Group();
+let groupPillars = new THREE.Group();
+
+let allObjects = [];
+let selectedElement = null;
+let isIsolated = false;
+let currentExplode = 0;
+let clippingPlanes = [];
+
+const clipPlaneX = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
+const clipPlaneY = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);
+
+let matBlockConcrete, matBeamConcrete, matPileConcrete;
+let matBlockEdges, matBeamEdges;
+
+function init() {
+  const container = document.getElementById('three-container');
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0c10);
+
+  camera = new THREE.PerspectiveCamera(40, width / height, 10, 15000);
+  camera.position.set(1600, -2800, 2200);
+  camera.up.set(0, 0, 1);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.localClippingEnabled = true;
+  container.appendChild(renderer.domElement);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.target.set(0, 0, -30);
+  controls.maxDistance = 10000;
+  controls.minDistance = 50;
+
+  const amb = new THREE.AmbientLight(0xffffff, 0.75);
+  scene.add(amb);
+
+  const dir1 = new THREE.DirectionalLight(0xffffff, 0.85);
+  dir1.position.set(2000, -3000, 3500);
+  scene.add(dir1);
+
+  const dir2 = new THREE.DirectionalLight(0x94b8e6, 0.45);
+  dir2.position.set(-2000, 2000, 1500);
+  scene.add(dir2);
+
+  const dir3 = new THREE.DirectionalLight(0x64748b, 0.3);
+  dir3.position.set(0, 0, -2500);
+  scene.add(dir3);
+
+  const grid = new THREE.GridHelper(5000, 50, 0x2a3245, 0x161a24);
+  grid.rotation.x = Math.PI / 2;
+  grid.position.set(0, 0, -60);
+  scene.add(grid);
+
+  initMaterials();
+  buildStructuralModel();
+
+  scene.add(groupConcreteBlocks);
+  scene.add(groupConcreteBeams);
+  scene.add(groupPiles);
+  scene.add(groupBlockRebars);
+  scene.add(groupBeamRebars);
+  scene.add(groupPillars);
+
+  buildUI();
+  setupRaycaster();
+
+  window.addEventListener('resize', onWindowResize);
+  animate();
+}
+
+function initMaterials() {
+  matBlockConcrete = new THREE.MeshPhysicalMaterial({
+    color: 0xd6d3d1,
+    transparent: true,
+    opacity: 0.35,
+    roughness: 0.35,
+    metalness: 0.05,
+    transmission: 0.25,
+    ior: 1.4,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    clippingPlanes: clippingPlanes
+  });
+
+  matBeamConcrete = new THREE.MeshPhysicalMaterial({
+    color: 0xcbd5e1,
+    transparent: true,
+    opacity: 0.35,
+    roughness: 0.35,
+    metalness: 0.05,
+    transmission: 0.25,
+    ior: 1.4,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    clippingPlanes: clippingPlanes
+  });
+
+  matPileConcrete = new THREE.MeshStandardMaterial({
+    color: 0x64748b,
+    roughness: 0.65,
+    metalness: 0.1,
+    clippingPlanes: clippingPlanes
+  });
+
+  matBlockEdges = new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.6, clippingPlanes: clippingPlanes });
+  matBeamEdges  = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.5, clippingPlanes: clippingPlanes });
+}
+
+function buildStructuralModel() {
+  buildBlocksAndPiles();
+  buildBeams();
+}
+
+function buildBlocksAndPiles() {
+  groupConcreteBlocks.clear();
+  groupPiles.clear();
+  groupBlockRebars.clear();
+  groupPillars.clear();
+
+  Object.values(DATA.blocos).forEach(b => {
+    // 1. Concreto do Bloco com dimensão e orientação exata
+    const geom = new THREE.BoxGeometry(b.dim[0], b.dim[1], b.dim[2]);
+    const mesh = new THREE.Mesh(geom, matBlockConcrete.clone());
+    mesh.position.set(b.lx, b.ly, -30);
+    mesh.userData = { type: 'BLOCO', id: b.id, data: b };
+    groupConcreteBlocks.add(mesh);
+    allObjects.push(mesh);
+
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geom), matBlockEdges);
+    edges.position.copy(mesh.position);
+    groupConcreteBlocks.add(edges);
+
+    // 2. Estacas do Bloco (posicionamento rigoroso)
+    b.estacas.forEach(est => {
+      const radius = 20; // Ø40 cm
+      const len = 350; // Visualização dos primeiros 3.5m
+      const pGeom = new THREE.CylinderGeometry(radius, radius, len, 24);
+      pGeom.rotateX(Math.PI / 2);
+
+      const pMesh = new THREE.Mesh(pGeom, matPileConcrete);
+      pMesh.position.set(b.lx + est.rx, b.ly + est.ry, -55 - len/2);
+      pMesh.userData = { type: 'ESTACA', id: `${b.id}_estaca`, bloco: b.id };
+      groupPiles.add(pMesh);
+
+      const cEdges = new THREE.LineSegments(new THREE.EdgesGeometry(pGeom, 30), new THREE.LineBasicMaterial({ color: 0x94a3b8 }));
+      cEdges.position.copy(pMesh.position);
+      groupPiles.add(cEdges);
+    });
+
+    // 3. Armaduras FIEIS de cada Bloco
+    buildExactRebarForBlock(b);
+
+    // 4. Arranque do Pilar específico
+    buildExactPillarStarter(b);
+  });
+
+  // Estacas Isoladas E1, E2, E3
+  DATA.estacasIsoladas.forEach(est => {
+    const radius = 20;
+    const len = 200;
+    const pGeom = new THREE.CylinderGeometry(radius, radius, len, 24);
+    pGeom.rotateX(Math.PI / 2);
+
+    const pMesh = new THREE.Mesh(pGeom, matPileConcrete);
+    pMesh.position.set(est.lx, est.ly, est.ca - len/2);
+    pMesh.userData = { type: 'ESTACA_ISOLADA', id: est.id };
+    groupPiles.add(pMesh);
+
+    const cEdges = new THREE.LineSegments(new THREE.EdgesGeometry(pGeom, 30), new THREE.LineBasicMaterial({ color: 0x38bdf8 }));
+    cEdges.position.copy(pMesh.position);
+    groupPiles.add(cEdges);
+  });
+}
+
+// Modelagem exata das armaduras do bloco conforme a prancha específica
+function buildExactRebarForBlock(b) {
+  const spec = b.rebar;
+  const orient = b.orient;
+  const group = new THREE.Group();
+  group.userData = { parentId: b.id };
+
+  const matTirante = new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.35, metalness: 0.45 });
+  const matSup     = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.35, metalness: 0.45 });
+  const matLatN9   = new THREE.MeshStandardMaterial({ color: 0xec4899, roughness: 0.35, metalness: 0.45 });
+  const matCintas  = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.35, metalness: 0.45 });
+  const matEstribo = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.35, metalness: 0.45 });
+
+  if (orient === "X" || orient === "Y") {
+    // --- BLOCOS DE 2 ESTACAS (160 × 60 cm) ---
+    const isX = orient === "X";
+    const L = 150; // vão reto
+    const w = 50;  // largura
+
+    // 1. Tirante Principal Inferior em U com abas verticais de 41 cm para cima
+    const tCfg = spec.tirante;
+    const tDiam = tCfg.diam;
+    const tQuant = tCfg.quant;
+    const tRadius = Math.max(0.35, (tDiam / 20) * 1.05);
+
+    // Distribuição das barras ao longo da largura interna (-17.5 a +17.5 ou conforme espaçamento)
+    const tStep = 35 / (tQuant - 1);
+    for (let k = 0; k < tQuant; k++) {
+      const off = -17.5 + k * tStep;
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-75, off, -13),
+          new THREE.Vector3(-75, off, -53.5),
+          new THREE.Vector3(75, off, -53.5),
+          new THREE.Vector3(75, off, -13)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(off, -75, -13),
+          new THREE.Vector3(off, -75, -53.5),
+          new THREE.Vector3(off, 75, -53.5),
+          new THREE.Vector3(off, 75, -13)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, tRadius, 6, false), matTirante));
+    }
+
+    // 2. Duas Barras Laterais em U vertical longitudinal com abas de 30 cm para cima (N9 / N10)
+    // Conforme correção: ficam no plano vertical longitudinal com as extremidades para cima, paralelas às extremidades laterais!
+    const latOffsets = isX ? [-23.5, 23.5] : [-23.5, 23.5];
+    latOffsets.forEach(off => {
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-75, off, -23.5),
+          new THREE.Vector3(-75, off, -53.5),
+          new THREE.Vector3(75, off, -53.5),
+          new THREE.Vector3(75, off, -23.5)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(off, -75, -23.5),
+          new THREE.Vector3(off, -75, -53.5),
+          new THREE.Vector3(off, 75, -53.5),
+          new THREE.Vector3(off, 75, -23.5)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.45, 6, false), matLatN9));
+    });
+
+    // 3. Quatro Barras Superiores Longitudinais com ganchos de 9 cm para baixo
+    const supOffsets = [-18, -6, 6, 18];
+    supOffsets.forEach(off => {
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-75, off, -22),
+          new THREE.Vector3(-75, off, -13),
+          new THREE.Vector3(75, off, -13),
+          new THREE.Vector3(75, off, -22)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(off, -75, -22),
+          new THREE.Vector3(off, -75, -13),
+          new THREE.Vector3(off, 75, -13),
+          new THREE.Vector3(off, 75, -22)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.45, 6, false), matSup));
+    });
+
+    // 4. Cintas Perimetrais Horizontais Fechadas (151 × 51 cm)
+    const cCfg = spec.cintasH;
+    const cQuant = cCfg.quant;
+    const cStep = 36 / (cQuant - 1);
+    for (let c = 0; c < cQuant; c++) {
+      const z = -52 + c * cStep;
+      const lx = isX ? 75.5 : 25.5;
+      const ly = isX ? 25.5 : 75.5;
+      const pts = [
+        new THREE.Vector3(-lx, -ly, z),
+        new THREE.Vector3(lx, -ly, z),
+        new THREE.Vector3(lx, ly, z),
+        new THREE.Vector3(-lx, ly, z)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 32, 0.35, 6, true), matCintas));
+    }
+
+    // 5. Estribos Verticais Transversais Fechados
+    const eCfg = spec.estribosV;
+    const eQuant = eCfg.quant;
+    const eStep = 150 / (eQuant - 1);
+    for (let e = 0; e < eQuant; e++) {
+      const loc = -75 + e * eStep;
+      const z0 = -54.5, z1 = -13.5;
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(loc, -25, z0),
+          new THREE.Vector3(loc, 25, z0),
+          new THREE.Vector3(loc, 25, z1),
+          new THREE.Vector3(loc, -25, z1)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(-25, loc, z0),
+          new THREE.Vector3(25, loc, z0),
+          new THREE.Vector3(25, loc, z1),
+          new THREE.Vector3(-25, loc, z1)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.35, 6, true), matEstribo));
+    }
+
+  } else {
+    // --- BLOCOS DE 1 ESTACA (60 × 60 × 60 cm) ---
+    // Conforme Pranchas 02, 03, 04 e 05:
+    // Estribos verticais transversais fechados de 49 × 41 cm + Cintas horizontais fechadas de 51 × 51 cm!
+    const eV = spec.estribosV;
+    const cH = spec.cintasH;
+
+    // Estribos verticais (4 unidades distribuídas)
+    const eVStep = 36 / (eV.quant - 1);
+    for (let i = 0; i < eV.quant; i++) {
+      const x = -18 + i * eVStep;
+      const pts = [
+        new THREE.Vector3(x, -24.5, -53.5),
+        new THREE.Vector3(x, 24.5, -53.5),
+        new THREE.Vector3(x, 24.5, -12.5),
+        new THREE.Vector3(x, -24.5, -12.5)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.35, 6, true), matEstribo));
+    }
+
+    // Cintas perimetrais horizontais fechadas (51 × 51 cm) com bitola e espaçamento da prancha
+    const cHStep = 36 / (cH.quant - 1);
+    const cRadius = Math.max(0.35, (cH.diam / 20) * 1.05);
+    for (let j = 0; j < cH.quant; j++) {
+      const z = -52 + j * cHStep;
+      const pts = [
+        new THREE.Vector3(-25.5, -25.5, z),
+        new THREE.Vector3(25.5, -25.5, z),
+        new THREE.Vector3(25.5, 25.5, z),
+        new THREE.Vector3(-25.5, 25.5, z)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 28, cRadius, 6, true), matCintas));
+    }
+  }
+
+  group.position.set(b.lx, b.ly, 0);
+  groupBlockRebars.add(group);
+}
+
+// Arranque de pilar específico para cada bloco
+function buildExactPillarStarter(b) {
+  const pilarSpec = b.rebar.pilar;
+  const quant = pilarSpec.quant;
+  const diam = pilarSpec.diam;
+  const alt = pilarSpec.alt;
+
+  const group = new THREE.Group();
+  group.userData = { parentId: b.id };
+  const rebarMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.35, metalness: 0.5 });
+  const stirrupMat = new THREE.MeshStandardMaterial({ color: 0x60a5fa, roughness: 0.4, metalness: 0.3 });
+  const radius = Math.max(0.4, (diam / 20) * 1.05);
+
+  let barLocs = [];
+  if (quant === 4) {
+    barLocs = [{x:-9, y:-9}, {x:9, y:-9}, {x:9, y:9}, {x:-9, y:9}];
+  } else if (quant === 6) {
+    barLocs = [{x:-12, y:-8}, {x:0, y:-8}, {x:12, y:-8}, {x:-12, y:8}, {x:0, y:8}, {x:12, y:8}];
+  } else if (quant === 8) {
+    barLocs = [{x:-12, y:-12}, {x:0, y:-12}, {x:12, y:-12}, {x:12, y:0}, {x:12, y:12}, {x:0, y:12}, {x:-12, y:12}, {x:-12, y:0}];
+  } else {
+    barLocs = [{x:-10, y:-10}, {x:10, y:-10}, {x:10, y:10}, {x:-10, y:10}];
+  }
+
+  // Dobras horizontais de ancoragem de 20 cm na base do bloco
+  barLocs.forEach(loc => {
+    const bendDirX = loc.x >= 0 ? -1 : 1;
+    const pts = [
+      new THREE.Vector3(loc.x + bendDirX * 20, loc.y, -54),
+      new THREE.Vector3(loc.x, loc.y, -54),
+      new THREE.Vector3(loc.x, loc.y, -54 + alt)
+    ];
+    const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+    group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, radius, 6, false), rebarMat));
+  });
+
+  // Estribos de pilar
+  [-40, -25, -10, 5, 20, 35, 50].forEach(z => {
+    if (z < -54 + alt) {
+      const pts = [
+        new THREE.Vector3(-12.5, -12.5, z),
+        new THREE.Vector3(12.5, -12.5, z),
+        new THREE.Vector3(12.5, 12.5, z),
+        new THREE.Vector3(-12.5, 12.5, z)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.35, 6, true), stirrupMat));
+    }
+  });
+
+  group.position.set(b.lx, b.ly, 0);
+  groupPillars.add(group);
+}
+
+function resolveBeamNode(node, zMid) {
+  if (typeof node === 'string') {
+    if (DATA.blocos[node]) {
+      return { pt: new THREE.Vector3(DATA.blocos[node].lx, DATA.blocos[node].ly, zMid), name: node };
+    }
+    const est = DATA.estacasIsoladas.find(e => e.id === node);
+    if (est) {
+      return { pt: new THREE.Vector3(est.lx, est.ly, zMid), name: est.id };
+    }
+  } else if (node && typeof node === 'object') {
+    const lx = node.lx !== undefined ? node.lx : (node.x !== undefined ? (node.x - CX) : 0);
+    const ly = node.ly !== undefined ? node.ly : (node.y !== undefined ? (node.y - CY) : 0);
+    return { pt: new THREE.Vector3(lx, ly, zMid), name: node.name || 'Ponto' };
+  }
+  return { pt: new THREE.Vector3(0, 0, zMid), name: 'Origem' };
+}
+
+function buildBeams() {
+  groupConcreteBeams.clear();
+  groupBeamRebars.clear();
+
+  const rebarInfMat  = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.35, metalness: 0.45 });
+  const rebarSupMat  = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.35, metalness: 0.45 });
+  const rebarPeleMat = new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.35, metalness: 0.45 });
+  const stirrupMat   = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.35, metalness: 0.45 });
+
+  DATA.vigas.forEach(v => {
+    const bLarg = v.b;
+    const hAlt  = v.h;
+    const zTopo = -10;
+    const zBase = zTopo - hAlt;
+    const zMid  = (zTopo + zBase) / 2;
+
+    const rawList = v.pontos || v.nos || [];
+    for (let i = 0; i < rawList.length - 1; i++) {
+      const r1 = resolveBeamNode(rawList[i], zMid);
+      const r2 = resolveBeamNode(rawList[i+1], zMid);
+      const p1 = r1.pt;
+      const p2 = r2.pt;
+
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 1.0) continue;
+      const angle = Math.atan2(dy, dx);
+
+      const geom = new THREE.BoxGeometry(dist, bLarg, hAlt);
+      const mesh = new THREE.Mesh(geom, matBeamConcrete.clone());
+      mesh.position.set((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, zMid);
+      mesh.rotation.z = angle;
+      mesh.userData = { type: 'VIGA', id: v.id, secao: v.secao, trecho: `${r1.name}-${r2.name}`, comp: dist, desc: v.desc };
+      groupConcreteBeams.add(mesh);
+      allObjects.push(mesh);
+
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geom), matBeamEdges);
+      edges.position.copy(mesh.position);
+      edges.rotation.copy(mesh.rotation);
+      groupConcreteBeams.add(edges);
+
+      const beamRebarGroup = new THREE.Group();
+      beamRebarGroup.userData = { parentId: v.id };
+
+      const zInf = zBase + 4;
+      const zSup = zTopo - 4;
+      const yDist = (bLarg - 6) / 2;
+
+      // 1. Barras inferiores longitudinais com diâmetro e quantidade exatos do PDF
+      const numInf = v.rebar && v.rebar.inf ? v.rebar.inf.quant : (bLarg >= 35 ? 3 : 2);
+      const diamInf = v.rebar && v.rebar.inf ? v.rebar.inf.diam : 10.0;
+      const rInf = Math.max(0.35, (diamInf / 20) * 1.05);
+      const infStep = numInf > 1 ? (yDist * 2) / (numInf - 1) : 0;
+      for (let bIdx = 0; bIdx < numInf; bIdx++) {
+        const yOff = -yDist + bIdx * infStep;
+        const infPts = [
+          new THREE.Vector3(-dist/2 + 4, yOff, zInf - zMid),
+          new THREE.Vector3(dist/2 - 4, yOff, zInf - zMid)
+        ];
+        const curve = new THREE.LineCurve3(infPts[0], infPts[1]);
+        beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 12, rInf, 6, false), rebarInfMat));
+      }
+
+      // 2. Barras superiores longitudinais com diâmetro e quantidade exatos do PDF
+      const numSup = v.rebar && v.rebar.sup ? v.rebar.sup.quant : (bLarg >= 35 ? 3 : 2);
+      const diamSup = v.rebar && v.rebar.sup ? v.rebar.sup.diam : 8.0;
+      const rSup = Math.max(0.35, (diamSup / 20) * 1.05);
+      const supStep = numSup > 1 ? (yDist * 2) / (numSup - 1) : 0;
+      for (let bIdx = 0; bIdx < numSup; bIdx++) {
+        const yOff = -yDist + bIdx * supStep;
+        const supPts = [
+          new THREE.Vector3(-dist/2 + 4, yOff, zSup - zMid),
+          new THREE.Vector3(dist/2 - 4, yOff, zSup - zMid)
+        ];
+        const curve = new THREE.LineCurve3(supPts[0], supPts[1]);
+        beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 12, rSup, 6, false), rebarSupMat));
+      }
+
+      // 3. Armadura de Pele (vigas de altura h >= 45 cm, ex: VB1, VB2, VB13)
+      if (v.rebar && v.rebar.pele) {
+        const peleLevels = [-9, 0, 9];
+        const rPele = Math.max(0.32, (v.rebar.pele.diam / 20) * 1.05);
+        [-yDist, yDist].forEach(yOff => {
+          peleLevels.forEach(zOff => {
+            const pelePts = [
+              new THREE.Vector3(-dist/2 + 4, yOff, zOff),
+              new THREE.Vector3(dist/2 - 4, yOff, zOff)
+            ];
+            const curve = new THREE.LineCurve3(pelePts[0], pelePts[1]);
+            beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 12, rPele, 6, false), rebarPeleMat));
+          });
+        });
+      }
+
+      // 4. Estribos fechados com espaçamento exato da prancha
+      const stirrupSpacing = v.rebar && v.rebar.estribos ? v.rebar.estribos.espac : 15;
+      const isDuplo = v.rebar && v.rebar.estribos && v.rebar.estribos.duplo;
+      const numStirrups = Math.max(2, Math.floor((dist - 12) / stirrupSpacing));
+      const step = (dist - 12) / (numStirrups - 1);
+
+      for (let s = 0; s < numStirrups; s++) {
+        const sX = -dist/2 + 6 + s * step;
+
+        if (isDuplo) {
+          // Estribos duplos em paralelo para vigas largas de 40 cm (VB4 e VB22)
+          [-yDist/2, yDist/2].forEach(yC => {
+            const halfW = yDist / 2;
+            const pts = [
+              new THREE.Vector3(sX, yC - halfW, zInf - zMid),
+              new THREE.Vector3(sX, yC + halfW, zInf - zMid),
+              new THREE.Vector3(sX, yC + halfW, zSup - zMid),
+              new THREE.Vector3(sX, yC - halfW, zSup - zMid)
+            ];
+            const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+            beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.35, 6, true), stirrupMat));
+          });
+        } else {
+          // Estribo retangular fechado padrão
+          const pts = [
+            new THREE.Vector3(sX, -yDist, zInf - zMid),
+            new THREE.Vector3(sX, yDist, zInf - zMid),
+            new THREE.Vector3(sX, yDist, zSup - zMid),
+            new THREE.Vector3(sX, -yDist, zSup - zMid)
+          ];
+          const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+          beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.35, 6, true), stirrupMat));
+        }
+      }
+
+      beamRebarGroup.position.copy(mesh.position);
+      beamRebarGroup.rotation.copy(mesh.rotation);
+      groupBeamRebars.add(beamRebarGroup);
+    }
+  });
+}
+
+function buildUI() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('tabCamadas').style.display = btn.dataset.tab === 'camadas' ? 'flex' : 'none';
+      document.getElementById('tabElementos').style.display = btn.dataset.tab === 'elementos' ? 'flex' : 'none';
+      document.getElementById('tabResumo').style.display = btn.dataset.tab === 'resumo' ? 'flex' : 'none';
+    });
+  });
+
+  setupSlider('opacityBlocos', 'outBlocos', val => {
+    groupConcreteBlocks.traverse(c => { if (c.material && c.isMesh) c.material.opacity = val; });
+  });
+  setupSlider('opacityVigas', 'outVigas', val => {
+    groupConcreteBeams.traverse(c => { if (c.material && c.isMesh) c.material.opacity = val; });
+  });
+  setupSlider('opacityEstacas', 'outEstacas', val => {
+    groupPiles.traverse(c => { if (c.material && c.isMesh) c.material.opacity = val; });
+  });
+
+  const explodeSlider = document.getElementById('explodeRange');
+  const explodeOut = document.getElementById('outExplode');
+  explodeSlider.addEventListener('input', e => {
+    currentExplode = parseFloat(e.target.value);
+    explodeOut.textContent = e.target.value + ' cm';
+    groupBlockRebars.position.z = currentExplode * 0.4;
+    groupBeamRebars.position.z  = currentExplode * 0.4;
+  });
+
+  setupToggle('chkConcreteBlocks', groupConcreteBlocks);
+  setupToggle('chkConcreteBeams', groupConcreteBeams);
+  setupToggle('chkPiles', groupPiles);
+  setupToggle('chkBlockRebars', groupBlockRebars);
+  setupToggle('chkBeamRebars', groupBeamRebars);
+  setupToggle('chkPillars', groupPillars);
+
+  document.querySelectorAll('#quickViews button[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#quickViews button[data-view]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setCameraView(btn.dataset.view);
+    });
+  });
+
+  document.getElementById('btnResetView').addEventListener('click', () => {
+    resetIsolation();
+    setCameraView('iso');
+  });
+
+  document.getElementById('btnCutX').addEventListener('click', () => setClipping('X'));
+  document.getElementById('btnCutY').addEventListener('click', () => setClipping('Y'));
+  document.getElementById('btnCutOff').addEventListener('click', () => setClipping(null));
+
+  document.getElementById('btnCloseFocus').addEventListener('click', () => {
+    document.getElementById('focusInspector').style.display = 'none';
+    resetIsolation();
+  });
+  document.getElementById('btnIsolate').addEventListener('click', () => {
+    if (selectedElement) isolateElement(selectedElement);
+  });
+  document.getElementById('btnShowAll').addEventListener('click', () => {
+    resetIsolation();
+  });
+
+  buildElementChips();
+}
+
+function setupSlider(sliderId, outputId, callback) {
+  const s = document.getElementById(sliderId);
+  const o = document.getElementById(outputId);
+  s.addEventListener('input', e => {
+    const val = e.target.value / 100;
+    o.textContent = e.target.value + '%';
+    callback(val);
+  });
+}
+
+function setupToggle(chkId, group) {
+  document.getElementById(chkId).addEventListener('change', e => {
+    group.visible = e.target.checked;
+  });
+}
+
+function buildElementChips() {
+  const blockContainer = document.getElementById('blockChips');
+  const beamContainer  = document.getElementById('beamChips');
+
+  blockContainer.innerHTML = '';
+  beamContainer.innerHTML = '';
+
+  Object.values(DATA.blocos).forEach(b => {
+    const chip = document.createElement('div');
+    chip.className = 'element-chip';
+    chip.id = `chip_${b.id}`;
+    chip.textContent = b.id;
+    chip.title = `${b.id} (${b.dim[0]}x${b.dim[1]} cm)`;
+    chip.addEventListener('click', () => inspectElement('BLOCO', b.id));
+    blockContainer.appendChild(chip);
+  });
+
+  DATA.vigas.forEach(v => {
+    const chip = document.createElement('div');
+    chip.className = 'element-chip';
+    chip.id = `chip_${v.id}`;
+    chip.textContent = v.id;
+    chip.title = `${v.id} (${v.secao})`;
+    chip.addEventListener('click', () => inspectElement('VIGA', v.id));
+    beamContainer.appendChild(chip);
+  });
+
+  document.getElementById('elementSearch').addEventListener('input', e => {
+    const q = e.target.value.toUpperCase().trim();
+    document.querySelectorAll('.element-chip').forEach(c => {
+      c.style.display = c.textContent.includes(q) ? 'block' : 'none';
+    });
+  });
+}
+
+function inspectElement(type, id) {
+  selectedElement = { type, id };
+  document.querySelectorAll('.element-chip').forEach(c => c.classList.remove('selected'));
+  const chip = document.getElementById(`chip_${id}`);
+  if (chip) chip.classList.add('selected');
+
+  const card = document.getElementById('focusInspector');
+  const title = document.getElementById('focusTitle');
+  const subtitle = document.getElementById('focusSubtitle');
+  const body = document.getElementById('focusBody');
+
+  card.style.display = 'block';
+
+  if (type === 'BLOCO') {
+    const b = DATA.blocos[id];
+    title.textContent = `Bloco ${b.id}`;
+    const orientTxt = b.orient === 'X' ? 'Longitudinal em X' : (b.orient === 'Y' ? 'Transversal em Y' : 'Centrado');
+    subtitle.textContent = `${b.dim[0]} × ${b.dim[1]} × ${b.dim[2]} cm · ${b.estacas.length} Estaca(s) · ${orientTxt}`;
+
+    let rebarDetails = '';
+    const r = b.rebar;
+    if (b.orient === 'X' || b.orient === 'Y') {
+      rebarDetails = `
+        <div><strong>Tirante Inferior Principal:</strong> ${r.tirante.quant} Ø${r.tirante.diam.toFixed(1)} c/${r.tirante.espac} cm (em U com abas de 41 cm)</div>
+        <div><strong>Laterais em U Vertical:</strong> 2 Ø8.0 c/5 cm (abas de 30 cm para cima)</div>
+        <div><strong>Superior Longitudinal:</strong> 4 Ø8.0 c/12 cm (ganchos de 9 cm para baixo)</div>
+        <div><strong>Cintas Perimetrais:</strong> ${r.cintasH.quant} Ø5.0 c/${r.cintasH.espac} cm (fechadas 151×51 cm)</div>
+        <div><strong>Estribos Transversais:</strong> ${r.estribosV.quant} Ø5.0 fechados (50×41 cm)</div>
+        <div><strong>Arranque do Pilar ${b.pilar}:</strong> ${r.pilar.quant} Ø${r.pilar.diam.toFixed(1)} C=121 cm + estribos</div>
+      `;
+    } else {
+      rebarDetails = `
+        <div><strong>Estribos Verticais:</strong> ${r.estribosV.quant} Ø5.0 fechados (49×41 cm)</div>
+        <div><strong>Cintas Perimetrais:</strong> ${r.cintasH.quant} Ø${r.cintasH.diam.toFixed(1)} c/${r.cintasH.espac} cm (fechadas 51×51 cm)</div>
+        <div><strong>Arranque do Pilar ${b.pilar}:</strong> ${r.pilar.quant} Ø${r.pilar.diam.toFixed(1)} alt=${r.pilar.alt} cm (dobra 20 cm)</div>
+      `;
+    }
+
+    body.innerHTML = `
+      <div><strong>Locação Global:</strong> X = ${(b.x/100).toFixed(2)} m · Y = ${(b.y/100).toFixed(2)} m</div>
+      <div><strong>Arrasamento:</strong> CA: -0.60 m · Nível do topo: 0.00 m</div>
+      <div><strong>Estacas:</strong> ${b.estacas.length} × Ø40 cm C40 (prof. 7,0 m)</div>
+      ${rebarDetails}
+    `;
+
+    const targetPos = new THREE.Vector3(b.lx, b.ly, -30);
+    animateCameraTo(new THREE.Vector3(b.lx + 220, b.ly - 320, 220), targetPos);
+    document.getElementById('viewStateBadge').textContent = `Foco no Bloco ${b.id}`;
+
+  } else if (type === 'VIGA') {
+    const v = DATA.vigas.find(item => item.id === id);
+    title.textContent = `Viga Baldrame ${v.id}`;
+    subtitle.textContent = `Seção ${v.secao} cm · Nível -10 cm`;
+
+    const rawList = v.pontos || v.nos || [];
+    const rA = resolveBeamNode(rawList[0], -25);
+    const rB = resolveBeamNode(rawList[rawList.length - 1], -25);
+    const midX = (rA.pt.x + rB.pt.x) / 2;
+    const midY = (rA.pt.y + rB.pt.y) / 2;
+
+    const nosLabels = rawList.map(item => typeof item === 'string' ? item : (item.name || 'Ponto Intermed.'));
+    const interligados = nosLabels.join(' ➔ ');
+
+    const rb = v.rebar || {};
+    body.innerHTML = `
+      <div><strong>Apoios / Trechos:</strong> ${interligados}</div>
+      <div><strong>Função / Descrição:</strong> ${v.desc || 'Viga Baldrame Estrutural'}</div>
+      <div><strong>Dimensões:</strong> Largura ${v.b} cm · Altura ${v.h} cm · Nível do Topo -10 cm</div>
+      <div style="margin-top:6px; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+        <div><strong>Armadura Inferior (Positiva):</strong> ${rb.inf ? rb.inf.desc : '2 a 3 Ø10.0'}</div>
+        <div><strong>Armadura Superior (Negativa/Porta-estribos):</strong> ${rb.sup ? rb.sup.desc : '2 a 3 Ø8.0'}</div>
+        <div><strong>Armadura de Pele:</strong> ${rb.pele ? rb.pele.desc : 'Não exigida (h < 45 cm)'}</div>
+        <div><strong>Estribos:</strong> ${rb.estribos ? rb.estribos.desc : 'Ø5.0 c/15 cm'}</div>
+      </div>
+    `;
+
+    const targetPos = new THREE.Vector3(midX, midY, -25);
+    animateCameraTo(new THREE.Vector3(midX + 350, midY - 450, 350), targetPos);
+    document.getElementById('viewStateBadge').textContent = `Foco na Viga ${v.id}`;
+  }
+}
+
+function isolateElement(elem) {
+  isIsolated = true;
+  document.getElementById('btnIsolate').classList.add('active');
+
+  groupConcreteBlocks.children.forEach(c => {
+    if (c.userData && c.userData.type === 'BLOCO') {
+      c.visible = c.userData.id === elem.id;
+    }
+  });
+
+  groupConcreteBeams.children.forEach(c => {
+    if (c.userData && c.userData.type === 'VIGA') {
+      c.visible = c.userData.id === elem.id;
+    }
+  });
+
+  groupBlockRebars.children.forEach(c => {
+    c.visible = c.userData.parentId === elem.id;
+  });
+
+  groupBeamRebars.children.forEach(c => {
+    c.visible = c.userData.parentId === elem.id;
+  });
+
+  groupPillars.children.forEach(c => {
+    c.visible = c.userData.parentId === elem.id;
+  });
+
+  groupPiles.children.forEach(c => {
+    c.visible = c.userData.bloco === elem.id;
+  });
+}
+
+function resetIsolation() {
+  isIsolated = false;
+  document.getElementById('btnIsolate').classList.remove('active');
+
+  groupConcreteBlocks.children.forEach(c => c.visible = true);
+  groupConcreteBeams.children.forEach(c => c.visible = true);
+  groupBlockRebars.children.forEach(c => c.visible = true);
+  groupBeamRebars.children.forEach(c => c.visible = true);
+  groupPillars.children.forEach(c => c.visible = true);
+  groupPiles.children.forEach(c => c.visible = true);
+
+  document.getElementById('viewStateBadge').textContent = 'Visão Geral da Obra';
+}
+
+function setCameraView(viewName) {
+  const target = new THREE.Vector3(0, 0, -30);
+  const badge = document.getElementById('viewStateBadge');
+
+  switch(viewName) {
+    case 'iso':
+      badge.textContent = 'Visão Geral Isométrica';
+      animateCameraTo(new THREE.Vector3(1600, -2800, 2200), target);
+      break;
+
+    case 'planta':
+      badge.textContent = 'Planta de Fôrma Geral';
+      animateCameraTo(new THREE.Vector3(0, 0, 3800), target, new THREE.Vector3(0, 1, 0));
+      break;
+
+    case 'norte':
+      badge.textContent = 'Elevação Norte (Longitudinal)';
+      animateCameraTo(new THREE.Vector3(0, -3500, -30), target, new THREE.Vector3(0, 0, 1));
+      break;
+
+    case 'oeste':
+      badge.textContent = 'Elevação Oeste (Transversal)';
+      animateCameraTo(new THREE.Vector3(-3500, 0, -30), target, new THREE.Vector3(0, 0, 1));
+      break;
+
+    case 'estacas':
+      badge.textContent = 'Apoio / Fuste das Estacas';
+      animateCameraTo(new THREE.Vector3(0, -1800, -1600), new THREE.Vector3(0, 0, -200), new THREE.Vector3(0, 1, 0));
+      break;
+  }
+}
+
+let cameraTween = null;
+function animateCameraTo(targetPos, targetLookAt, targetUp = new THREE.Vector3(0, 0, 1)) {
+  const startPos = camera.position.clone();
+  const startLookAt = controls.target.clone();
+  const startUp = camera.up.clone();
+  const duration = 750;
+  const startTime = performance.now();
+
+  if (cameraTween) cancelAnimationFrame(cameraTween);
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    camera.position.lerpVectors(startPos, targetPos, ease);
+    controls.target.lerpVectors(startLookAt, targetLookAt, ease);
+    camera.up.lerpVectors(startUp, targetUp, ease);
+    controls.update();
+
+    if (progress < 1) {
+      cameraTween = requestAnimationFrame(step);
+    }
+  }
+  cameraTween = requestAnimationFrame(step);
+}
+
+function setClipping(axis) {
+  document.getElementById('btnCutX').classList.toggle('active', axis === 'X');
+  document.getElementById('btnCutY').classList.toggle('active', axis === 'Y');
+  document.getElementById('btnCutOff').classList.toggle('active', axis === null);
+
+  clippingPlanes.length = 0;
+  if (axis === 'X') clippingPlanes.push(clipPlaneX);
+  if (axis === 'Y') clippingPlanes.push(clipPlaneY);
+
+  scene.traverse(c => {
+    if (c.material && c.isMesh) {
+      c.material.clippingPlanes = clippingPlanes;
+      c.material.needsUpdate = true;
+    }
+  });
+}
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById('tooltip');
+
+function setupRaycaster() {
+  const container = document.getElementById('viewportArea');
+
+  container.addEventListener('pointermove', e => {
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(allObjects, false);
+
+    if (hits.length > 0 && hits[0].object.userData.type) {
+      const data = hits[0].object.userData;
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top = (e.clientY - 20) + 'px';
+
+      if (data.type === 'BLOCO') {
+        tooltip.innerHTML = `<strong>Bloco ${data.id}</strong> (${data.data.tipo})<br><span style="color:var(--muted)">Clique para inspecionar</span>`;
+      } else if (data.type === 'VIGA') {
+        tooltip.innerHTML = `<strong>Viga ${data.id}</strong> (${data.secao})<br><span style="color:var(--muted)">Trecho: ${data.trecho}</span>`;
+      }
+      return;
+    }
+    tooltip.style.display = 'none';
+  });
+
+  container.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(allObjects, false);
+
+    if (hits.length > 0 && hits[0].object.userData.type) {
+      const data = hits[0].object.userData;
+      inspectElement(data.type, data.id);
+    }
+  });
+}
+
+function onWindowResize() {
+  const container = document.getElementById('three-container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
