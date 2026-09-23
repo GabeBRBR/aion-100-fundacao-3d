@@ -3,53 +3,1851 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>AION-100 · Gêmeo Digital 3D de Fundações & Baldrames</title>
-<script>
-// Redirecionamento inteligente: Dispositivos móveis abrem a versão otimizada touch/iPhone
-if (/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  window.location.replace("mobile.html");
-} else {
-  window.location.replace("desktop.html");
-}
-</script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0d11">
+<title>AION-100 · 3D Mobile (iPhone Otimizado)</title>
+
 <style>
-body {
+:root {
+  --bg: #0b0d11;
+  --panel: rgba(19, 23, 32, 0.94);
+  --panel-solid: #131720;
+  --panel2: #1b202c;
+  --panel3: #242b3b;
+  --ink: #f3f5f9;
+  --muted: #94a0b8;
+  --line: #2a3245;
+  --accent: #f59e0b;
+  --blue: #38bdf8;
+  --green: #10b981;
+  --purple: #a855f7;
+  --pink: #ec4899;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 40px 20px;
-  background: #0b0d11;
-  color: #f3f5f9;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  text-align: center;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Roboto, sans-serif;
+  position: fixed;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#canvas-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 40%, #151a26 0%, #080a0e 100%);
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Barra Superior Flutuante (iOS Notch / Dynamic Island Safe) */
+.mobile-top-bar {
+  position: absolute;
+  top: max(10px, var(--safe-top));
+  left: 12px;
+  right: 12px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.brand-pill {
+  pointer-events: auto;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+}
+
+.brand-info h1 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-info h1 span {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.brand-info p {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.top-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+.btn-icon:active {
+  transform: scale(0.92);
+  background: var(--panel3);
+}
+
+/* Atalhos de Câmera Rápidos */
+.camera-chips {
+  pointer-events: auto;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.camera-chips::-webkit-scrollbar { display: none; }
+
+.chip-btn {
+  background: rgba(19, 23, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.chip-btn.active {
+  background: var(--accent);
+  color: #120e04;
+  border-color: var(--accent);
+}
+.chip-btn:active {
+  transform: scale(0.95);
+}
+
+/* Botão Flutuante de Camadas Rápidas */
+.floating-quick-bar {
+  position: absolute;
+  right: 12px;
+  bottom: calc(68px + var(--safe-bottom));
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.floating-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.floating-btn:active {
+  transform: scale(0.9);
+}
+.floating-btn.active {
+  background: var(--blue);
+  color: #0b0d11;
+  border-color: var(--blue);
+}
+
+/* Toast de Alerta Rápido */
+.mobile-toast {
+  position: absolute;
+  top: calc(max(10px, var(--safe-top)) + 76px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(19, 23, 32, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--accent);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
+  white-space: nowrap;
+}
+.mobile-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================ */
+/* BOTTOM SHEET DRAWER (GAVETA INFERIOR NATIVA DE IPHONE)       */
+/* ============================================================ */
+.bottom-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: var(--panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+  transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+}
+
+/* Estados de Altura */
+.bottom-sheet.state-peek {
+  transform: translateY(calc(100% - 60px - var(--safe-bottom)));
+}
+.bottom-sheet.state-half {
+  transform: translateY(48vh);
+}
+.bottom-sheet.state-full {
+  transform: translateY(12vh);
+}
+
+/* Alça de Puxar */
+.sheet-handle-bar {
+  width: 100%;
+  padding: 10px 0 6px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  cursor: grab;
+  touch-action: none;
 }
-h1 { font-size: 20px; margin-bottom: 8px; color: #fff; }
-p { color: #94a0b8; font-size: 14px; margin-bottom: 24px; }
-.links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.btn {
-  background: #1b202c;
+.sheet-pill {
+  width: 38px;
+  height: 4.5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 10px 16px;
+}
+.sheet-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sheet-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--blue);
+  color: #0b0d11;
+}
+.sheet-title {
+  font-size: 15px;
+  font-weight: 700;
   color: #fff;
-  text-decoration: none;
-  border: 1px solid #2a3245;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all .2s ease;
 }
-.btn.primary { background: #f59e0b; color: #120e04; border-color: #f59e0b; }
-.btn:hover { transform: translateY(-2px); }
+
+/* Abas da Gaveta */
+.sheet-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  padding: 0 12px;
+}
+.sheet-tab {
+  flex: 1;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.sheet-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Conteúdo Rolável */
+.sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 16px calc(16px + var(--safe-bottom)) 16px;
+  touch-action: pan-y;
+}
+
+.tab-pane {
+  display: none;
+}
+.tab-pane.active {
+  display: block;
+}
+
+/* Cards de Detalhes da Inspeção */
+.inspect-card {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.inspect-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.inspect-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+}
+.inspect-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.rebar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+}
+.rebar-row:last-child { border-bottom: none; }
+.rebar-badge {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.bg-tirante { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+.bg-sup { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.4); }
+.bg-estribo { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.4); }
+.bg-cintas { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); }
+.bg-pele { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4); }
+
+.inspect-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.action-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--panel3);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.action-btn.primary {
+  background: var(--accent);
+  color: #120e04;
+  border-color: var(--accent);
+  font-weight: 700;
+}
+.action-btn:active {
+  transform: scale(0.96);
+}
+
+/* Lista de Elementos (Blocos / Vigas) */
+.filter-search-box {
+  margin-bottom: 12px;
+}
+.search-input {
+  width: 100%;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 13px;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+.grid-item-btn {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.grid-item-btn:active {
+  background: var(--panel3);
+  border-color: var(--accent);
+}
+.grid-item-btn.selected {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.item-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+.item-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Slider e Controles */
+.control-row {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.control-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.control-slider {
+  width: 140px;
+  accent-color: var(--accent);
+}
 </style>
+
+<!-- Scripts Three.js com Fallback local/CDN -->
+<script src="three.min.js"></script>
+<script>
+if (typeof THREE === 'undefined') {
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+<script src="OrbitControls.js"></script>
+<script>
+if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+}
+</script>
 </head>
 <body>
-  <h1>AION-100 · Lucas Hajjar</h1>
-  <p>Fundações & Baldrames 3D (Fiel às Pranchas 01 a 08)</p>
-  <div class="links">
-    <a href="mobile.html" class="btn primary">📱 Versão Mobile (iPhone)</a>
-    <a href="desktop.html" class="btn">💻 Versão Desktop Completa</a>
+
+<div id="canvas-container"></div>
+
+<!-- Barra Superior Flutuante -->
+<header class="mobile-top-bar">
+  <div class="brand-pill">
+    <div class="brand-info">
+      <h1>AION-100 <span>Mobile 3D</span></h1>
+      <p>Fundação & Baldrame · 27 Blocos · 22 Vigas</p>
+    </div>
+    <div class="top-actions">
+      <button class="btn-icon" id="btnResetCamera" title="Resetar Câmera">🎯</button>
+      <button class="btn-icon" id="btnToggleSheet" title="Gaveta">📋</button>
+    </div>
   </div>
+
+  <!-- Chips de Câmera Rápida -->
+  <div class="camera-chips">
+    <button class="chip-btn active" data-view="iso">🌐 3D Geral</button>
+    <button class="chip-btn" data-view="planta">📐 Planta Fôrma</button>
+    <button class="chip-btn" data-view="norte">⬆️ Long. Norte</button>
+    <button class="chip-btn" data-view="oeste">⬅️ Transv. Oeste</button>
+    <button class="chip-btn" data-view="estacas">🔩 Estacas</button>
+  </div>
+</header>
+
+<!-- Botões Flutuantes Direita (Ações Imediatas) -->
+<aside class="floating-quick-bar">
+  <button class="floating-btn" id="btnToggleConcrete" title="Alternar Concreto">👁️</button>
+  <button class="floating-btn active" id="btnToggleRebars" title="Alternar Armaduras">🔩</button>
+  <button class="floating-btn" id="btnToggleIsolate" title="Isolar / Ver Tudo">🔍</button>
+</aside>
+
+<!-- Toast de Notificação -->
+<div class="mobile-toast" id="mobileToast">Elemento selecionado</div>
+
+<!-- GAVETA INFERIOR (BOTTOM SHEET) -->
+<section class="bottom-sheet state-peek" id="bottomSheet">
+  <div class="sheet-handle-bar" id="sheetHandle">
+    <div class="sheet-pill"></div>
+  </div>
+
+  <div class="sheet-header">
+    <div class="sheet-title-row">
+      <span class="sheet-badge" id="sheetBadge">OBRA</span>
+      <h2 class="sheet-title" id="sheetTitle">Toque num Bloco ou Viga</h2>
+    </div>
+    <button class="btn-icon" id="btnCloseSheet" style="width:28px; height:28px; font-size:12px;">▼</button>
+  </div>
+
+  <!-- Abas de Navegação -->
+  <nav class="sheet-tabs">
+    <button class="sheet-tab active" data-tab="tab-inspect">🎯 Inspeção</button>
+    <button class="sheet-tab" data-tab="tab-blocos">🧱 Blocos (27)</button>
+    <button class="sheet-tab" data-tab="tab-vigas">📏 Vigas (22)</button>
+    <button class="sheet-tab" data-tab="tab-settings">⚙️ Camadas</button>
+  </nav>
+
+  <!-- Conteúdo Rolável -->
+  <div class="sheet-content">
+    <!-- ABA 1: INSPEÇÃO DO ELEMENTO SELECIONADO -->
+    <div class="tab-pane active" id="tab-inspect">
+      <div id="inspectEmptyState" style="text-align:center; padding: 25px 10px; color: var(--muted); font-size: 13px;">
+        👈 Toque diretamente em qualquer peça no 3D acima ou selecione pelas abas <strong>Blocos</strong> e <strong>Vigas</strong> para ver a ficha completa de armaduras fiéis aos PDFs.
+      </div>
+      <div id="inspectFilledState" style="display:none;">
+        <div class="inspect-card">
+          <div class="inspect-header">
+            <div>
+              <div class="inspect-name" id="insTitle">Bloco B5</div>
+              <div class="inspect-sub" id="insSub">2 Estacas Ø40 · 160 × 60 × 60 cm</div>
+            </div>
+            <span class="rebar-badge bg-sup" id="insPrancha">Prancha FUN-02</span>
+          </div>
+
+          <div id="insDetailsList"></div>
+
+          <div class="inspect-actions">
+            <button class="action-btn primary" id="btnSheetIsolate">🔍 Isolar no 3D</button>
+            <button class="action-btn" id="btnSheetFocus">🎯 Enquadrar</button>
+            <button class="action-btn" id="btnSheetAll">🌐 Ver Tudo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 2: LISTA DE BLOCOS -->
+    <div class="tab-pane" id="tab-blocos">
+      <div class="filter-search-box">
+        <input type="text" class="search-input" id="searchBlocos" placeholder="Filtrar blocos (ex: B2, B13, 160)..." />
+      </div>
+      <div class="item-grid" id="gridBlocos"></div>
+    </div>
+
+    <!-- ABA 3: LISTA DE VIGAS -->
+    <div class="tab-pane" id="tab-vigas">
+      <div class="filter-search-box">
+        <input type="text" class="search-input" id="searchVigas" placeholder="Filtrar vigas (ex: VB1, VB14, 20x45)..." />
+      </div>
+      <div class="item-grid" id="gridVigas"></div>
+    </div>
+
+    <!-- ABA 4: AJUSTES E CAMADAS -->
+    <div class="tab-pane" id="tab-settings">
+      <div class="control-row">
+        <span class="control-label">Transparência Concreto</span>
+        <input type="range" class="control-slider" id="sliderOpacity" min="0" max="1" step="0.05" value="0.35">
+      </div>
+      <div class="control-row">
+        <span class="control-label">Exibir Estacas de Fundação</span>
+        <input type="checkbox" id="checkPiles" checked style="width:20px; height:20px; accent-color:var(--accent);">
+      </div>
+      <div class="control-row">
+        <span class="control-label">Exibir Arranques de Pilares</span>
+        <input type="checkbox" id="checkPillars" checked style="width:20px; height:20px; accent-color:var(--accent);">
+      </div>
+      <div class="control-row">
+        <span class="control-label">Grade de Referência do Terreno</span>
+        <input type="checkbox" id="checkGrid" checked style="width:20px; height:20px; accent-color:var(--accent);">
+      </div>
+      <div style="margin-top:14px; text-align:center; font-size:11px; color:var(--muted); line-height:1.5;">
+        AION-100 · Lucas Hajjar<br>
+        Fundações e Baldrames 22-09-2026<br>
+        Renderizador WebGL Otimizado para iPhone / Mobile
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const DATA = {
+  center: [11711.2, 50524.5],
+  blocos: {
+    // Folha 02
+    "B1":  { id:"B1",  pilar:"P1",  x:10000.0, y:50998.9, blockOffsetX:0, blockOffsetY:-20.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B2":  { id:"B2",  pilar:"P2",  x:10131.5, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B3":  { id:"B3",  pilar:"P3",  x:10496.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:4, espac:13}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B4":  { id:"B4",  pilar:"P4",  x:10829.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B5":  { id:"B5",  pilar:"P5",  x:11209.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B6":  { id:"B6",  pilar:"P6",  x:11589.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B7":  { id:"B7",  pilar:"P7",  x:11969.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:7}, pilar:{quant:6, diam:16.0, alt:105} } },
+    
+    // Folha 03
+    "B8":  { id:"B8",  pilar:"P8",  x:12349.0, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B9":  { id:"B9",  pilar:"P9",  x:12736.5, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B10": { id:"B10", pilar:"P10", x:12901.4, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B11": { id:"B11", pilar:"P11", x:13422.4, y:50998.9, blockOffsetX:0, blockOffsetY:-70.0, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:50, prof:700, ca:-60}, {rx:0, ry:-50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:10}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B12": { id:"B12", pilar:"P12", x:12349.0, y:50773.4, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:12, w:51, l:51}, pilar:{quant:4, diam:10.0, alt:83} } },
+    "B13": { id:"B13", pilar:"P13", x:12731.0, y:50773.4, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:8.0, quant:9, espac:4}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:6, espac:7}, estribosV:{diam:5.0, quant:7}, pilar:{quant:4, diam:10.0, alt:83} } },
+    "B14": { id:"B14", pilar:"P14", x:12901.4, y:50778.9, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:12, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B15": { id:"B15", pilar:"P15", x:13422.4, y:50784.4, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+
+    // Folha 04
+    "B16": { id:"B16", pilar:"P16", x:12354.5, y:50550.4, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:12.5, quant:5, espac:10}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:10}, estribosV:{diam:5.0, quant:4}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B17": { id:"B17", pilar:"P17", x:12731.0, y:50555.9, dim:[160,60,60],  orient:"X",       estacas:[{rx:-50, ry:0, prof:700, ca:-60}, {rx:50, ry:0, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:4}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B18": { id:"B18", pilar:"P18", x:10131.5, y:50491.5, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:8, diam:10.0, alt:83} } },
+    "B19": { id:"B19", pilar:"P19", x:10121.5, y:50211.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:6, espac:8, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B20": { id:"B20", pilar:"P20", x:10116.0, y:50005.5, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:5.0, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:10.0, alt:83} } },
+    "B21": { id:"B21", pilar:"P21", x:12349.0, y:50005.5, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:7, espac:6}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B22": { id:"B22", pilar:"P22", x:12731.0, y:50005.5, dim:[60,160,60],  orient:"Y",       estacas:[{rx:0, ry:-50, prof:700, ca:-60}, {rx:0, ry:50, prof:700, ca:-60}],
+           rebar:{ tirante:{diam:10.0, quant:6, espac:7}, sup:{diam:8.0, quant:4}, lateralN9:{diam:8.0, quant:2}, cintasH:{diam:5.0, quant:5, espac:9}, estribosV:{diam:5.0, quant:5}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B23": { id:"B23", pilar:"P23", x:10496.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+
+    // Folha 05
+    "B24": { id:"B24", pilar:"P24", x:10829.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B25": { id:"B25", pilar:"P25", x:11209.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B26": { id:"B26", pilar:"P26", x:11589.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } },
+    "B27": { id:"B27", pilar:"P27", x:11969.0, y:50000.0, dim:[60,60,60],   orient:"CENTRAL", estacas:[{rx:0, ry:0, prof:700, ca:-60}],
+           rebar:{ estribosV:{diam:5.0, quant:4, w:49, h:41}, cintasH:{diam:6.3, quant:5, espac:10, w:51, l:51}, pilar:{quant:6, diam:16.0, alt:105} } }
+  },
+  estacasIsoladas: [
+    { id:"E1", x:10147.0, y:50780.9, prof:200, ca:-10 },
+    { id:"E2", x:10490.5, y:50211.0, prof:200, ca:-10 },
+    { id:"E3", x:12213.5, y:50212.5, prof:200, ca:-10 }
+  ],
+  vigas: [
+    // Linha Longitudinal Norte (Folha 07)
+    { id:"VB1",  secao:"20x45", b:20, h:45, nos:["B1", "B2", "B3", "B4", "B5"], desc:"Baldrame Longitudinal Norte (P1-P5)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N34 Ø10.0 (contínua) + reforço 1 N54 Ø16.0"}, sup:{quant:2, diam:6.3, desc:"2 N4 Ø6.3 (porta-estribos) + reforço N10 Ø8.0"}, pele:{quant:6, diam:6.3, desc:"2x3 N5 Ø6.3 C=1200"}, estribos:{diam:5.0, espac:12, desc:"N1 Ø5.0 c/12 e c/20"} } },
+    { id:"VB2",  secao:"20x45", b:20, h:45, nos:["B5", "B6", "B7", "B8"], desc:"Baldrame Longitudinal Norte (P5-P8)",
+      rebar: { inf:{quant:3, diam:16.0, desc:"2 N53 Ø16.0 + 1 N35 Ø10.0"}, sup:{quant:2, diam:10.0, desc:"2 N36 Ø10.0 + reforço 1 N54 Ø16.0"}, pele:{quant:6, diam:6.3, desc:"2x3 N6 Ø6.3 C=1194"}, estribos:{diam:5.0, espac:15, desc:"28 N1 Ø5.0 c/15"} } },
+    { id:"VB3",  secao:"20x45", b:20, h:45, nos:["B8", "B9", "B10"], desc:"Baldrame Longitudinal Norte (P8-P10)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N37 Ø10.0 C=606"}, sup:{quant:3, diam:8.0, desc:"3 N11 Ø8.0 C=606"}, pele:null, estribos:{diam:5.0, espac:20, desc:"31 N1 Ø5.0 c/20"} } },
+    { id:"VB4",  secao:"40x30", b:40, h:30, pontos:[{x:12901.4, y:50988.9}, {x:13422.4, y:50988.9}], desc:"Baldrame Longitudinal Norte (P10-P11)",
+      rebar: { inf:{quant:4, diam:8.0, desc:"4 N13 Ø8.0"}, sup:{quant:4, diam:8.0, desc:"4 N12 Ø8.0 C=575"}, pele:null, estribos:{diam:5.0, espac:15, duplo:true, desc:"Estribos duplos 2x39 N2 Ø5.0 c/15"} } },
+
+    // Linha Longitudinal Intermediária (Folhas 07 e 08)
+    { id:"VB5",  secao:"19x30", b:19, h:30, nos:["B12", "B13", "B14", "B15"], desc:"Baldrame Longitudinal Intermediário (P12-P15)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N38 Ø10.0 + 2 N18 Ø8.0"}, sup:{quant:2, diam:8.0, desc:"2 N16 Ø8.0 C=716"}, pele:null, estribos:{diam:5.0, espac:15, desc:"37 N3 Ø5.0 c/15"} } },
+    { id:"VB6",  secao:"19x30", b:19, h:30, nos:["B16", "B17"], desc:"Baldrame Intermediário (P16-P17)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N19 Ø8.0 C=486"}, sup:{quant:2, diam:8.0, desc:"2 N19 Ø8.0 C=486"}, pele:null, estribos:{diam:5.0, espac:15, desc:"33 N3 Ø5.0 c/15"} } },
+    { id:"VB7",  secao:"19x30", b:19, h:30, pontos:[{x:12354.5, y:50299.5}, {x:12731.0, y:50299.5}], desc:"Baldrame Intermediário entre VB17 e VB19 (vão 401 cm)",
+      rebar: { inf:{quant:2, diam:12.5, desc:"2 N44 Ø12.5 C=395"}, sup:{quant:2, diam:8.0, desc:"2 N20 Ø8.0 C=395"}, pele:null, estribos:{diam:5.0, espac:11, desc:"30 N3 Ø5.0 c/11 e c/15"} } },
+    { id:"VB8",  secao:"19x30", b:19, h:30, nos:["B19", "E2"], desc:"Baldrame Longitudinal Oeste (P19 a Estaca E2)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N42 Ø10.0 C=413"}, sup:{quant:2, diam:10.0, desc:"2 N43 Ø10.0 C=435"}, pele:null, estribos:{diam:5.0, espac:15, desc:"26 N3 Ø5.0 c/15"} } },
+    { id:"VB9",  secao:"19x30", b:19, h:30, pontos:[{x:12213.5, y:50212.5}, {x:12354.5, y:50212.5}], desc:"Baldrame de Ligação (Estaca E3 à VB17)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N21 Ø8.0 C=167"}, sup:{quant:2, diam:8.0, desc:"2 N22 Ø8.0 C=209"}, pele:null, estribos:{diam:5.0, espac:15, desc:"9 N3 Ø5.0 c/15"} } },
+
+    // Linha Longitudinal Sul (Folha 07)
+    { id:"VB10", secao:"19x30", b:19, h:30, nos:["B20", "B23", "B24", "B25"], desc:"Baldrame Longitudinal Sul (P20-P25)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"3 N46 Ø12.5 C=1158"}, sup:{quant:3, diam:8.0, desc:"3 N23 Ø8.0 C=1147"}, pele:null, estribos:{diam:5.0, espac:15, desc:"N3 Ø5.0 c/14 e c/15"} } },
+    { id:"VB11", secao:"19x30", b:19, h:30, nos:["B25", "B26", "B27", "B21"], desc:"Baldrame Longitudinal Sul (P25-P21)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"3 N48 Ø12.5 C=1085"}, sup:{quant:3, diam:8.0, desc:"3 N25 Ø8.0 C=1194"}, pele:null, estribos:{diam:5.0, espac:15, desc:"N3 Ø5.0 c/15"} } },
+    { id:"VB12", secao:"19x30", b:19, h:30, nos:["B21", "B22"], desc:"Baldrame Longitudinal Sul (P21-P22)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N26 Ø8.0 C=436"}, sup:{quant:2, diam:8.0, desc:"2 N26 Ø8.0 + 1 N27 Ø8.0"}, pele:null, estribos:{diam:5.0, espac:15, desc:"30 N3 Ø5.0 c/15"} } },
+
+    // Vigas Transversais (Norte-Sul) (Folhas 07 e 08)
+    { id:"VB13", secao:"20x45", b:20, h:45, nos:["B20", "B19", "B18"], desc:"Baldrame Transversal Oeste (P20-P18)",
+      rebar: { inf:{quant:3, diam:8.0, desc:"3 N28 Ø8.0 C=540"}, sup:{quant:4, diam:8.0, desc:"4 N29 Ø8.0 C=577"}, pele:{quant:6, diam:6.3, desc:"2x3 N8 Ø6.3 C=260"}, estribos:{diam:5.0, espac:16, desc:"36 N1 Ø5.0 c/13, c/16, c/20"} } },
+    { id:"VB14", secao:"20x45", b:20, h:45, nos:["B18", "E1", "B2"], desc:"Baldrame Transversal (P18 - E1 - P2)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N39 Ø10.0 C=611"}, sup:{quant:2, diam:10.0, desc:"2 N41 Ø10.0 C=639 + 2 N40 Ø10.0 C=325"}, pele:null, estribos:{diam:5.0, espac:15, desc:"40 N1 Ø5.0 c/15 e c/16"} } },
+    { id:"VB15", secao:"19x30", b:19, h:30, nos:["B23", "E2"], desc:"Baldrame Transversal (P23 a Estaca E2)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N30 Ø8.0 C=255"}, sup:{quant:2, diam:8.0, desc:"2 N31 Ø8.0 C=305"}, pele:null, estribos:{diam:5.0, espac:15, desc:"15 N3 Ø5.0 c/15"} } },
+    { id:"VB16", secao:"19x30", b:19, h:30, pontos:[{x:12213.5, y:50000.0}, {x:12213.5, y:50212.5}], desc:"Baldrame Transversal (VB11 a Estaca E3)",
+      rebar: { inf:{quant:2, diam:8.0, desc:"2 N32 Ø8.0 C=236"}, sup:{quant:4, diam:8.0, desc:"4 N33 Ø8.0 C=282"}, pele:null, estribos:{diam:5.0, espac:15, desc:"13 N3 Ø5.0 c/15"} } },
+    { id:"VB17", secao:"19x30", b:19, h:30, nos:["B21", "B16"], desc:"Baldrame Transversal (P21-P16)",
+      rebar: { inf:{quant:3, diam:12.5, desc:"2 N5 Ø8.0 + 3 N14 Ø12.5 C=337"}, sup:{quant:2, diam:10.0, desc:"2 N8 Ø10.0 + 2 N3 Ø6.3"}, pele:null, estribos:{diam:5.0, espac:15, desc:"28 N1 Ø5.0 c/15"} } },
+    { id:"VB18", secao:"19x30", b:19, h:30, nos:["B16", "B12", "B8"], desc:"Baldrame Transversal (P16 - P12 - P8)",
+      rebar: { inf:{quant:3, diam:10.0, desc:"3 N12 Ø10.0 C=597"}, sup:{quant:3, diam:12.5, desc:"3 N16 Ø12.5 C=618"}, pele:null, estribos:{diam:5.0, espac:15, desc:"18 N1 Ø5.0 c/15"} } },
+    { id:"VB19", secao:"19x30", b:19, h:30, nos:["B22", "B17"], desc:"Baldrame Transversal (P22-P17)",
+      rebar: { inf:{quant:2, diam:10.0, desc:"2 N9 Ø10.0 C=664"}, sup:{quant:2, diam:16.0, desc:"2 N18 Ø16.0 C=654 + 1 N4 Ø6.3"}, pele:null, estribos:{diam:5.0, espac:15, desc:"31 N1 Ø5.0 c/15"} } },
+    { id:"VB20", secao:"19x30", b:19, h:30, nos:["B17", "B13", "B9"], desc:"Baldrame Transversal (P17 - P13 - P9)",
+      rebar: { inf:{quant:3, diam:10.0, desc:"3 N10 Ø10.0 C=571 + 1 N3 Ø6.3"}, sup:{quant:2, diam:16.0, desc:"2 N19 Ø16.0 C=624"}, pele:null, estribos:{diam:5.0, espac:15, desc:"15 N1 Ø5.0 c/15"} } },
+    { id:"VB21", secao:"19x30", b:19, h:30, nos:["B14", "B10"], desc:"Baldrame Transversal (P14-P10)",
+      rebar: { inf:{quant:2, diam:16.0, desc:"2 N20 Ø16.0 C=324"}, sup:{quant:2, diam:16.0, desc:"2 N20 Ø16.0 C=324"}, pele:null, estribos:{diam:5.0, espac:10, desc:"12 N1 Ø5.0 c/10"} } },
+    { id:"VB22", secao:"40x30", b:40, h:30, nos:["B15", "B11"], desc:"Baldrame Transversal Leste (P15-P11)",
+      rebar: { inf:{quant:4, diam:12.5, desc:"4 N15 Ø12.5 C=326"}, sup:{quant:3, diam:12.5, desc:"3 N22 Ø12.5 C=324 / 7 N11 Ø10.0"}, pele:null, estribos:{diam:5.0, espac:15, duplo:true, desc:"Estribos duplos 2x8 N2 Ø5.0 c/15"} } }
+  ]
+};
+
+// Normalizar coordenadas em relação ao centro (em cm)
+const CX = DATA.center[0];
+const CY = DATA.center[1];
+Object.values(DATA.blocos).forEach(b => {
+  b.lx = b.x - CX;
+  b.ly = b.y - CY;
+  b.blockLx = b.lx + (b.blockOffsetX || 0);
+  b.blockLy = b.ly + (b.blockOffsetY || 0);
+});
+DATA.estacasIsoladas.forEach(e => {
+  e.lx = e.x - CX;
+  e.ly = e.y - CY;
+});
+
+// --- VARIÁVEIS GLOBAIS THREE.JS (OTIMIZADO PARA RETINA IPHONE) ---
+let scene, camera, renderer, controls;
+let groupConcreteBlocks = new THREE.Group();
+let groupConcreteBeams = new THREE.Group();
+let groupPiles = new THREE.Group();
+let groupBlockRebars = new THREE.Group();
+let groupBeamRebars = new THREE.Group();
+let groupPillars = new THREE.Group();
+let gridHelper;
+
+let allObjects = [];
+let selectedElement = null;
+let isIsolated = false;
+let concreteVisibilityMode = 1; // 0: oculto, 1: transparente, 2: solido
+
+let matBlockConcrete, matBeamConcrete, matPileConcrete;
+let matBlockEdges, matBeamEdges;
+
+function init() {
+  const container = document.getElementById('canvas-container');
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0c10);
+
+  camera = new THREE.PerspectiveCamera(45, width / height, 10, 15000);
+  camera.position.set(1600, -2800, 2200);
+  camera.up.set(0, 0, 1);
+
+  // CLAMP DE PIXEL RATIO PARA EVITAR TRAVAMENTO DE GPU EM IPHONE RETINA (MÁXIMO 1.75x)
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    powerPreference: 'high-performance',
+    precision: 'mediump'
+  });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  container.appendChild(renderer.domElement);
+
+  // OrbitControls com Gestos de Toque Naturais de iPhone
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.target.set(0, 0, -30);
+  controls.maxDistance = 9000;
+  controls.minDistance = 60;
+  controls.touches = {
+    ONE: THREE.TOUCH.ROTATE,
+    TWO: THREE.TOUCH.DOLLY_PAN
+  };
+
+  const amb = new THREE.AmbientLight(0xffffff, 0.85);
+  scene.add(amb);
+
+  const dir1 = new THREE.DirectionalLight(0xffffff, 0.85);
+  dir1.position.set(2000, -3000, 3500);
+  scene.add(dir1);
+
+  const dir2 = new THREE.DirectionalLight(0x94b8e6, 0.45);
+  dir2.position.set(-2000, 2000, 1500);
+  scene.add(dir2);
+
+  gridHelper = new THREE.GridHelper(4500, 45, 0x2a3245, 0x141822);
+  gridHelper.rotation.x = Math.PI / 2;
+  gridHelper.position.set(0, 0, -60);
+  scene.add(gridHelper);
+
+  initMaterials();
+  buildStructuralModel();
+
+  scene.add(groupConcreteBlocks);
+  scene.add(groupConcreteBeams);
+  scene.add(groupPiles);
+  scene.add(groupBlockRebars);
+  scene.add(groupBeamRebars);
+  scene.add(groupPillars);
+
+  setupMobileUI();
+  setupTouchRaycaster();
+
+  window.addEventListener('resize', onWindowResize);
+  animate();
+}
+
+function initMaterials() {
+  matBlockConcrete = new THREE.MeshPhysicalMaterial({
+    color: 0xd6d3d1,
+    transparent: true,
+    opacity: 0.35,
+    roughness: 0.35,
+    metalness: 0.05,
+    transmission: 0.2,
+    ior: 1.4,
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+
+  matBeamConcrete = new THREE.MeshPhysicalMaterial({
+    color: 0xcbd5e1,
+    transparent: true,
+    opacity: 0.35,
+    roughness: 0.35,
+    metalness: 0.05,
+    transmission: 0.2,
+    ior: 1.4,
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+
+  matPileConcrete = new THREE.MeshStandardMaterial({
+    color: 0x64748b,
+    roughness: 0.65,
+    metalness: 0.1
+  });
+
+  matBlockEdges = new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.6 });
+  matBeamEdges  = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.5 });
+}
+
+function buildStructuralModel() {
+  buildBlocksAndPiles();
+  buildBeams();
+}
+
+function buildBlocksAndPiles() {
+  groupConcreteBlocks.clear();
+  groupPiles.clear();
+  groupBlockRebars.clear();
+  groupPillars.clear();
+
+  Object.values(DATA.blocos).forEach(b => {
+    // Concreto do Bloco
+    const geom = new THREE.BoxGeometry(b.dim[0], b.dim[1], b.dim[2]);
+    const mesh = new THREE.Mesh(geom, matBlockConcrete.clone());
+    mesh.position.set(b.blockLx, b.blockLy, -30);
+    mesh.userData = { type: 'BLOCO', id: b.id, data: b };
+    groupConcreteBlocks.add(mesh);
+    allObjects.push(mesh);
+
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geom), matBlockEdges);
+    edges.position.copy(mesh.position);
+    groupConcreteBlocks.add(edges);
+
+    // Estacas (12 segmentos radiais para leveza no iPhone)
+    b.estacas.forEach(est => {
+      const radius = 20;
+      const len = 300;
+      const pGeom = new THREE.CylinderGeometry(radius, radius, len, 12);
+      pGeom.rotateX(Math.PI / 2);
+
+      const pMesh = new THREE.Mesh(pGeom, matPileConcrete);
+      pMesh.position.set(b.blockLx + est.rx, b.blockLy + est.ry, -55 - len/2);
+      pMesh.userData = { type: 'ESTACA', id: `${b.id}_estaca`, bloco: b.id };
+      groupPiles.add(pMesh);
+    });
+
+    buildExactRebarForBlock(b);
+    buildExactPillarStarter(b);
+  });
+
+  // Estacas Isoladas
+  DATA.estacasIsoladas.forEach(est => {
+    const radius = 20;
+    const len = 200;
+    const pGeom = new THREE.CylinderGeometry(radius, radius, len, 12);
+    pGeom.rotateX(Math.PI / 2);
+
+    const pMesh = new THREE.Mesh(pGeom, matPileConcrete);
+    pMesh.position.set(est.lx, est.ly, est.ca - len/2);
+    pMesh.userData = { type: 'ESTACA_ISOLADA', id: est.id };
+    groupPiles.add(pMesh);
+  });
+}
+
+function buildExactRebarForBlock(b) {
+  const spec = b.rebar;
+  const orient = b.orient;
+  const group = new THREE.Group();
+  group.userData = { parentId: b.id };
+
+  const matTirante = new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.35, metalness: 0.45 });
+  const matSup     = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.35, metalness: 0.45 });
+  const matLatN9   = new THREE.MeshStandardMaterial({ color: 0xec4899, roughness: 0.35, metalness: 0.45 });
+  const matCintas  = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.35, metalness: 0.45 });
+  const matEstribo = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.35, metalness: 0.45 });
+
+  if (orient === 'X' || orient === 'Y') {
+    const isX = orient === 'X';
+    const L = 150;
+    const w = 50;
+
+    // 1. Tirante Principal Inferior (4 segmentos radiais no Tube para performance)
+    const tCfg = spec.tirante;
+    const tDiam = tCfg.diam;
+    const tQuant = tCfg.quant;
+    const tRadius = Math.max(0.35, (tDiam / 20) * 1.05);
+    const tStep = (w - 10) / (tQuant - 1);
+
+    for (let i = 0; i < tQuant; i++) {
+      const off = -(w - 10)/2 + i * tStep;
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-L/2, off, -13),
+          new THREE.Vector3(-L/2, off, -54),
+          new THREE.Vector3(L/2, off, -54),
+          new THREE.Vector3(L/2, off, -13)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(off, -L/2, -13),
+          new THREE.Vector3(off, -L/2, -54),
+          new THREE.Vector3(off, L/2, -54),
+          new THREE.Vector3(off, L/2, -13)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, tRadius, 4, false), matTirante));
+    }
+
+    // 2. Armadura Superior
+    const sDiam = spec.sup ? spec.sup.diam : 8.0;
+    const sRadius = Math.max(0.3, (sDiam / 20) * 1.05);
+    [-18, 18].forEach(off => {
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-L/2, off, -47),
+          new THREE.Vector3(-L/2, off, -6),
+          new THREE.Vector3(L/2, off, -6),
+          new THREE.Vector3(L/2, off, -47)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(off, -L/2, -47),
+          new THREE.Vector3(off, -L/2, -6),
+          new THREE.Vector3(off, L/2, -6),
+          new THREE.Vector3(off, L/2, -47)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, sRadius, 4, false), matSup));
+    });
+
+    // 3. Lateral Vertical N9
+    const n9Diam = spec.lateralN9 ? spec.lateralN9.diam : 8.0;
+    const n9Radius = Math.max(0.3, (n9Diam / 20) * 1.05);
+    [-20, 20].forEach(latOff => {
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-60, latOff, -15),
+          new THREE.Vector3(-60, latOff, -45),
+          new THREE.Vector3(60, latOff, -45),
+          new THREE.Vector3(60, latOff, -15)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(latOff, -60, -15),
+          new THREE.Vector3(latOff, -60, -45),
+          new THREE.Vector3(latOff, 60, -45),
+          new THREE.Vector3(latOff, 60, -15)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, n9Radius, 4, false), matLatN9));
+    });
+
+    // 4. Cintas Horizontais Fechadas
+    const cCfg = spec.cintasH;
+    const cDiam = cCfg.diam;
+    const cQuant = cCfg.quant;
+    const cRadius = Math.max(0.25, (cDiam / 20) * 1.05);
+    const zBase = -50;
+    const zStep = 38 / (cQuant - 1);
+    for (let j = 0; j < cQuant; j++) {
+      const z = zBase + j * zStep;
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(-L/2, -w/2, z),
+          new THREE.Vector3(L/2, -w/2, z),
+          new THREE.Vector3(L/2, w/2, z),
+          new THREE.Vector3(-L/2, w/2, z)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(-w/2, -L/2, z),
+          new THREE.Vector3(w/2, -L/2, z),
+          new THREE.Vector3(w/2, L/2, z),
+          new THREE.Vector3(-w/2, L/2, z)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, cRadius, 4, true), matCintas));
+    }
+
+    // 5. Estribos Verticais
+    const eCfg = spec.estribosV;
+    const eQuant = eCfg.quant;
+    const eStep = (L - 20) / (eQuant - 1);
+    for (let k = 0; k < eQuant; k++) {
+      const loc = -(L - 20)/2 + k * eStep;
+      const z0 = -52;
+      const z1 = -8;
+      let pts;
+      if (isX) {
+        pts = [
+          new THREE.Vector3(loc, -25, z0),
+          new THREE.Vector3(loc, 25, z0),
+          new THREE.Vector3(loc, 25, z1),
+          new THREE.Vector3(loc, -25, z1)
+        ];
+      } else {
+        pts = [
+          new THREE.Vector3(-25, loc, z0),
+          new THREE.Vector3(25, loc, z0),
+          new THREE.Vector3(25, loc, z1),
+          new THREE.Vector3(-25, loc, z1)
+        ];
+      }
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.3, 4, true), matEstribo));
+    }
+
+  } else {
+    // BLOCOS DE 1 ESTACA (60 × 60 cm)
+    const eV = spec.estribosV;
+    const cH = spec.cintasH;
+
+    const eVStep = 36 / (eV.quant - 1);
+    for (let i = 0; i < eV.quant; i++) {
+      const x = -18 + i * eVStep;
+      const pts = [
+        new THREE.Vector3(x, -24.5, -53.5),
+        new THREE.Vector3(x, 24.5, -53.5),
+        new THREE.Vector3(x, 24.5, -12.5),
+        new THREE.Vector3(x, -24.5, -12.5)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.3, 4, true), matEstribo));
+    }
+
+    const cHStep = 36 / (cH.quant - 1);
+    const cRadius = Math.max(0.3, (cH.diam / 20) * 1.05);
+    for (let j = 0; j < cH.quant; j++) {
+      const z = -52 + j * cHStep;
+      const pts = [
+        new THREE.Vector3(-25.5, -25.5, z),
+        new THREE.Vector3(25.5, -25.5, z),
+        new THREE.Vector3(25.5, 25.5, z),
+        new THREE.Vector3(-25.5, 25.5, z)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, cRadius, 4, true), matCintas));
+    }
+  }
+
+  group.position.set(b.blockLx, b.blockLy, 0);
+  groupBlockRebars.add(group);
+}
+
+function buildExactPillarStarter(b) {
+  const pilarSpec = b.rebar.pilar;
+  const quant = pilarSpec.quant;
+  const diam = pilarSpec.diam;
+  const alt = pilarSpec.alt;
+
+  const group = new THREE.Group();
+  group.userData = { parentId: b.id };
+  const rebarMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.35, metalness: 0.5 });
+  const radius = Math.max(0.35, (diam / 20) * 1.05);
+
+  let barLocs = [];
+  if (quant === 4) {
+    barLocs = [{x:-9, y:-9}, {x:9, y:-9}, {x:9, y:9}, {x:-9, y:9}];
+  } else if (quant === 6) {
+    barLocs = [{x:-12, y:-8}, {x:0, y:-8}, {x:12, y:-8}, {x:-12, y:8}, {x:0, y:8}, {x:12, y:8}];
+  } else if (quant === 8) {
+    barLocs = [{x:-12, y:-12}, {x:0, y:-12}, {x:12, y:-12}, {x:12, y:0}, {x:12, y:12}, {x:0, y:12}, {x:-12, y:12}, {x:-12, y:0}];
+  } else {
+    barLocs = [{x:-10, y:-10}, {x:10, y:-10}, {x:10, y:10}, {x:-10, y:10}];
+  }
+
+  barLocs.forEach(loc => {
+    const bendDirX = loc.x >= 0 ? -1 : 1;
+    const pts = [
+      new THREE.Vector3(loc.x + bendDirX * 18, loc.y, -54),
+      new THREE.Vector3(loc.x, loc.y, -54),
+      new THREE.Vector3(loc.x, loc.y, -54 + alt)
+    ];
+    const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
+    group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 14, radius, 4, false), rebarMat));
+  });
+
+  group.position.set(b.lx, b.ly, 0);
+  groupPillars.add(group);
+}
+
+function resolveBeamNode(node, zMid) {
+  if (typeof node === 'string') {
+    if (DATA.blocos[node]) {
+      return { pt: new THREE.Vector3(DATA.blocos[node].lx, DATA.blocos[node].ly, zMid), name: node };
+    }
+    const est = DATA.estacasIsoladas.find(e => e.id === node);
+    if (est) {
+      return { pt: new THREE.Vector3(est.lx, est.ly, zMid), name: est.id };
+    }
+  } else if (node && typeof node === 'object') {
+    const lx = node.lx !== undefined ? node.lx : (node.x !== undefined ? (node.x - CX) : 0);
+    const ly = node.ly !== undefined ? node.ly : (node.y !== undefined ? (node.y - CY) : 0);
+    return { pt: new THREE.Vector3(lx, ly, zMid), name: node.name || 'Ponto' };
+  }
+  return { pt: new THREE.Vector3(0, 0, zMid), name: 'Origem' };
+}
+
+function buildBeams() {
+  groupConcreteBeams.clear();
+  groupBeamRebars.clear();
+
+  const rebarInfMat  = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.35, metalness: 0.45 });
+  const rebarSupMat  = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.35, metalness: 0.45 });
+  const rebarPeleMat = new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.35, metalness: 0.45 });
+  const stirrupMat   = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.35, metalness: 0.45 });
+
+  DATA.vigas.forEach(v => {
+    const bLarg = v.b;
+    const hAlt  = v.h;
+    const zTopo = -10;
+    const zBase = zTopo - hAlt;
+    const zMid  = (zTopo + zBase) / 2;
+
+    const rawList = v.pontos || v.nos || [];
+    for (let i = 0; i < rawList.length - 1; i++) {
+      const r1 = resolveBeamNode(rawList[i], zMid);
+      const r2 = resolveBeamNode(rawList[i+1], zMid);
+      const p1 = r1.pt;
+      const p2 = r2.pt;
+
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 1.0) continue;
+      const angle = Math.atan2(dy, dx);
+
+      const geom = new THREE.BoxGeometry(dist, bLarg, hAlt);
+      const mesh = new THREE.Mesh(geom, matBeamConcrete.clone());
+      mesh.position.set((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, zMid);
+      mesh.rotation.z = angle;
+      mesh.userData = { type: 'VIGA', id: v.id, secao: v.secao, trecho: `${r1.name}-${r2.name}`, comp: dist, desc: v.desc, data: v };
+      groupConcreteBeams.add(mesh);
+      allObjects.push(mesh);
+
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geom), matBeamEdges);
+      edges.position.copy(mesh.position);
+      edges.rotation.copy(mesh.rotation);
+      groupConcreteBeams.add(edges);
+
+      const beamRebarGroup = new THREE.Group();
+      beamRebarGroup.userData = { parentId: v.id };
+
+      const zInf = zBase + 4;
+      const zSup = zTopo - 4;
+      const yDist = (bLarg - 6) / 2;
+
+      // 1. Barras inferiores
+      const numInf = v.rebar && v.rebar.inf ? v.rebar.inf.quant : (bLarg >= 35 ? 3 : 2);
+      const diamInf = v.rebar && v.rebar.inf ? v.rebar.inf.diam : 10.0;
+      const rInf = Math.max(0.3, (diamInf / 20) * 1.05);
+      const infStep = numInf > 1 ? (yDist * 2) / (numInf - 1) : 0;
+      for (let bIdx = 0; bIdx < numInf; bIdx++) {
+        const yOff = -yDist + bIdx * infStep;
+        const infPts = [
+          new THREE.Vector3(-dist/2 + 4, yOff, zInf - zMid),
+          new THREE.Vector3(dist/2 - 4, yOff, zInf - zMid)
+        ];
+        const curve = new THREE.LineCurve3(infPts[0], infPts[1]);
+        beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 10, rInf, 4, false), rebarInfMat));
+      }
+
+      // 2. Barras superiores
+      const numSup = v.rebar && v.rebar.sup ? v.rebar.sup.quant : (bLarg >= 35 ? 3 : 2);
+      const diamSup = v.rebar && v.rebar.sup ? v.rebar.sup.diam : 8.0;
+      const rSup = Math.max(0.3, (diamSup / 20) * 1.05);
+      const supStep = numSup > 1 ? (yDist * 2) / (numSup - 1) : 0;
+      for (let bIdx = 0; bIdx < numSup; bIdx++) {
+        const yOff = -yDist + bIdx * supStep;
+        const supPts = [
+          new THREE.Vector3(-dist/2 + 4, yOff, zSup - zMid),
+          new THREE.Vector3(dist/2 - 4, yOff, zSup - zMid)
+        ];
+        const curve = new THREE.LineCurve3(supPts[0], supPts[1]);
+        beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 10, rSup, 4, false), rebarSupMat));
+      }
+
+      // 3. Armadura de Pele
+      if (v.rebar && v.rebar.pele) {
+        const diamPele = v.rebar.pele.diam || 6.3;
+        const rPele = Math.max(0.25, (diamPele / 20) * 1.05);
+        [-yDist, yDist].forEach(yOff => {
+          [ (zInf + zMid)/2 - zMid, (zSup + zMid)/2 - zMid ].forEach(zP => {
+            const pCurve = new THREE.LineCurve3(
+              new THREE.Vector3(-dist/2 + 4, yOff, zP),
+              new THREE.Vector3(dist/2 - 4, yOff, zP)
+            );
+            beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(pCurve, 10, rPele, 4, false), rebarPeleMat));
+          });
+        });
+      }
+
+      // 4. Estribos transversais
+      const espac = (v.rebar && v.rebar.estribos && v.rebar.estribos.espac) ? v.rebar.estribos.espac : 15;
+      const isDuplo = v.rebar && v.rebar.estribos && v.rebar.estribos.duplo;
+      const numEstribos = Math.max(2, Math.floor((dist - 16) / espac));
+      const eStep = (dist - 16) / (numEstribos - 1);
+
+      for (let sIdx = 0; sIdx < numEstribos; sIdx++) {
+        const xPos = -dist/2 + 8 + sIdx * eStep;
+        if (isDuplo) {
+          [-yDist/2, yDist/2].forEach(yCenter => {
+            const halfW = (yDist) / 2;
+            const pts = [
+              new THREE.Vector3(xPos, yCenter - halfW, zInf - zMid),
+              new THREE.Vector3(xPos, yCenter + halfW, zInf - zMid),
+              new THREE.Vector3(xPos, yCenter + halfW, zSup - zMid),
+              new THREE.Vector3(xPos, yCenter - halfW, zSup - zMid)
+            ];
+            const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+            beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 14, 0.25, 4, true), stirrupMat));
+          });
+        } else {
+          const pts = [
+            new THREE.Vector3(xPos, -yDist, zInf - zMid),
+            new THREE.Vector3(xPos, yDist, zInf - zMid),
+            new THREE.Vector3(xPos, yDist, zSup - zMid),
+            new THREE.Vector3(xPos, -yDist, zSup - zMid)
+          ];
+          const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
+          beamRebarGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 14, 0.25, 4, true), stirrupMat));
+        }
+      }
+
+      beamRebarGroup.position.set((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, zMid);
+      beamRebarGroup.rotation.z = angle;
+      groupBeamRebars.add(beamRebarGroup);
+    }
+  });
+}
+
+// ============================================================
+// LÓGICA DE UI MOBILE E TOUCH GESTURES (BOTTOM SHEET)
+// ============================================================
+const sheet = document.getElementById('bottomSheet');
+const sheetHandle = document.getElementById('sheetHandle');
+let currentSheetState = 'peek'; // 'peek', 'half', 'full'
+
+function setSheetState(state) {
+  sheet.classList.remove('state-peek', 'state-half', 'state-full');
+  sheet.classList.add(`state-${state}`);
+  currentSheetState = state;
+}
+
+function setupMobileUI() {
+  // 1. Alternância de abas da gaveta
+  document.querySelectorAll('.sheet-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+
+      if (currentSheetState === 'peek') {
+        setSheetState('half');
+      }
+    });
+  });
+
+  // 2. Drag / Touch da gaveta
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  sheetHandle.addEventListener('touchstart', e => {
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const deltaY = currentY - startY;
+    if (Math.abs(deltaY) > 40) {
+      if (deltaY < 0) {
+        // Deslizar para cima
+        if (currentSheetState === 'peek') setSheetState('half');
+        else if (currentSheetState === 'half') setSheetState('full');
+      } else {
+        // Deslizar para baixo
+        if (currentSheetState === 'full') setSheetState('half');
+        else if (currentSheetState === 'half') setSheetState('peek');
+      }
+    }
+  });
+
+  // Clique na alça para alternar
+  sheetHandle.addEventListener('click', () => {
+    if (currentSheetState === 'peek') setSheetState('half');
+    else if (currentSheetState === 'half') setSheetState('peek');
+    else setSheetState('half');
+  });
+
+  document.getElementById('btnCloseSheet').addEventListener('click', () => {
+    setSheetState('peek');
+  });
+
+  document.getElementById('btnToggleSheet').addEventListener('click', () => {
+    if (currentSheetState === 'peek') setSheetState('half');
+    else setSheetState('peek');
+  });
+
+  // 3. Atalhos de Câmera
+  document.querySelectorAll('.chip-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setCameraView(btn.dataset.view);
+    });
+  });
+
+  document.getElementById('btnResetCamera').addEventListener('click', () => {
+    resetView();
+    showToast('Câmera restaurada');
+  });
+
+  // 4. Botões Flutuantes Rápidos
+  document.getElementById('btnToggleConcrete').addEventListener('click', () => {
+    concreteVisibilityMode = (concreteVisibilityMode + 1) % 3;
+    if (concreteVisibilityMode === 0) {
+      groupConcreteBlocks.visible = false;
+      groupConcreteBeams.visible = false;
+      showToast('Concreto: Invisível');
+    } else if (concreteVisibilityMode === 1) {
+      groupConcreteBlocks.visible = true;
+      groupConcreteBeams.visible = true;
+      matBlockConcrete.opacity = 0.35;
+      matBeamConcrete.opacity = 0.35;
+      showToast('Concreto: Transparente');
+    } else {
+      groupConcreteBlocks.visible = true;
+      groupConcreteBeams.visible = true;
+      matBlockConcrete.opacity = 0.95;
+      matBeamConcrete.opacity = 0.95;
+      showToast('Concreto: Sólido');
+    }
+  });
+
+  document.getElementById('btnToggleRebars').addEventListener('click', e => {
+    const on = !groupBlockRebars.visible;
+    groupBlockRebars.visible = on;
+    groupBeamRebars.visible = on;
+    e.currentTarget.classList.toggle('active', on);
+    showToast(on ? 'Armaduras: Ativadas' : 'Armaduras: Ocultadas');
+  });
+
+  document.getElementById('btnToggleIsolate').addEventListener('click', () => {
+    if (selectedElement) {
+      toggleIsolate();
+    } else {
+      showToast('Selecione primeiro um bloco ou viga');
+    }
+  });
+
+  // 5. Botões de Ação na Ficha de Inspeção
+  document.getElementById('btnSheetIsolate').addEventListener('click', toggleIsolate);
+  document.getElementById('btnSheetFocus').addEventListener('click', () => {
+    if (selectedElement) focusOnElement(selectedElement.type, selectedElement.id);
+  });
+  document.getElementById('btnSheetAll').addEventListener('click', showAllElements);
+
+  // 6. Controles de Camadas
+  document.getElementById('sliderOpacity').addEventListener('input', e => {
+    const val = parseFloat(e.target.value);
+    matBlockConcrete.opacity = val;
+    matBeamConcrete.opacity = val;
+  });
+  document.getElementById('checkPiles').addEventListener('change', e => {
+    groupPiles.visible = e.target.checked;
+  });
+  document.getElementById('checkPillars').addEventListener('change', e => {
+    groupPillars.visible = e.target.checked;
+  });
+  document.getElementById('checkGrid').addEventListener('change', e => {
+    gridHelper.visible = e.target.checked;
+  });
+
+  // 7. Gerar Grids de Seleção Rápida
+  populateGridBlocos();
+  populateGridVigas();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('mobileToast');
+  t.innerText = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function populateGridBlocos() {
+  const grid = document.getElementById('gridBlocos');
+  grid.innerHTML = '';
+  Object.values(DATA.blocos).forEach(b => {
+    const btn = document.createElement('div');
+    btn.className = 'grid-item-btn';
+    btn.id = `grid-btn-${b.id}`;
+    btn.innerHTML = `
+      <div class="item-title">${b.id}</div>
+      <div class="item-sub">${b.dim[0]}x${b.dim[1]}</div>
+    `;
+    btn.addEventListener('click', () => {
+      inspectElement('BLOCO', b.id);
+      switchToInspectTab();
+    });
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('searchBlocos').addEventListener('input', e => {
+    const term = e.target.value.toUpperCase();
+    Object.values(DATA.blocos).forEach(b => {
+      const el = document.getElementById(`grid-btn-${b.id}`);
+      if (el) {
+        const match = b.id.includes(term) || `${b.dim[0]}x${b.dim[1]}`.includes(term);
+        el.style.display = match ? 'block' : 'none';
+      }
+    });
+  });
+}
+
+function populateGridVigas() {
+  const grid = document.getElementById('gridVigas');
+  grid.innerHTML = '';
+  DATA.vigas.forEach(v => {
+    const btn = document.createElement('div');
+    btn.className = 'grid-item-btn';
+    btn.id = `grid-btn-${v.id}`;
+    btn.innerHTML = `
+      <div class="item-title">${v.id}</div>
+      <div class="item-sub">${v.secao}</div>
+    `;
+    btn.addEventListener('click', () => {
+      inspectElement('VIGA', v.id);
+      switchToInspectTab();
+    });
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('searchVigas').addEventListener('input', e => {
+    const term = e.target.value.toUpperCase();
+    DATA.vigas.forEach(v => {
+      const el = document.getElementById(`grid-btn-${v.id}`);
+      if (el) {
+        const match = v.id.includes(term) || v.secao.includes(term) || (v.desc && v.desc.toUpperCase().includes(term));
+        el.style.display = match ? 'block' : 'none';
+      }
+    });
+  });
+}
+
+function switchToInspectTab() {
+  document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-tab="tab-inspect"]').classList.add('active');
+  document.getElementById('tab-inspect').classList.add('active');
+  setSheetState('half');
+}
+
+// ============================================================
+// INSPEÇÃO TÉCNICA E DETALHAMENTO DE ARMADURAS
+// ============================================================
+function inspectElement(type, id) {
+  selectedElement = { type, id };
+
+  document.querySelectorAll('.grid-item-btn').forEach(b => b.classList.remove('selected'));
+  const activeGridBtn = document.getElementById(`grid-btn-${id}`);
+  if (activeGridBtn) activeGridBtn.classList.add('selected');
+
+  document.getElementById('inspectEmptyState').style.display = 'none';
+  document.getElementById('inspectFilledState').style.display = 'block';
+
+  document.getElementById('sheetBadge').innerText = type;
+  document.getElementById('sheetTitle').innerText = `${type === 'BLOCO' ? 'Bloco' : 'Viga'} ${id}`;
+
+  const detailsList = document.getElementById('insDetailsList');
+  detailsList.innerHTML = '';
+
+  if (type === 'BLOCO') {
+    const b = DATA.blocos[id];
+    document.getElementById('insTitle').innerText = `Bloco ${b.id} (${b.pilar})`;
+    document.getElementById('insSub').innerText = `${b.estacas.length} Estaca(s) Ø40 · Dim: ${b.dim[0]} × ${b.dim[1]} × ${b.dim[2]} cm`;
+    document.getElementById('insPrancha').innerText = b.orient === 'CENTRAL' ? 'Folha 02..05 (1 Estaca)' : `Folha 02..05 (2 Estacas em ${b.orient})`;
+
+    if (b.rebar.tirante) {
+      addRebarRow(detailsList, 'TIRANTE PRINCIPAL', `${b.rebar.tirante.quant} Ø${b.rebar.tirante.diam.toFixed(1)} c/${b.rebar.tirante.espac} (em U)`, 'bg-tirante');
+    }
+    if (b.rebar.sup) {
+      addRebarRow(detailsList, 'ARMADURA SUPERIOR', `${b.rebar.sup.quant} Ø${b.rebar.sup.diam.toFixed(1)} (gaiola topo)`, 'bg-sup');
+    }
+    if (b.rebar.lateralN9) {
+      addRebarRow(detailsList, 'LATERAL VERTICAL N9', `${b.rebar.lateralN9.quant} Ø${b.rebar.lateralN9.diam.toFixed(1)} (verticais paralelas)`, 'bg-pele');
+    }
+    if (b.rebar.cintasH) {
+      addRebarRow(detailsList, 'CINTAS HORIZONTAIS', `${b.rebar.cintasH.quant} Ø${b.rebar.cintasH.diam.toFixed(1)} c/${b.rebar.cintasH.espac || 10} fechadas`, 'bg-cintas');
+    }
+    if (b.rebar.estribosV) {
+      addRebarRow(detailsList, 'ESTRIBOS VERTICAIS', `${b.rebar.estribosV.quant} Ø${b.rebar.estribosV.diam.toFixed(1)} verticais fechados`, 'bg-estribo');
+    }
+    if (b.rebar.pilar) {
+      addRebarRow(detailsList, 'ARRANQUE PILAR', `${b.rebar.pilar.quant} Ø${b.rebar.pilar.diam.toFixed(1)} C=${b.rebar.pilar.alt + 20} cm`, 'bg-sup');
+    }
+
+  } else if (type === 'VIGA') {
+    const v = DATA.vigas.find(item => item.id === id);
+    document.getElementById('insTitle').innerText = `Viga ${v.id} (${v.secao})`;
+    document.getElementById('insSub').innerText = `${v.desc || 'Baldrame'} · Nível: ${v.nivel || -10} cm`;
+    document.getElementById('insPrancha').innerText = 'Folha 07 / 08';
+
+    if (v.rebar && v.rebar.inf) {
+      addRebarRow(detailsList, 'ARMADURA INFERIOR', v.rebar.inf.desc, 'bg-estribo');
+    }
+    if (v.rebar && v.rebar.sup) {
+      addRebarRow(detailsList, 'ARMADURA SUPERIOR', v.rebar.sup.desc, 'bg-sup');
+    }
+    if (v.rebar && v.rebar.pele) {
+      addRebarRow(detailsList, 'ARMADURA DE PELE', v.rebar.pele.desc, 'bg-pele');
+    }
+    if (v.rebar && v.rebar.estribos) {
+      addRebarRow(detailsList, 'ESTRIBOS TRANSVERSAIS', v.rebar.estribos.desc, 'bg-cintas');
+    }
+  }
+
+  focusOnElement(type, id);
+  showToast(`${type === 'BLOCO' ? 'Bloco' : 'Viga'} ${id} selecionado`);
+}
+
+function addRebarRow(container, badgeText, descText, badgeClass) {
+  const row = document.createElement('div');
+  row.className = 'rebar-row';
+  row.innerHTML = `
+    <div>
+      <span class="rebar-badge ${badgeClass}">${badgeText}</span>
+    </div>
+    <div style="font-weight:600; text-align:right; font-size:11px;">${descText}</div>
+  `;
+  container.appendChild(row);
+}
+
+function toggleIsolate() {
+  if (!selectedElement) return;
+  isIsolated = !isIsolated;
+  document.getElementById('btnSheetIsolate').innerText = isIsolated ? '🌐 Ver Conjunto' : '🔍 Isolar no 3D';
+  document.getElementById('btnToggleIsolate').classList.toggle('active', isIsolated);
+
+  const selId = selectedElement.id;
+
+  groupConcreteBlocks.children.forEach(c => {
+    if (c.userData && c.userData.type === 'BLOCO') {
+      c.visible = !isIsolated || c.userData.id === selId;
+    } else if (c.isLineSegments) {
+      c.visible = !isIsolated;
+    }
+  });
+
+  groupConcreteBeams.children.forEach(c => {
+    if (c.userData && c.userData.type === 'VIGA') {
+      c.visible = !isIsolated || c.userData.id === selId;
+    } else if (c.isLineSegments) {
+      c.visible = !isIsolated;
+    }
+  });
+
+  groupBlockRebars.children.forEach(c => {
+    c.visible = !isIsolated || (c.userData && c.userData.parentId === selId);
+  });
+
+  groupBeamRebars.children.forEach(c => {
+    c.visible = !isIsolated || (c.userData && c.userData.parentId === selId);
+  });
+
+  groupPillars.children.forEach(c => {
+    c.visible = !isIsolated || (c.userData && c.userData.parentId === selId);
+  });
+
+  groupPiles.visible = !isIsolated;
+  showToast(isIsolated ? `Elemento ${selId} isolado` : 'Todos os elementos visíveis');
+}
+
+function showAllElements() {
+  isIsolated = false;
+  document.getElementById('btnSheetIsolate').innerText = '🔍 Isolar no 3D';
+  document.getElementById('btnToggleIsolate').classList.remove('active');
+
+  groupConcreteBlocks.children.forEach(c => c.visible = true);
+  groupConcreteBeams.children.forEach(c => c.visible = true);
+  groupBlockRebars.children.forEach(c => c.visible = true);
+  groupBeamRebars.children.forEach(c => c.visible = true);
+  groupPillars.children.forEach(c => c.visible = true);
+  groupPiles.visible = true;
+
+  resetView();
+  showToast('Visão Geral da Obra');
+}
+
+function focusOnElement(type, id) {
+  let target = new THREE.Vector3(0, 0, -30);
+
+  if (type === 'BLOCO') {
+    const b = DATA.blocos[id];
+    target.set(b.blockLx, b.blockLy, -30);
+    animateCamera(
+      new THREE.Vector3(b.blockLx + 220, b.blockLy - 320, 260),
+      target,
+      new THREE.Vector3(0, 0, 1)
+    );
+  } else if (type === 'VIGA') {
+    let count = 0;
+    const center = new THREE.Vector3();
+    groupConcreteBeams.children.forEach(m => {
+      if (m.userData && m.userData.id === id && m.isMesh) {
+        center.add(m.position);
+        count++;
+      }
+    });
+    if (count > 0) {
+      center.divideScalar(count);
+      target.copy(center);
+      animateCamera(
+        new THREE.Vector3(center.x + 300, center.y - 450, center.z + 380),
+        target,
+        new THREE.Vector3(0, 0, 1)
+      );
+    }
+  }
+}
+
+// ============================================================
+// TOUCH RAYCASTER (PRECISÃO PARA IPHONE SEM CONFLITO DE GESTOS)
+// ============================================================
+function setupTouchRaycaster() {
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  let touchStartPos = { x: 0, y: 0 };
+  let touchStartTime = 0;
+
+  const dom = renderer.domElement;
+
+  dom.addEventListener('pointerdown', e => {
+    touchStartPos = { x: e.clientX, y: e.clientY };
+    touchStartTime = performance.now();
+  }, { passive: true });
+
+  dom.addEventListener('pointerup', e => {
+    const dx = e.clientX - touchStartPos.x;
+    const dy = e.clientY - touchStartPos.y;
+    const dist = Math.hypot(dx, dy);
+    const duration = performance.now() - touchStartTime;
+
+    // Se o dedo moveu menos de 10px em menos de 350ms, é um TOQUE limpo!
+    if (dist < 10 && duration < 350) {
+      const rect = dom.getBoundingClientRect();
+      pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(allObjects, false);
+
+      if (hits.length > 0 && hits[0].object.userData.type) {
+        const data = hits[0].object.userData;
+        inspectElement(data.type, data.id);
+        switchToInspectTab();
+      }
+    }
+  }, { passive: true });
+}
+
+// ============================================================
+// CÂMERA E ANIMAÇÃO SUAVE
+// ============================================================
+let cameraTween = null;
+
+function animateCamera(targetPos, targetLookAt, targetUp) {
+  const startPos = camera.position.clone();
+  const startLookAt = controls.target.clone();
+  const startUp = camera.up.clone();
+  const duration = 650;
+  const startTime = performance.now();
+
+  if (cameraTween) cancelAnimationFrame(cameraTween);
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    camera.position.lerpVectors(startPos, targetPos, ease);
+    controls.target.lerpVectors(startLookAt, targetLookAt, ease);
+    camera.up.lerpVectors(startUp, targetUp, ease);
+    controls.update();
+
+    if (progress < 1) {
+      cameraTween = requestAnimationFrame(step);
+    }
+  }
+  cameraTween = requestAnimationFrame(step);
+}
+
+function setCameraView(view) {
+  switch(view) {
+    case 'iso':
+      animateCamera(new THREE.Vector3(1600, -2800, 2200), new THREE.Vector3(0, 0, -30), new THREE.Vector3(0, 0, 1));
+      break;
+    case 'planta':
+      animateCamera(new THREE.Vector3(0, 0, 3600), new THREE.Vector3(0, 0, -30), new THREE.Vector3(0, 1, 0));
+      break;
+    case 'norte':
+      animateCamera(new THREE.Vector3(0, -3600, -30), new THREE.Vector3(0, 0, -30), new THREE.Vector3(0, 0, 1));
+      break;
+    case 'oeste':
+      animateCamera(new THREE.Vector3(-3600, 0, -30), new THREE.Vector3(0, 0, -30), new THREE.Vector3(0, 0, 1));
+      break;
+    case 'estacas':
+      animateCamera(new THREE.Vector3(1200, -1800, -900), new THREE.Vector3(0, 0, -200), new THREE.Vector3(0, 0, 1));
+      break;
+  }
+}
+
+function resetView() {
+  document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-view="iso"]').classList.add('active');
+  setCameraView('iso');
+}
+
+function onWindowResize() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>

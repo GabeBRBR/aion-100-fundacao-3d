@@ -5,10 +5,10 @@
     "data": "22/09/2026",
     "dimensoesObra": {
       "extensaoX_m": 34.22,
-      "larguraY_m": 10.49,
+      "larguraY_m": 9.99,
       "centroGlobal": [
         11711.2,
-        50524.4
+        50499.4
       ]
     },
     "totais": {
@@ -26,9 +26,15 @@
       "numEstacas": 1,
       "orientacao": "CENTRAL",
       "globalX": 10000.0,
-      "globalY": 51048.9,
+      "globalY": 50998.9,
       "localX": -1711.2,
-      "localY": 524.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -20.0,
+      "blockGlobalX": 10000.0,
+      "blockGlobalY": 50978.9,
+      "blockLocalX": -1711.2,
+      "blockLocalY": 479.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -47,6 +53,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": -20.0,
         "dim": [
           60,
           60,
@@ -84,7 +91,13 @@
       "globalX": 10131.5,
       "globalY": 50998.9,
       "localX": -1579.7,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 10131.5,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": -1579.7,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -95,7 +108,7 @@
         {
           "id": "B2_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -103,7 +116,7 @@
         {
           "id": "B2_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -111,6 +124,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -151,7 +165,13 @@
       "globalX": 10496.0,
       "globalY": 50998.9,
       "localX": -1215.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 10496.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": -1215.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -162,7 +182,7 @@
         {
           "id": "B3_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -170,7 +190,7 @@
         {
           "id": "B3_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -178,6 +198,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -218,7 +239,13 @@
       "globalX": 10829.0,
       "globalY": 50998.9,
       "localX": -882.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 10829.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": -882.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -229,7 +256,7 @@
         {
           "id": "B4_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -237,7 +264,7 @@
         {
           "id": "B4_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -245,6 +272,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -285,7 +313,13 @@
       "globalX": 11209.0,
       "globalY": 50998.9,
       "localX": -502.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 11209.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": -502.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -296,7 +330,7 @@
         {
           "id": "B5_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -304,7 +338,7 @@
         {
           "id": "B5_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -312,6 +346,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -352,7 +387,13 @@
       "globalX": 11589.0,
       "globalY": 50998.9,
       "localX": -122.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 11589.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": -122.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -363,7 +404,7 @@
         {
           "id": "B6_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -371,7 +412,7 @@
         {
           "id": "B6_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -379,6 +420,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -419,7 +461,13 @@
       "globalX": 11969.0,
       "globalY": 50998.9,
       "localX": 257.8,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 11969.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": 257.8,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -430,7 +478,7 @@
         {
           "id": "B7_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -438,7 +486,7 @@
         {
           "id": "B7_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -446,6 +494,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -486,7 +535,13 @@
       "globalX": 12349.0,
       "globalY": 50998.9,
       "localX": 637.8,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 12349.0,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": 637.8,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -497,7 +552,7 @@
         {
           "id": "B8_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -505,7 +560,7 @@
         {
           "id": "B8_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -513,6 +568,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -553,7 +609,13 @@
       "globalX": 12736.5,
       "globalY": 50998.9,
       "localX": 1025.3,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 12736.5,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": 1025.3,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -564,7 +626,7 @@
         {
           "id": "B9_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -572,7 +634,7 @@
         {
           "id": "B9_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -580,6 +642,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -620,7 +683,13 @@
       "globalX": 12901.4,
       "globalY": 50998.9,
       "localX": 1190.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 12901.4,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": 1190.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -631,7 +700,7 @@
         {
           "id": "B10_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -639,7 +708,7 @@
         {
           "id": "B10_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -647,6 +716,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -687,7 +757,13 @@
       "globalX": 13422.4,
       "globalY": 50998.9,
       "localX": 1711.2,
-      "localY": 474.5,
+      "localY": 499.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": -70.0,
+      "blockGlobalX": 13422.4,
+      "blockGlobalY": 50928.9,
+      "blockLocalX": 1711.2,
+      "blockLocalY": 429.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -698,7 +774,7 @@
         {
           "id": "B11_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -706,7 +782,7 @@
         {
           "id": "B11_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -714,6 +790,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": -70.0,
         "dim": [
           60,
           160,
@@ -754,7 +831,13 @@
       "globalX": 12349.0,
       "globalY": 50773.4,
       "localX": 637.8,
-      "localY": 249.0,
+      "localY": 274.0,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12349.0,
+      "blockGlobalY": 50773.4,
+      "blockLocalX": 637.8,
+      "blockLocalY": 274.0,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -773,6 +856,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -810,7 +894,13 @@
       "globalX": 12731.0,
       "globalY": 50773.4,
       "localX": 1019.8,
-      "localY": 249.0,
+      "localY": 274.0,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12731.0,
+      "blockGlobalY": 50773.4,
+      "blockLocalX": 1019.8,
+      "blockLocalY": 274.0,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -821,7 +911,7 @@
         {
           "id": "B13_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -829,7 +919,7 @@
         {
           "id": "B13_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -837,6 +927,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": 0.0,
         "dim": [
           60,
           160,
@@ -877,7 +968,13 @@
       "globalX": 12901.4,
       "globalY": 50778.9,
       "localX": 1190.2,
-      "localY": 254.5,
+      "localY": 279.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12901.4,
+      "blockGlobalY": 50778.9,
+      "blockLocalX": 1190.2,
+      "blockLocalY": 279.5,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -896,6 +993,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -933,7 +1031,13 @@
       "globalX": 13422.4,
       "globalY": 50784.4,
       "localX": 1711.2,
-      "localY": 260.0,
+      "localY": 285.0,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 13422.4,
+      "blockGlobalY": 50784.4,
+      "blockLocalX": 1711.2,
+      "blockLocalY": 285.0,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -952,6 +1056,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -989,7 +1094,13 @@
       "globalX": 12354.5,
       "globalY": 50550.4,
       "localX": 643.3,
-      "localY": 26.0,
+      "localY": 51.0,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12354.5,
+      "blockGlobalY": 50550.4,
+      "blockLocalX": 643.3,
+      "blockLocalY": 51.0,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -1000,7 +1111,7 @@
         {
           "id": "B16_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1008,7 +1119,7 @@
         {
           "id": "B16_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1016,6 +1127,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": 0.0,
         "dim": [
           60,
           160,
@@ -1056,7 +1168,13 @@
       "globalX": 12731.0,
       "globalY": 50555.9,
       "localX": 1019.8,
-      "localY": 31.5,
+      "localY": 56.5,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12731.0,
+      "blockGlobalY": 50555.9,
+      "blockLocalX": 1019.8,
+      "blockLocalY": 56.5,
       "localZ": 0.0,
       "dimX": 160,
       "dimY": 60,
@@ -1083,6 +1201,7 @@
       ],
       "especRebar": {
         "orient": "X",
+        "offsetY": 0.0,
         "dim": [
           160,
           60,
@@ -1123,7 +1242,13 @@
       "globalX": 10131.5,
       "globalY": 50491.5,
       "localX": -1579.7,
-      "localY": -32.9,
+      "localY": -7.9,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 10131.5,
+      "blockGlobalY": 50491.5,
+      "blockLocalX": -1579.7,
+      "blockLocalY": -7.9,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1142,6 +1267,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1179,7 +1305,13 @@
       "globalX": 10121.5,
       "globalY": 50211.0,
       "localX": -1589.7,
-      "localY": -313.4,
+      "localY": -288.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 10121.5,
+      "blockGlobalY": 50211.0,
+      "blockLocalX": -1589.7,
+      "blockLocalY": -288.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1198,6 +1330,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1235,7 +1368,13 @@
       "globalX": 10116.0,
       "globalY": 50005.5,
       "localX": -1595.2,
-      "localY": -518.9,
+      "localY": -493.9,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 10116.0,
+      "blockGlobalY": 50005.5,
+      "blockLocalX": -1595.2,
+      "blockLocalY": -493.9,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1254,6 +1393,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1291,7 +1431,13 @@
       "globalX": 12349.0,
       "globalY": 50005.5,
       "localX": 637.8,
-      "localY": -518.9,
+      "localY": -493.9,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12349.0,
+      "blockGlobalY": 50005.5,
+      "blockLocalX": 637.8,
+      "blockLocalY": -493.9,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -1302,7 +1448,7 @@
         {
           "id": "B21_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1310,7 +1456,7 @@
         {
           "id": "B21_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1318,6 +1464,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": 0.0,
         "dim": [
           60,
           160,
@@ -1358,7 +1505,13 @@
       "globalX": 12731.0,
       "globalY": 50005.5,
       "localX": 1019.8,
-      "localY": -518.9,
+      "localY": -493.9,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 12731.0,
+      "blockGlobalY": 50005.5,
+      "blockLocalX": 1019.8,
+      "blockLocalY": -493.9,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 160,
@@ -1369,7 +1522,7 @@
         {
           "id": "B22_E1",
           "relX": 0.0,
-          "relY": -50.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1377,7 +1530,7 @@
         {
           "id": "B22_E2",
           "relX": 0.0,
-          "relY": 50.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
@@ -1385,6 +1538,7 @@
       ],
       "especRebar": {
         "orient": "Y",
+        "offsetY": 0.0,
         "dim": [
           60,
           160,
@@ -1425,7 +1579,13 @@
       "globalX": 10496.0,
       "globalY": 50000.0,
       "localX": -1215.2,
-      "localY": -524.4,
+      "localY": -499.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 10496.0,
+      "blockGlobalY": 50000.0,
+      "blockLocalX": -1215.2,
+      "blockLocalY": -499.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1444,6 +1604,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1481,7 +1642,13 @@
       "globalX": 10829.0,
       "globalY": 50000.0,
       "localX": -882.2,
-      "localY": -524.4,
+      "localY": -499.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 10829.0,
+      "blockGlobalY": 50000.0,
+      "blockLocalX": -882.2,
+      "blockLocalY": -499.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1500,6 +1667,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1537,7 +1705,13 @@
       "globalX": 11209.0,
       "globalY": 50000.0,
       "localX": -502.2,
-      "localY": -524.4,
+      "localY": -499.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 11209.0,
+      "blockGlobalY": 50000.0,
+      "blockLocalX": -502.2,
+      "blockLocalY": -499.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1556,6 +1730,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1593,7 +1768,13 @@
       "globalX": 11589.0,
       "globalY": 50000.0,
       "localX": -122.2,
-      "localY": -524.4,
+      "localY": -499.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 11589.0,
+      "blockGlobalY": 50000.0,
+      "blockLocalX": -122.2,
+      "blockLocalY": -499.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1612,6 +1793,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1649,7 +1831,13 @@
       "globalX": 11969.0,
       "globalY": 50000.0,
       "localX": 257.8,
-      "localY": -524.4,
+      "localY": -499.4,
+      "blockOffsetX": 0.0,
+      "blockOffsetY": 0.0,
+      "blockGlobalX": 11969.0,
+      "blockGlobalY": 50000.0,
+      "blockLocalX": 257.8,
+      "blockLocalY": -499.4,
       "localZ": 0.0,
       "dimX": 60,
       "dimY": 60,
@@ -1668,6 +1856,7 @@
       ],
       "especRebar": {
         "orient": "CENTRAL",
+        "offsetY": 0.0,
         "dim": [
           60,
           60,
@@ -1702,7 +1891,7 @@
       "globalX": 10147.0,
       "globalY": 50780.9,
       "localX": -1564.2,
-      "localY": 256.5,
+      "localY": 281.5,
       "diam": 40.0,
       "prof": 200.0,
       "ca": -10.0,
@@ -1713,7 +1902,7 @@
       "globalX": 10490.5,
       "globalY": 50211.0,
       "localX": -1220.7,
-      "localY": -313.4,
+      "localY": -288.4,
       "diam": 40.0,
       "prof": 200.0,
       "ca": -10.0,
@@ -1724,7 +1913,7 @@
       "globalX": 12213.5,
       "globalY": 50212.5,
       "localX": 502.3,
-      "localY": -311.9,
+      "localY": -286.9,
       "diam": 40.0,
       "prof": 200.0,
       "ca": -10.0,
@@ -1842,9 +2031,15 @@
       "b": 40.0,
       "h": 30.0,
       "nivel": -10.0,
-      "nos": [
-        "B10",
-        "B11"
+      "pontos": [
+        {
+          "x": 1190.199999999999,
+          "y": 489.45000000000437
+        },
+        {
+          "x": 1711.199999999999,
+          "y": 489.45000000000437
+        }
       ],
       "desc": "Baldrame Longitudinal Norte (P10-P11)",
       "rebar": {
@@ -1938,11 +2133,11 @@
       "pontos": [
         {
           "x": 643.2999999999993,
-          "y": -224.9499999999971
+          "y": -199.9499999999971
         },
         {
           "x": 1019.7999999999993,
-          "y": -224.9499999999971
+          "y": -199.9499999999971
         }
       ],
       "desc": "Baldrame Intermediário entre VB17 e VB19 (vão 401 cm)",
@@ -2004,11 +2199,11 @@
       "pontos": [
         {
           "x": 502.2999999999993,
-          "y": -311.9499999999971
+          "y": -286.9499999999971
         },
         {
           "x": 643.2999999999993,
-          "y": -311.9499999999971
+          "y": -286.9499999999971
         }
       ],
       "desc": "Baldrame de Ligação (Estaca E3 à VB17)",
@@ -2230,11 +2425,11 @@
       "pontos": [
         {
           "x": 502.2999999999993,
-          "y": -524.4499999999971
+          "y": -499.4499999999971
         },
         {
           "x": 502.2999999999993,
-          "y": -311.9499999999971
+          "y": -286.9499999999971
         }
       ],
       "desc": "Baldrame Transversal (VB11 a Estaca E3)",
