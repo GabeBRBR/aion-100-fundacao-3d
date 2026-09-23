@@ -979,120 +979,106 @@ function buildExactRebarForBlock(b) {
     const L = 150;
     const w = 50;
 
-    // 1. Tirante Principal Inferior (4 segmentos radiais no Tube para performance)
+    // 1. Tirante Principal Inferior (vão reto 150 cm com abas verticais de 41 cm)
     const tCfg = spec.tirante;
     const tDiam = tCfg.diam;
     const tQuant = tCfg.quant;
     const tRadius = Math.max(0.35, (tDiam / 20) * 1.05);
-    const tStep = (w - 10) / (tQuant - 1);
+    const tStep = (tQuant > 1) ? 42 / (tQuant - 1) : 0;
 
     for (let i = 0; i < tQuant; i++) {
-      const off = -(w - 10)/2 + i * tStep;
+      const off = -21 + i * tStep;
       let pts;
       if (isX) {
         pts = [
-          new THREE.Vector3(-L/2, off, -13),
-          new THREE.Vector3(-L/2, off, -54),
-          new THREE.Vector3(L/2, off, -54),
-          new THREE.Vector3(L/2, off, -13)
+          new THREE.Vector3(-75, off, -13),
+          new THREE.Vector3(-75, off, -53.5),
+          new THREE.Vector3(75, off, -53.5),
+          new THREE.Vector3(75, off, -13)
         ];
       } else {
         pts = [
-          new THREE.Vector3(off, -L/2, -13),
-          new THREE.Vector3(off, -L/2, -54),
-          new THREE.Vector3(off, L/2, -54),
-          new THREE.Vector3(off, L/2, -13)
+          new THREE.Vector3(off, -75, -13),
+          new THREE.Vector3(off, -75, -53.5),
+          new THREE.Vector3(off, 75, -53.5),
+          new THREE.Vector3(off, 75, -13)
         ];
       }
       const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
       group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, tRadius, 4, false), matTirante));
     }
 
-    // 2. Armadura Superior
-    const sDiam = spec.sup ? spec.sup.diam : 8.0;
-    const sRadius = Math.max(0.3, (sDiam / 20) * 1.05);
-    [-18, 18].forEach(off => {
+    // 2. Duas Barras Laterais em U vertical longitudinal com abas de 30 cm para cima (N9 / N10, C=206 cm)
+    const latOffsets = [-23.5, 23.5];
+    latOffsets.forEach(off => {
       let pts;
       if (isX) {
         pts = [
-          new THREE.Vector3(-L/2, off, -47),
-          new THREE.Vector3(-L/2, off, -6),
-          new THREE.Vector3(L/2, off, -6),
-          new THREE.Vector3(L/2, off, -47)
+          new THREE.Vector3(-75, off, -23.5),
+          new THREE.Vector3(-75, off, -53.5),
+          new THREE.Vector3(75, off, -53.5),
+          new THREE.Vector3(75, off, -23.5)
         ];
       } else {
         pts = [
-          new THREE.Vector3(off, -L/2, -47),
-          new THREE.Vector3(off, -L/2, -6),
-          new THREE.Vector3(off, L/2, -6),
-          new THREE.Vector3(off, L/2, -47)
+          new THREE.Vector3(off, -75, -23.5),
+          new THREE.Vector3(off, -75, -53.5),
+          new THREE.Vector3(off, 75, -53.5),
+          new THREE.Vector3(off, 75, -23.5)
         ];
       }
       const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
-      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, sRadius, 4, false), matSup));
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.4, 4, false), matLatN9));
     });
 
-    // 3. Lateral Vertical N9
-    const n9Diam = spec.lateralN9 ? spec.lateralN9.diam : 8.0;
-    const n9Radius = Math.max(0.3, (n9Diam / 20) * 1.05);
-    [-20, 20].forEach(latOff => {
+    // 3. Quatro Barras Superiores Longitudinais com ganchos de 9 cm para baixo (N10 / N11, C=164 cm)
+    const supOffsets = [-21, -7, 7, 21];
+    supOffsets.forEach(off => {
       let pts;
       if (isX) {
         pts = [
-          new THREE.Vector3(-60, latOff, -15),
-          new THREE.Vector3(-60, latOff, -45),
-          new THREE.Vector3(60, latOff, -45),
-          new THREE.Vector3(60, latOff, -15)
+          new THREE.Vector3(-75, off, -22),
+          new THREE.Vector3(-75, off, -13),
+          new THREE.Vector3(75, off, -13),
+          new THREE.Vector3(75, off, -22)
         ];
       } else {
         pts = [
-          new THREE.Vector3(latOff, -60, -15),
-          new THREE.Vector3(latOff, -60, -45),
-          new THREE.Vector3(latOff, 60, -45),
-          new THREE.Vector3(latOff, 60, -15)
+          new THREE.Vector3(off, -75, -22),
+          new THREE.Vector3(off, -75, -13),
+          new THREE.Vector3(off, 75, -13),
+          new THREE.Vector3(off, 75, -22)
         ];
       }
       const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.08);
-      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, n9Radius, 4, false), matLatN9));
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.4, 4, false), matSup));
     });
 
-    // 4. Cintas Horizontais Fechadas
+    // 4. Cintas Perimetrais Horizontais Fechadas (151 × 51 cm, C=415 cm)
     const cCfg = spec.cintasH;
-    const cDiam = cCfg.diam;
     const cQuant = cCfg.quant;
-    const cRadius = Math.max(0.25, (cDiam / 20) * 1.05);
-    const zBase = -50;
-    const zStep = 38 / (cQuant - 1);
-    for (let j = 0; j < cQuant; j++) {
-      const z = zBase + j * zStep;
-      let pts;
-      if (isX) {
-        pts = [
-          new THREE.Vector3(-L/2, -w/2, z),
-          new THREE.Vector3(L/2, -w/2, z),
-          new THREE.Vector3(L/2, w/2, z),
-          new THREE.Vector3(-L/2, w/2, z)
-        ];
-      } else {
-        pts = [
-          new THREE.Vector3(-w/2, -L/2, z),
-          new THREE.Vector3(w/2, -L/2, z),
-          new THREE.Vector3(w/2, L/2, z),
-          new THREE.Vector3(-w/2, L/2, z)
-        ];
-      }
+    const cStep = 36 / (cQuant - 1);
+    for (let c = 0; c < cQuant; c++) {
+      const z = -52 + c * cStep;
+      const lx = isX ? 75.5 : 25.5;
+      const ly = isX ? 25.5 : 75.5;
+      const pts = [
+        new THREE.Vector3(-lx, -ly, z),
+        new THREE.Vector3(lx, -ly, z),
+        new THREE.Vector3(lx, ly, z),
+        new THREE.Vector3(-lx, ly, z)
+      ];
       const curve = new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.08);
-      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, cRadius, 4, true), matCintas));
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.3, 4, true), matCintas));
     }
 
-    // 5. Estribos Verticais
+    // 5. Estribos Verticais Transversais Fechados (50 × 41 cm, C=193 cm)
     const eCfg = spec.estribosV;
     const eQuant = eCfg.quant;
-    const eStep = (L - 20) / (eQuant - 1);
-    for (let k = 0; k < eQuant; k++) {
-      const loc = -(L - 20)/2 + k * eStep;
-      const z0 = -52;
-      const z1 = -8;
+    const eStep = 150 / (eQuant - 1);
+    for (let e = 0; e < eQuant; e++) {
+      const loc = -75 + e * eStep;
+      const z0 = -54.5, z1 = -13.5;
       let pts;
       if (isX) {
         pts = [
@@ -1114,13 +1100,14 @@ function buildExactRebarForBlock(b) {
     }
 
   } else {
-    // BLOCOS DE 1 ESTACA (60 × 60 cm)
+    // BLOCOS DE 1 ESTACA (60 × 60 × 60 cm)
     const eV = spec.estribosV;
     const cH = spec.cintasH;
 
-    const eVStep = 36 / (eV.quant - 1);
+    // Estribos verticais transversais (49 × 41 cm) distribuídos ocupando toda a largura útil de 48 cm
+    const eVStep = 48 / (eV.quant - 1);
     for (let i = 0; i < eV.quant; i++) {
-      const x = -18 + i * eVStep;
+      const x = -24 + i * eVStep;
       const pts = [
         new THREE.Vector3(x, -24.5, -53.5),
         new THREE.Vector3(x, 24.5, -53.5),
@@ -1131,6 +1118,7 @@ function buildExactRebarForBlock(b) {
       group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 18, 0.3, 4, true), matEstribo));
     }
 
+    // Cintas perimetrais horizontais fechadas (51 × 51 cm)
     const cHStep = 36 / (cH.quant - 1);
     const cRadius = Math.max(0.3, (cH.diam / 20) * 1.05);
     for (let j = 0; j < cH.quant; j++) {

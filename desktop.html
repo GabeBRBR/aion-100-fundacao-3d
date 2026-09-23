@@ -951,10 +951,10 @@ function buildExactRebarForBlock(b) {
     const tQuant = tCfg.quant;
     const tRadius = Math.max(0.35, (tDiam / 20) * 1.05);
 
-    // Distribuição das barras ao longo da largura interna (-17.5 a +17.5 ou conforme espaçamento)
-    const tStep = 35 / (tQuant - 1);
+    // Distribuição das barras ao longo da largura interna (-21 a +21 cm no fundo da gaiola de 50 cm)
+    const tStep = (tQuant > 1) ? 42 / (tQuant - 1) : 0;
     for (let k = 0; k < tQuant; k++) {
-      const off = -17.5 + k * tStep;
+      const off = -21 + k * tStep;
       let pts;
       if (isX) {
         pts = [
@@ -999,8 +999,8 @@ function buildExactRebarForBlock(b) {
       group.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.45, 6, false), matLatN9));
     });
 
-    // 3. Quatro Barras Superiores Longitudinais com ganchos de 9 cm para baixo
-    const supOffsets = [-18, -6, 6, 18];
+    // 3. Quatro Barras Superiores Longitudinais com ganchos de 9 cm para baixo (distribuídas na largura útil)
+    const supOffsets = [-21, -7, 7, 21];
     supOffsets.forEach(off => {
       let pts;
       if (isX) {
@@ -1074,10 +1074,10 @@ function buildExactRebarForBlock(b) {
     const eV = spec.estribosV;
     const cH = spec.cintasH;
 
-    // Estribos verticais (4 unidades distribuídas)
-    const eVStep = 36 / (eV.quant - 1);
+    // Estribos verticais (4 unidades distribuídas ocupando a largura total útil de 48 cm)
+    const eVStep = 48 / (eV.quant - 1);
     for (let i = 0; i < eV.quant; i++) {
-      const x = -18 + i * eVStep;
+      const x = -24 + i * eVStep;
       const pts = [
         new THREE.Vector3(x, -24.5, -53.5),
         new THREE.Vector3(x, 24.5, -53.5),
