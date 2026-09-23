@@ -80,40 +80,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P2",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 10131.5,
       "globalY": 50998.9,
       "localX": -1579.7,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B2_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B2_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -147,40 +147,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P3",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 10496.0,
       "globalY": 50998.9,
       "localX": -1215.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B3_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B3_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -214,40 +214,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P4",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 10829.0,
       "globalY": 50998.9,
       "localX": -882.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B4_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B4_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -281,40 +281,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P5",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 11209.0,
       "globalY": 50998.9,
       "localX": -502.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B5_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B5_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -348,40 +348,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P6",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 11589.0,
       "globalY": 50998.9,
       "localX": -122.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B6_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B6_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -415,40 +415,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P7",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 11969.0,
       "globalY": 50998.9,
       "localX": 257.8,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B7_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B7_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -482,40 +482,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P8",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 12349.0,
       "globalY": 50998.9,
       "localX": 637.8,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B8_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B8_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -549,40 +549,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P9",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 12736.5,
       "globalY": 50998.9,
       "localX": 1025.3,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B9_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B9_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -616,40 +616,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P10",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 12901.4,
       "globalY": 50998.9,
       "localX": 1190.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B10_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B10_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -683,40 +683,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P11",
       "numEstacas": 2,
-      "orientacao": "X",
+      "orientacao": "Y",
       "globalX": 13422.4,
       "globalY": 50998.9,
       "localX": 1711.2,
       "localY": 474.5,
       "localZ": 0.0,
-      "dimX": 160,
-      "dimY": 60,
+      "dimX": 60,
+      "dimY": 160,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B11_E1",
-          "relX": -50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": -50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B11_E2",
-          "relX": 50.0,
-          "relY": 0.0,
+          "relX": 0.0,
+          "relY": 50.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "X",
+        "orient": "Y",
         "dim": [
-          160,
           60,
+          160,
           60
         ],
         "tirante": {
@@ -1052,40 +1052,40 @@
       "tipo": "2xC40_7m",
       "pilarId": "P17",
       "numEstacas": 2,
-      "orientacao": "Y",
+      "orientacao": "X",
       "globalX": 12731.0,
       "globalY": 50555.9,
       "localX": 1019.8,
       "localY": 31.5,
       "localZ": 0.0,
-      "dimX": 60,
-      "dimY": 160,
+      "dimX": 160,
+      "dimY": 60,
       "dimZ": 60,
       "hb": 60.0,
       "ca": -60.0,
       "estacas": [
         {
           "id": "B17_E1",
-          "relX": 0.0,
-          "relY": -50.0,
+          "relX": -50.0,
+          "relY": 0.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         },
         {
           "id": "B17_E2",
-          "relX": 0.0,
-          "relY": 50.0,
+          "relX": 50.0,
+          "relY": 0.0,
           "diam": 40.0,
           "prof": 700.0,
           "ca": -60.0
         }
       ],
       "especRebar": {
-        "orient": "Y",
+        "orient": "X",
         "dim": [
-          60,
           160,
+          60,
           60
         ],
         "tirante": {
