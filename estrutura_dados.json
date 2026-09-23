@@ -59,11 +59,7 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
           "diam": 5.0,
@@ -132,8 +128,8 @@
         ],
         "tirante": {
           "diam": 10.0,
-          "quant": 6,
-          "espac": 7
+          "quant": 4,
+          "espac": 13
         },
         "sup": {
           "diam": 8.0,
@@ -146,7 +142,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -220,7 +216,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -427,9 +423,9 @@
           60
         ],
         "tirante": {
-          "diam": 8.0,
-          "quant": 7,
-          "espac": 6
+          "diam": 10.0,
+          "quant": 6,
+          "espac": 7
         },
         "sup": {
           "diam": 8.0,
@@ -437,7 +433,7 @@
         },
         "cintas": {
           "diam": 5.0,
-          "quant": 6,
+          "quant": 5,
           "espac": 9
         },
         "estribos": {
@@ -590,7 +586,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -650,8 +646,8 @@
         ],
         "tirante": {
           "diam": 8.0,
-          "quant": 7,
-          "espac": 6
+          "quant": 10,
+          "espac": 4
         },
         "sup": {
           "diam": 8.0,
@@ -664,12 +660,12 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
-          "quant": 6,
-          "diam": 16.0,
-          "alt": 105
+          "quant": 4,
+          "diam": 10.0,
+          "alt": 83
         }
       }
     },
@@ -723,9 +719,9 @@
           60
         ],
         "tirante": {
-          "diam": 10.0,
-          "quant": 6,
-          "espac": 7
+          "diam": 12.5,
+          "quant": 5,
+          "espac": 9
         },
         "sup": {
           "diam": 8.0,
@@ -738,12 +734,12 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
-          "diam": 16.0,
-          "alt": 105
+          "diam": 10.0,
+          "alt": 83
         }
       }
     },
@@ -797,9 +793,9 @@
           60
         ],
         "tirante": {
-          "diam": 10.0,
-          "quant": 6,
-          "espac": 7
+          "diam": 12.5,
+          "quant": 4,
+          "espac": 13
         },
         "sup": {
           "diam": 8.0,
@@ -807,17 +803,17 @@
         },
         "cintas": {
           "diam": 5.0,
-          "quant": 6,
+          "quant": 5,
           "espac": 10
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
-          "diam": 16.0,
-          "alt": 105
+          "diam": 10.0,
+          "alt": 83
         }
       }
     },
@@ -862,16 +858,12 @@
           60,
           60
         ],
-        "tirante": {
+        "tirante": null,
+        "sup": null,
+        "cintas": {
           "diam": 6.3,
           "quant": 5,
           "espac": 10
-        },
-        "sup": null,
-        "cintas": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 12
         },
         "estribos": {
           "diam": 5.0,
@@ -999,16 +991,12 @@
           60,
           60
         ],
-        "tirante": {
+        "tirante": null,
+        "sup": null,
+        "cintas": {
           "diam": 6.3,
           "quant": 5,
           "espac": 10
-        },
-        "sup": null,
-        "cintas": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 12
         },
         "estribos": {
           "diam": 5.0,
@@ -1062,11 +1050,7 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
           "diam": 5.0,
@@ -1136,7 +1120,7 @@
         "tirante": {
           "diam": 12.5,
           "quant": 5,
-          "espac": 10
+          "espac": 9
         },
         "sup": {
           "diam": 8.0,
@@ -1149,7 +1133,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 4
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -1209,8 +1193,8 @@
         ],
         "tirante": {
           "diam": 10.0,
-          "quant": 6,
-          "espac": 7
+          "quant": 7,
+          "espac": 6
         },
         "sup": {
           "diam": 8.0,
@@ -1223,7 +1207,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 4
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -1273,11 +1257,7 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
           "diam": 5.0,
@@ -1336,11 +1316,7 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 5.0,
-          "quant": 6,
-          "espac": 8
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
           "diam": 5.0,
@@ -1399,11 +1375,7 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 5.0,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
           "diam": 5.0,
@@ -1486,7 +1458,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -1560,7 +1532,7 @@
         },
         "estribos": {
           "diam": 5.0,
-          "quant": 5
+          "quant": 7
         },
         "pilar": {
           "quant": 6,
@@ -1610,14 +1582,10 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 6.3,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
-          "diam": 5.0,
+          "diam": 6.3,
           "quant": 5,
           "espac": 10
         },
@@ -1673,14 +1641,10 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 6.3,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
-          "diam": 5.0,
+          "diam": 6.3,
           "quant": 5,
           "espac": 10
         },
@@ -1736,14 +1700,10 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 6.3,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
-          "diam": 5.0,
+          "diam": 6.3,
           "quant": 5,
           "espac": 10
         },
@@ -1799,14 +1759,10 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 6.3,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
-          "diam": 5.0,
+          "diam": 6.3,
           "quant": 5,
           "espac": 10
         },
@@ -1862,14 +1818,10 @@
           60,
           60
         ],
-        "tirante": {
-          "diam": 6.3,
-          "quant": 5,
-          "espac": 10
-        },
+        "tirante": null,
         "sup": null,
         "cintas": {
-          "diam": 5.0,
+          "diam": 6.3,
           "quant": 5,
           "espac": 10
         },
@@ -1937,24 +1889,24 @@
       "desc": "Baldrame Longitudinal Norte (P1-P5)",
       "rebar": {
         "inf": {
-          "quant": 2,
-          "diam": 10.0,
-          "desc": "2 N34 Ø10.0 + reforços N54 Ø16.0"
+          "quant": 4,
+          "diam": 16.0,
+          "desc": "2 N51 Ø16.0 C=1200 + 2 N34 Ø10.0 C=1200 + reforços 2 N52 Ø16.0 C=236"
         },
         "sup": {
           "quant": 2,
           "diam": 6.3,
-          "desc": "2 N4 Ø6.3 + negativos Ø8.0 / Ø16.0"
+          "desc": "2 N4 Ø6.3 + negativos nos apoios 1 N54 Ø16.0 C=200"
         },
         "pele": {
           "quant": 6,
           "diam": 6.3,
-          "desc": "2x3 N5 Ø6.3 C=1200"
+          "desc": "2x3 N5 Ø6.3 C=131 / N4 Ø6.3"
         },
         "estribos": {
           "diam": 5.0,
           "espac": 12,
-          "desc": "N1 Ø5.0 c/12 e c/20"
+          "desc": "82 N1 Ø5.0 c/12, c/16 e c/20 C=117"
         }
       }
     },
@@ -1975,12 +1927,12 @@
         "inf": {
           "quant": 3,
           "diam": 16.0,
-          "desc": "2 N53 Ø16.0 + 1 N35 Ø10.0"
+          "desc": "2 N53 Ø16.0 C=1193 + 1 N35 Ø10.0 C=1193"
         },
         "sup": {
           "quant": 2,
           "diam": 10.0,
-          "desc": "2 N36 Ø10.0 + reforço 1 N54 Ø16.0"
+          "desc": "2 N36 Ø10.0 C=1194 + reforço 1 N54 Ø16.0 C=200"
         },
         "pele": {
           "quant": 6,
@@ -1990,7 +1942,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "28 N1 Ø5.0 c/15"
+          "desc": "73 N1 Ø5.0 c/15, c/16, c/20 C=117"
         }
       }
     },
@@ -2015,13 +1967,13 @@
         "sup": {
           "quant": 3,
           "diam": 8.0,
-          "desc": "3 N11 Ø8.0 C=606"
+          "desc": "3 N11 Ø8.0 C=606 + 1 N10 Ø8.0 C=1200"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 20,
-          "desc": "31 N1 Ø5.0 c/20"
+          "desc": "31 N1 Ø5.0 c/20 C=117"
         }
       }
     },
@@ -2044,21 +1996,21 @@
       "desc": "Baldrame Longitudinal Norte (P10-P11)",
       "rebar": {
         "inf": {
-          "quant": 4,
+          "quant": 6,
           "diam": 8.0,
-          "desc": "4 N13 Ø8.0"
+          "desc": "6 N14 Ø8.0 C=630 + 1 N13 Ø8.0 C=255"
         },
         "sup": {
           "quant": 4,
           "diam": 8.0,
-          "desc": "4 N12 Ø8.0 C=575"
+          "desc": "4 N12 Ø8.0 C=575 + 1 N9 Ø8.0 C=150"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
           "duplo": true,
-          "desc": "Estribos duplos 2x39 N2 Ø5.0 c/15"
+          "desc": "Estribos duplos 2x39 N2 Ø5.0 c/15 C=105"
         }
       }
     },
@@ -2077,9 +2029,9 @@
       "desc": "Baldrame Longitudinal Intermediário (P12-P15)",
       "rebar": {
         "inf": {
-          "quant": 2,
+          "quant": 4,
           "diam": 10.0,
-          "desc": "2 N38 Ø10.0 + 2 N18 Ø8.0"
+          "desc": "2 N38 Ø10.0 C=1128 + 2 N18 Ø8.0 C=1155 + 2 N17 Ø8.0 C=926 + 1 N15 Ø8.0 C=376"
         },
         "sup": {
           "quant": 2,
@@ -2090,7 +2042,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "37 N3 Ø5.0 c/15"
+          "desc": "77 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2120,7 +2072,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "33 N3 Ø5.0 c/15"
+          "desc": "33 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2156,7 +2108,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 11,
-          "desc": "30 N3 Ø5.0 c/11 e c/15"
+          "desc": "30 N3 Ø5.0 c/11 e c/15 C=85"
         }
       }
     },
@@ -2186,7 +2138,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "26 N3 Ø5.0 c/15"
+          "desc": "26 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2222,7 +2174,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "9 N3 Ø5.0 c/15"
+          "desc": "9 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2254,7 +2206,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "N3 Ø5.0 c/14 e c/15"
+          "desc": "80 N3 Ø5.0 c/14 e c/15 C=85"
         }
       }
     },
@@ -2275,18 +2227,18 @@
         "inf": {
           "quant": 3,
           "diam": 12.5,
-          "desc": "3 N48 Ø12.5 C=1085"
+          "desc": "3 N48 Ø12.5 C=1085 + 2 N49 Ø12.5 C=226"
         },
         "sup": {
           "quant": 3,
           "diam": 8.0,
-          "desc": "3 N25 Ø8.0 C=1194"
+          "desc": "3 N25 Ø8.0 C=1194 + 1 N24 Ø8.0 C=387"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "N3 Ø5.0 c/15"
+          "desc": "82 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2310,13 +2262,13 @@
         "sup": {
           "quant": 2,
           "diam": 8.0,
-          "desc": "2 N26 Ø8.0 + 1 N27 Ø8.0"
+          "desc": "2 N26 Ø8.0 + 1 N27 Ø8.0 C=172"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "30 N3 Ø5.0 c/15"
+          "desc": "30 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2351,7 +2303,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 16,
-          "desc": "36 N1 Ø5.0 c/13, c/16, c/20"
+          "desc": "36 N1 Ø5.0 c/13, c/16, c/20 C=117"
         }
       }
     },
@@ -2382,7 +2334,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "40 N1 Ø5.0 c/15 e c/16"
+          "desc": "40 N1 Ø5.0 c/15 e c/16 C=117"
         }
       }
     },
@@ -2412,7 +2364,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "15 N3 Ø5.0 c/15"
+          "desc": "15 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2448,7 +2400,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "13 N3 Ø5.0 c/15"
+          "desc": "13 N3 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2467,18 +2419,18 @@
         "inf": {
           "quant": 3,
           "diam": 12.5,
-          "desc": "2 N5 Ø8.0 + 3 N14 Ø12.5 C=337"
+          "desc": "3 N14 Ø12.5 C=337 + 2 N5 Ø8.0 C=712"
         },
         "sup": {
           "quant": 2,
           "diam": 10.0,
-          "desc": "2 N8 Ø10.0 + 2 N3 Ø6.3"
+          "desc": "2 N8 Ø10.0 C=417 + 2 N3 Ø6.3 C=371"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "28 N1 Ø5.0 c/15"
+          "desc": "28 N1 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2509,7 +2461,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "18 N1 Ø5.0 c/15"
+          "desc": "18 N1 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2533,13 +2485,13 @@
         "sup": {
           "quant": 2,
           "diam": 16.0,
-          "desc": "2 N18 Ø16.0 C=654 + 1 N4 Ø6.3"
+          "desc": "2 N18 Ø16.0 C=654 + 1 N4 Ø6.3 C=171"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "31 N1 Ø5.0 c/15"
+          "desc": "31 N1 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2559,7 +2511,7 @@
         "inf": {
           "quant": 3,
           "diam": 10.0,
-          "desc": "3 N10 Ø10.0 C=571 + 1 N3 Ø6.3"
+          "desc": "3 N10 Ø10.0 C=571 + 1 N3 Ø6.3 C=371"
         },
         "sup": {
           "quant": 2,
@@ -2570,7 +2522,7 @@
         "estribos": {
           "diam": 5.0,
           "espac": 15,
-          "desc": "15 N1 Ø5.0 c/15"
+          "desc": "15 N1 Ø5.0 c/15 C=85"
         }
       }
     },
@@ -2594,13 +2546,13 @@
         "sup": {
           "quant": 2,
           "diam": 16.0,
-          "desc": "2 N20 Ø16.0 C=324"
+          "desc": "2 N20 Ø16.0 C=324 + 7 N11 Ø10.0 C=374"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 10,
-          "desc": "12 N1 Ø5.0 c/10"
+          "desc": "12 N1 Ø5.0 c/10 C=85"
         }
       }
     },
@@ -2622,16 +2574,16 @@
           "desc": "4 N15 Ø12.5 C=326"
         },
         "sup": {
-          "quant": 3,
-          "diam": 12.5,
-          "desc": "3 N22 Ø12.5 C=324 / 7 N11 Ø10.0"
+          "quant": 7,
+          "diam": 10.0,
+          "desc": "7 N11 Ø10.0 C=374"
         },
         "pele": null,
         "estribos": {
           "diam": 5.0,
           "espac": 15,
           "duplo": true,
-          "desc": "Estribos duplos 2x8 N2 Ø5.0 c/15"
+          "desc": "Estribos duplos 2x8 N2 Ø5.0 c/15 C=105"
         }
       }
     }
